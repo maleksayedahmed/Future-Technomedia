@@ -3,8 +3,7 @@
                 <div class="tooltip color-bg">Close Menu</div>
             </div>
             <div class="nav-holder">
-                <a class="header-logo" href="index.html"><img src="images/logo2.png" alt=""></a>
-                <div class="nav-title"><span>Menu</span></div>
+                <a class="header-logo" href="index.html"><img src="images/logo2.svg" alt=""></a>
                 <div class="nav-inner-wrap">
                     <nav class="nav-inner sound-nav" id="menu">
                         <ul>

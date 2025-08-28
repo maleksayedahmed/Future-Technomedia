@@ -7,15 +7,15 @@
                             <div class="partcile-dec" data-parcount="90"></div>
                             <div class="row">
                                 <div class="col-md-2">
-                                    <div class="footer-title fl-wrap">
-                                        <span>Solonick</span>
-                                    </div>
+                                    {{-- <div class="footer-title fl-wrap">
+                                        <span>Future Technomedia</span>
+                                    </div> --}}
                                 </div>
                                 <div class="col-md-5">
-                                    <div class="footer-header fl-wrap"><span>01.</span>About Me</div>
+                                    <div class="footer-header fl-wrap">About Company</div>
                                     <div class="footer-box fl-wrap">
 										<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in pulvinar neque. Nulla finibus lobortis pulvinar. Donec a consectetur nulla. Nulla posuere sapien vitae lectus suscipit, et pulvinar nisi tincidunt. Curabitur convallis fringilla diam sed aliquam. Sed tempor iaculis massa faucibus feugiat. In fermentum facilisis massa, a consequat purus viverra. </p>
-                                        <a href="portfolio.html" class="btn float-btn trsp-btn">My Portfolio</a>
+                                        {{-- <a href="portfolio.html" class="btn float-btn trsp-btn">My Portfolio</a> --}}
                                         <!-- footer-socilal -->
                                         <div class="footer-socilal fl-wrap">
                                             <ul >
@@ -29,7 +29,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-5">
-                                    <div class="footer-header fl-wrap"><span>02.</span> Subscribe / Contacts</div>
+                                    <div class="footer-header fl-wrap"> Subscribe / Contacts</div>
                                     <!-- footer-box-->
                                     <div class="footer-box fl-wrap">
                                         <p>Want to be notified when we launch a new template or an udpate. Just sign up and we'll send you a notification by email.</p>
@@ -61,7 +61,7 @@
                         <div class="container">
                             <!-- policy-box-->
                             <div class="policy-box">
-                                <span>&#169; Solonick 2018  /  All rights reserved. </span>
+                                <span>&#169; 2018  /  All rights reserved. </span>
                             </div>
                             <!-- policy-box end-->
                             <a href="#" class="to-top color-bg"><i class="fal fa-angle-up"></i><span></span></a>

@@ -1,14 +1,14 @@
             <header class="main-header">
                 <a class="logo-holder" href="index.html">
-                <img src="images/logo.png"  alt="">
+                <img src="images/white_logo.svg"  alt="">
                 </a>
                 <!-- nav-button-wrap-->
-                <div class="nav-button but-hol">
+                {{-- <div class="nav-button but-hol">
                     <span  class="nos"></span>
                     <span class="ncs"></span>
                     <span class="nbs"></span>
                     <div class="menu-button-text">Menu</div>
-                </div>
+                </div> --}}
                 <!-- nav-button-wrap end-->
                 <div class="header-social">
                     <ul >
@@ -19,9 +19,9 @@
                     </ul>
                 </div>
                 <!--  showshare -->
-                <div class="show-share showshare">
+                {{-- <div class="show-share showshare">
                     <i class="fal fa-retweet"></i>
                     <span>Share This</span>
-                </div>
+                </div> --}}
                 <!--  showshare end -->
             </header>

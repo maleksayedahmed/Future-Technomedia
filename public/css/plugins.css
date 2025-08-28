@@ -468,7 +468,6 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item.lg-complete .lg-object 
   cursor: grab;
 }
 .lg-outer .lg-thumb-outer.lg-grabbing .lg-thumb-item {
-  cursor: move;
   cursor: -webkit-grabbing;
   cursor: -moz-grabbing;
   cursor: -o-grabbing;
@@ -851,7 +850,6 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item.lg-complete .lg-object 
   cursor: grab;
 }
 .lg-outer.lg-grabbing img.lg-object {
-  cursor: move;
   cursor: -webkit-grabbing;
   cursor: -moz-grabbing;
   cursor: -o-grabbing;
