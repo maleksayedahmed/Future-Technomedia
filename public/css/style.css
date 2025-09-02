@@ -1412,9 +1412,13 @@ p.interact,
 
 .half-hero-wrap {
 	position: absolute;
-	left: 8%;
+	left: 24%;
 	z-index: 10;
 	top: 29%;
+}
+
+.half-hero-wrap p{
+	text-align: left;
 }
 
 .half-hero-wrap h1:before {
@@ -1440,6 +1444,7 @@ p.interact,
 
 .half-hero-wrap h4 {
 	padding: 15px 30px;
+	margin-bottom: 24px;
 	background: rgba(0, 0, 0, 0.21);
 	text-align: left;
 	font-size: 11px;
@@ -1449,7 +1454,6 @@ p.interact,
 	letter-spacing: 6px;
 	font-weight: 600;
 }
-
 
 .pattern-bg {
 	position: absolute;
@@ -7688,3 +7692,4 @@ section.parallax-section .section-title:before {
 		background-position: center;
 	}
 }
+

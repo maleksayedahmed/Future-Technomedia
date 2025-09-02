@@ -22,6 +22,7 @@ Route::get('/', function () {
     $clients = Client::active()->ordered()->get();
     return view('user.index', compact('sliders', 'features', 'projects', 'testimonials', 'clients'));
 });
+Route::get('/project' , function(){ return view('user.ProjectDetails'); });
 
 // Admin Routes
 Route::prefix('admin')->name('admin.')->group(function () {

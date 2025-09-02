@@ -30,22 +30,27 @@
             <div class="half-slider-img-wrap">
                 <!-- half-slider-img-->
                 <div class="half-slider-img fl-wrap full-height">
-                    @forelse($sliders as $slider)
                     <!-- half-slider-img item-->
                     <div class="half-slider-img-item">
-                        <div class="bg" data-bg="{{ $slider->getFirstMediaUrl('slider_images') ?: asset('images/bg/1.jpg') }}"
-                            data-scrollax="properties: { translateY: '250px' }"></div>
+                        <div class="bg" data-bg="images/bg/1.jpg" data-scrollax="properties: { translateY: '250px' }">
+                        </div>
                         <div class="overlay"></div>
                     </div>
                     <!-- half-slider-img item end-->
-                    @empty
-                    <!-- Default slider item-->
+                    <!-- half-slider-img item-->
                     <div class="half-slider-img-item">
-                        <div class="bg" data-bg="{{ asset('images/bg/1.jpg') }}"
-                            data-scrollax="properties: { translateY: '250px' }"></div>
+                        <div class="bg" data-bg="images/bg/1.jpg" data-scrollax="properties: { translateY: '250px' }">
+                        </div>
                         <div class="overlay"></div>
                     </div>
-                    @endforelse
+                    <!-- half-slider-img item end-->
+                    <!-- half-slider-img item-->
+                    <div class="half-slider-img-item">
+                        <div class="bg" data-bg="images/bg/1.jpg" data-scrollax="properties: { translateY: '250px' }">
+                        </div>
+                        <div class="overlay"></div>
+                    </div>
+                    <!-- half-slider-img item end-->
                 </div>
                 <!-- half-slider-img end-->
             </div>
@@ -55,38 +60,50 @@
                 <!-- slider-nav-->
                 <div class="slider-nav cur_carousel-slider-container"
                     data-slick='{"autoplay": true, "autoplaySpeed": 4000 , "pauseOnHover": false}'>
-                    @forelse($sliders as $slider)
                     <!-- half-slider-item-->
                     <div class="half-slider-item fl-wrap">
                         <div class="half-hero-wrap">
-                            <h1>{!! $slider->title !!}</h1>
-                            @if($slider->description)
-                                <p>{{ $slider->description }}</p>
-                            @endif
-                            <div class="clearfix"></div>
-                            @if($slider->button_text && $slider->button_link)
-                                <a href="{{ $slider->button_link }}" class="btn float-btn flat-btn color-btn mar-top">{{ $slider->button_text }}</a>
-                            @endif
-                        </div>
-                    </div>
-                    <!-- half-slider-item end-->
-                    @empty
-                    <!-- Default slider item-->
-                    <div class="half-slider-item fl-wrap">
-                        <div class="half-hero-wrap">
-                            <h1>Hey there ! <br>Its Future Technomedia<br>Innovative <span> Software Company </span></h1>
+                            <h1>Hey there ! <br>I'm Martin Solonick<br>Independent <span> Digital Designer </span></h1>
+                            <h4>I create web and graphic design</h4>
                             <div class="clearfix"></div>
                             <a href="#sec2" class="custom-scroll-link btn float-btn flat-btn color-btn mar-top">Let's
                                 Start</a>
                         </div>
                     </div>
-                    @endforelse
+                    <!-- half-slider-item end-->
+                    <!-- half-slider-item-->
+                    <div class="half-slider-item fl-wrap">
+                        <div class="half-hero-wrap">
+                            <h1>Design<br> Classy and Stylish <br> <span>Brand Perception.</span></h1>
+                            <h4>I create web and graphic design</h4>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <!-- half-slider-item end-->
+                    <!-- half-slider-item-->
+                    <div class="half-slider-item fl-wrap">
+                        <div class="half-hero-wrap">
+                            <h1>Original Design <br> Features <br>With High <span> Quality Code.</span></h1>
+                            <h4>I create web and graphic design</h4>
+                            <div class="clearfix"></div>
+                            
+                        </div>
+                    </div>
+                    <!-- half-slider-item end-->
                 </div>
+                <!--  slider nav end-->
+                <div class="sp-cont sarr-contr sp-cont-prev"><i class="fal fa-arrow-left"></i></div>
+                <div class="sp-cont sarr-contr sp-cont-next"><i class="fal fa-arrow-right"></i></div>
+                <div class="slider-nav-counter"></div>
             </div>
             <!-- half-slider-wrap end-->
             <!--hero dec-->
-            {{-- <div class="half-bg-dec" data-ran="12"></div> --}}
+            <div class="half-bg-dec" data-ran="12"></div>
+            <div class="hero-decor-numb"><span>40.7143528 </span><span>-74.0059731 </span> <a
+                    href="https://www.google.com/maps/" target="_blank" class="hero-decor-numb-tooltip">Based In NewYork</a>
+            </div>
             <div class="pattern-bg"></div>
+            <div class="hero-line-dec"></div>
         </div>
         <!--hero dec end-->
     </div>
@@ -120,56 +137,56 @@
                             <div class="features-box-container fl-wrap">
                                 <div class="row">
                                     @forelse($features as $feature)
-                                    <!--features-box -->
-                                    <div class="features-box col-md-6">
-                                        <div class="time-line-icon">
-                                            <i class="{{ $feature->icon ?: 'fal fa-star' }}"></i>
+                                        <!--features-box -->
+                                        <div class="features-box col-md-6">
+                                            <div class="time-line-icon">
+                                                <i class="{{ $feature->icon ?: 'fal fa-star' }}"></i>
+                                            </div>
+                                            <h3>{{ $feature->title }}</h3>
+                                            <p>{{ $feature->description }}</p>
                                         </div>
-                                        <h3>{{ $feature->title }}</h3>
-                                        <p>{{ $feature->description }}</p>
-                                    </div>
-                                    <!-- features-box end  -->
+                                        <!-- features-box end  -->
                                     @empty
-                                    <!--features-box -->
-                                    <div class="features-box col-md-6">
-                                        <div class="time-line-icon">
-                                            <i class="fal fa-desktop"></i>
+                                        <!--features-box -->
+                                        <div class="features-box col-md-6">
+                                            <div class="time-line-icon">
+                                                <i class="fal fa-desktop"></i>
+                                            </div>
+                                            <h3>Web Design</h3>
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in pulvinar
+                                                neque. </p>
                                         </div>
-                                        <h3>Web Design</h3>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in pulvinar
-                                            neque. </p>
-                                    </div>
-                                    <!-- features-box end  -->
-                                    <!--features-box -->
-                                    <div class="features-box col-md-6">
-                                        <div class="time-line-icon">
-                                            <i class="fal fa-mobile-android"></i>
+                                        <!-- features-box end  -->
+                                        <!--features-box -->
+                                        <div class="features-box col-md-6">
+                                            <div class="time-line-icon">
+                                                <i class="fal fa-mobile-android"></i>
+                                            </div>
+                                            <h3>Ui/Ux Design</h3>
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in pulvinar
+                                                neque. </p>
                                         </div>
-                                        <h3>Ui/Ux Design</h3>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in pulvinar
-                                            neque. </p>
-                                    </div>
-                                    <!-- features-box end  -->
-                                    <!--features-box -->
-                                    <div class="features-box col-md-6">
-                                        <div class="time-line-icon">
-                                            <i class="fab fa-pagelines"></i>
+                                        <!-- features-box end  -->
+                                        <!--features-box -->
+                                        <div class="features-box col-md-6">
+                                            <div class="time-line-icon">
+                                                <i class="fab fa-pagelines"></i>
+                                            </div>
+                                            <h3>Branding</h3>
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in pulvinar
+                                                neque. </p>
                                         </div>
-                                        <h3>Branding</h3>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in pulvinar
-                                            neque. </p>
-                                    </div>
-                                    <!-- features-box end  -->
-                                    <!--features-box -->
-                                    <div class="features-box col-md-6">
-                                        <div class="time-line-icon">
-                                            <i class="fal fa-shopping-bag"></i>
+                                        <!-- features-box end  -->
+                                        <!--features-box -->
+                                        <div class="features-box col-md-6">
+                                            <div class="time-line-icon">
+                                                <i class="fal fa-shopping-bag"></i>
+                                            </div>
+                                            <h3>Ecommerce</h3>
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in pulvinar
+                                                neque. </p>
                                         </div>
-                                        <h3>Ecommerce</h3>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in pulvinar
-                                            neque. </p>
-                                    </div>
-                                    <!-- features-box end  -->
+                                        <!-- features-box end  -->
                                     @endforelse
                                 </div>
                             </div>
@@ -187,7 +204,7 @@
         </section>
         <!-- section end-->
         <!-- section-->
-        {{-- <section class="parallax-section dark-bg sec-half parallax-sec-half-right" data-scrollax-parent="true">
+        <section class="parallax-section dark-bg sec-half parallax-sec-half-right" data-scrollax-parent="true">
             <div class="bg par-elem" data-bg="{{ asset('images/bg/1.jpg') }}"
                 data-scrollax="properties: { translateY: '30%' }"></div>
             <div class="overlay"></div>
@@ -249,7 +266,7 @@
                     <!-- inline-facts end -->
                 </div>
             </div>
-        </section> --}}
+        </section>
         <!-- section end-->
         <!-- section-->
         {{-- <section data-scrollax-parent="true" id="sec3">
@@ -679,51 +696,58 @@
                 <!--fet_pr-carousel -->
                 <div class="fet_pr-carousel cur_carousel-slider-container fl-wrap">
                     @forelse($projects as $project)
-                    <!--slick-item -->
-                    <div class="slick-item">
-                        <div class="fet_pr-carousel-box">
-                            <div class="fet_pr-carousel-box-media fl-wrap">
-                                @if($project->getFirstMedia('projects'))
-                                    <img src="{{ $project->getFirstMedia('projects')->getUrl() }}" class="respimg" alt="{{ $project->title }}">
-                                    <a href="{{ $project->getFirstMedia('projects')->getUrl() }}"
-                                        class="fet_pr-carousel-box-media-zoom image-popup"><i class="fal fa-search"></i></a>
-                                @else
-                                    <img src="{{ asset('images/folio/web/slider/1.jpg') }}" class="respimg" alt="{{ $project->title }}">
-                                    <a href="{{ asset('images/folio/web/slider/1.jpg') }}"
-                                        class="fet_pr-carousel-box-media-zoom image-popup"><i class="fal fa-search"></i></a>
-                                @endif
-                            </div>
-                            <div class="fet_pr-carousel-box-text fl-wrap">
-                                <h3>
-                                    @if($project->project_url)
-                                        <a href="{{ $project->project_url }}" target="_blank">{{ $project->title }}</a>
+                        <!--slick-item -->
+                        <div class="slick-item">
+                            <div class="fet_pr-carousel-box">
+                                <div class="fet_pr-carousel-box-media fl-wrap">
+                                    @if ($project->getFirstMedia('projects'))
+                                        <img src="{{ $project->getFirstMedia('projects')->getUrl() }}" class="respimg"
+                                            alt="{{ $project->title }}">
+                                        <a href="{{ $project->getFirstMedia('projects')->getUrl() }}"
+                                            class="fet_pr-carousel-box-media-zoom image-popup"><i
+                                                class="fal fa-search"></i></a>
                                     @else
-                                        <a href="#">{{ $project->title }}</a>
+                                        <img src="{{ asset('images/folio/web/slider/1.jpg') }}" class="respimg"
+                                            alt="{{ $project->title }}">
+                                        <a href="{{ asset('images/folio/web/slider/1.jpg') }}"
+                                            class="fet_pr-carousel-box-media-zoom image-popup"><i
+                                                class="fal fa-search"></i></a>
                                     @endif
-                                </h3>
-                                <div class="fet_pr-carousel-cat">
-                                    <a href="#">{{ $project->category }}</a>
+                                </div>
+                                <div class="fet_pr-carousel-box-text fl-wrap">
+                                    <h3>
+                                        @if ($project->project_url)
+                                            <a href="{{ $project->project_url }}"
+                                                target="_blank">{{ $project->title }}</a>
+                                        @else
+                                            <a href="#">{{ $project->title }}</a>
+                                        @endif
+                                    </h3>
+                                    <div class="fet_pr-carousel-cat">
+                                        <a href="#">{{ $project->category }}</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <!--slick-item end -->
+                        <!--slick-item end -->
                     @empty
-                    <!--slick-item -->
-                    <div class="slick-item">
-                        <div class="fet_pr-carousel-box">
-                            <div class="fet_pr-carousel-box-media fl-wrap">
-                                <img src="{{ asset('images/folio/web/slider/1.jpg') }}" class="respimg" alt="">
-                                <a href="{{ asset('images/folio/web/slider/1.jpg') }}"
-                                    class="fet_pr-carousel-box-media-zoom image-popup"><i class="fal fa-search"></i></a>
-                            </div>
-                            <div class="fet_pr-carousel-box-text fl-wrap">
-                                <h3><a href="#">Sample Project</a></h3>
-                                <div class="fet_pr-carousel-cat"><a href="#">Web Design</a></div>
+                        <!--slick-item -->
+                        <div class="slick-item">
+                            <div class="fet_pr-carousel-box">
+                                <div class="fet_pr-carousel-box-media fl-wrap">
+                                    <img src="{{ asset('images/folio/web/slider/1.jpg') }}" class="respimg"
+                                        alt="">
+                                    <a href="{{ asset('images/folio/web/slider/1.jpg') }}"
+                                        class="fet_pr-carousel-box-media-zoom image-popup"><i
+                                            class="fal fa-search"></i></a>
+                                </div>
+                                <div class="fet_pr-carousel-box-text fl-wrap">
+                                    <h3><a href="#">Sample Project</a></h3>
+                                    <div class="fet_pr-carousel-cat"><a href="#">Web Design</a></div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <!--slick-item end -->
+                        <!--slick-item end -->
                     @endforelse
                 </div>
                 <!--fet_pr-carousel end -->
@@ -757,33 +781,37 @@
                 </div>
                 <div class="text-carousel cur_carousel-slider-container fl-wrap">
                     @forelse($testimonials as $testimonial)
-                    <!--slick-item -->
-                    <div class="slick-item">
-                        <div class="text-carousel-item">
-                            <div class="popup-avatar">
-                                <img src="{{ $testimonial->getFirstMediaUrl('avatar') ?: asset('images/avatar/1.jpg') }}" alt="{{ $testimonial->name }}">
+                        <!--slick-item -->
+                        <div class="slick-item">
+                            <div class="text-carousel-item">
+                                <div class="popup-avatar">
+                                    <img src="{{ $testimonial->getFirstMediaUrl('avatar') ?: asset('images/avatar/1.jpg') }}"
+                                        alt="{{ $testimonial->name }}">
+                                </div>
+                                <div class="listing-rating card-popup-rainingvis"
+                                    data-starrating2="{{ $testimonial->rating }}"> </div>
+                                <div class="review-owner fl-wrap">{{ $testimonial->name }} -
+                                    <span>{{ $testimonial->position }}{{ $testimonial->company ? ' at ' . $testimonial->company : '' }}</span>
+                                </div>
+                                <p>"{{ $testimonial->message }}"</p>
+                                @if ($testimonial->platform)
+                                    <a href="#" class="testim-link">Via {{ $testimonial->platform }}</a>
+                                @endif
                             </div>
-                            <div class="listing-rating card-popup-rainingvis" data-starrating2="{{ $testimonial->rating }}"> </div>
-                            <div class="review-owner fl-wrap">{{ $testimonial->name }} - <span>{{ $testimonial->position }}{{ $testimonial->company ? ' at ' . $testimonial->company : '' }}</span></div>
-                            <p>"{{ $testimonial->message }}"</p>
-                            @if($testimonial->platform)
-                            <a href="#" class="testim-link">Via {{ $testimonial->platform }}</a>
-                            @endif
                         </div>
-                    </div>
-                    <!--slick-item end -->
+                        <!--slick-item end -->
                     @empty
-                    <!--slick-item -->
-                    <div class="slick-item">
-                        <div class="text-carousel-item">
-                            <div class="popup-avatar"><img src="{{ asset('images/avatar/1.jpg') }}" alt="">
+                        <!--slick-item -->
+                        <div class="slick-item">
+                            <div class="text-carousel-item">
+                                <div class="popup-avatar"><img src="{{ asset('images/avatar/1.jpg') }}" alt="">
+                                </div>
+                                <div class="listing-rating card-popup-rainingvis" data-starrating2="5"> </div>
+                                <div class="review-owner fl-wrap">No testimonials available</div>
+                                <p>"No testimonials have been added yet."</p>
                             </div>
-                            <div class="listing-rating card-popup-rainingvis" data-starrating2="5"> </div>
-                            <div class="review-owner fl-wrap">No testimonials available</div>
-                            <p>"No testimonials have been added yet."</p>
                         </div>
-                    </div>
-                    <!--slick-item end -->
+                        <!--slick-item end -->
                     @endforelse
                 </div>
             </div>
@@ -793,13 +821,15 @@
                 <div class="container">
                     <ul class="client-list client-list-white">
                         @forelse($clients as $client)
-                        <li>
-                            <a href="{{ $client->website_url ? $client->website_url : '#' }}" target="_blank">
-                                <img src="{{ $client->getFirstMediaUrl('logo') ?: asset('images/clients/1.png') }}" alt="{{ $client->name }}">
-                            </a>
-                        </li>
+                            <li>
+                                <a href="{{ $client->website_url ? $client->website_url : '#' }}" target="_blank">
+                                    <img src="{{ $client->getFirstMediaUrl('logo') ?: asset('images/clients/1.png') }}"
+                                        alt="{{ $client->name }}">
+                                </a>
+                            </li>
                         @empty
-                        <li><a href="#" target="_blank"><img src="{{ asset('images/clients/1.png') }}" alt="No clients available"></a></li>
+                            <li><a href="#" target="_blank"><img src="{{ asset('images/clients/1.png') }}"
+                                        alt="No clients available"></a></li>
                         @endforelse
                     </ul>
                 </div>
