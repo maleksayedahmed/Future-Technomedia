@@ -26,7 +26,7 @@ if (!function_exists('settings')) {
         if ($group) {
             return \App\Models\Setting::getByGroup($group);
         }
-        
+
         return \App\Models\Setting::getAllSettings();
     }
 }
