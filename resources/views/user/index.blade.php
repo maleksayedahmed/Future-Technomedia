@@ -86,7 +86,7 @@
                             <h1>Original Design <br> Features <br>With High <span> Quality Code.</span></h1>
                             <h4>I create web and graphic design</h4>
                             <div class="clearfix"></div>
-                            
+
                         </div>
                     </div>
                     <!-- half-slider-item end-->
@@ -716,12 +716,7 @@
                                 </div>
                                 <div class="fet_pr-carousel-box-text fl-wrap">
                                     <h3>
-                                        @if ($project->project_url)
-                                            <a href="{{ $project->project_url }}"
-                                                target="_blank">{{ $project->title }}</a>
-                                        @else
-                                            <a href="#">{{ $project->title }}</a>
-                                        @endif
+                                        <a href="{{ route('projects.show', $project) }}">{{ $project->title }}</a>
                                     </h3>
                                     <div class="fet_pr-carousel-cat">
                                         <a href="#">{{ $project->category }}</a>

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\ProjectPublicController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\FeatureController;
 use App\Http\Controllers\Admin\ProjectController;
@@ -22,7 +23,10 @@ Route::get('/', function () {
     $clients = Client::active()->ordered()->get();
     return view('user.index', compact('sliders', 'features', 'projects', 'testimonials', 'clients'));
 });
-Route::get('/project' , function(){ return view('user.ProjectDetails'); });
+// Public Project routes
+Route::get('/projects/{project}', [ProjectPublicController::class, 'show'])->name('projects.show');
+Route::get('/projects/{project}/brochure', [ProjectPublicController::class, 'downloadBrochure'])->name('projects.brochure');
+Route::post('/projects/{project}/request-demo', [ProjectPublicController::class, 'requestDemo'])->name('projects.request-demo');
 
 // Admin Routes
 Route::prefix('admin')->name('admin.')->group(function () {
