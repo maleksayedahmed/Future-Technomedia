@@ -7,12 +7,12 @@
                 @endif
                 </a>
                 <!-- nav-button-wrap-->
-                {{-- <div class="nav-button but-hol">
+                <div class="nav-button but-hol">
                     <span  class="nos"></span>
                     <span class="ncs"></span>
                     <span class="nbs"></span>
                     <div class="menu-button-text">Menu</div>
-                </div> --}}
+                </div>
                 <!-- nav-button-wrap end-->
                 <div class="header-social">
                     <ul >
