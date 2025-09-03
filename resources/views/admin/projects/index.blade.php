@@ -26,9 +26,9 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                {{-- <th>Image</th> --}}
                                 <th>Title</th>
                                 <th>Category</th>
+                                <th>Pricing Type</th>
                                 <th>Order</th>
                                 <th>Status</th>
                                 <th>Created</th>
@@ -52,7 +52,16 @@
                                     </td> --}}
                                     <td>{{ $project->title }}</td>
                                     <td>
-                                        <span class="badge bg-info">{{ $project->category }}</span>
+                                        <span class="badge bg-info">{{ $project->project_category }}</span>
+                                    </td>
+                                    <td>
+                                        @if($project->pricing_type === 'fixed')
+                                            <span class="badge bg-success">Fixed Price</span>
+                                        @elseif($project->pricing_type === 'plans')
+                                            <span class="badge bg-warning">Pricing Plans</span>
+                                        @else
+                                            <span class="badge bg-secondary">No Price</span>
+                                        @endif
                                     </td>
                                     <td>{{ $project->order }}</td>
                                     <td>

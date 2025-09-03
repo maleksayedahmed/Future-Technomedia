@@ -719,7 +719,7 @@
                                         <a href="{{ route('projects.show', $project) }}">{{ $project->title }}</a>
                                     </h3>
                                     <div class="fet_pr-carousel-cat">
-                                        <a href="#">{{ $project->category }}</a>
+                                        <a href="#">{{ $project->project_category }}</a>
                                     </div>
                                 </div>
                             </div>
