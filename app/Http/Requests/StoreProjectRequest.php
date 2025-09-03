@@ -19,6 +19,7 @@ class StoreProjectRequest extends FormRequest
      */
     public function rules(): array
     {
+        // dd($this->all());
         return [
             'title' => 'required|string|max:255',
             'description' => 'required|string',
@@ -27,30 +28,31 @@ class StoreProjectRequest extends FormRequest
             'github_url' => 'nullable|url',
             'video_url' => 'nullable|url',
             'pdf_file' => 'nullable|file|mimes:pdf|max:10240', // 10MB max
+            'video_file' => 'nullable|file|mimetypes:video/mp4,video/webm,video/ogg|max:51200', // 50MB max
             'order' => 'required|integer|min:0',
             'is_active' => 'boolean',
-            
+
             // Pricing validation
             'pricing_type' => 'required|in:fixed,plans,none',
             'fixed_price' => 'nullable|numeric|min:0|required_if:pricing_type,fixed',
             'discount_amount' => 'nullable|numeric|min:0',
             'discount_type' => 'nullable|in:percentage,amount|required_with:discount_amount',
-            
+
             // Gallery validation
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120', // 5MB per image
-            
+
             // Features validation
             'features' => 'nullable|array',
             'features.*.icon' => 'required_with:features|string',
             'features.*.title' => 'required_with:features|string|max:255',
             'features.*.description' => 'required_with:features|string',
-            
+
             // Tech stack validation
             'tech_stacks' => 'nullable|array',
             'tech_stacks.*.parent_category' => 'required_with:tech_stacks|string|max:255',
             'tech_stacks.*.technology' => 'required_with:tech_stacks|string|max:255',
             'tech_stacks.*.icon' => 'nullable|string',
-            
+
             // Pricing plans validation
             'pricing_plans' => 'nullable|array|required_if:pricing_type,plans',
             'pricing_plans.*.title' => 'required_with:pricing_plans|string|max:255',

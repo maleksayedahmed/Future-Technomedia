@@ -15,33 +15,44 @@ class ProjectPublicController extends Controller
      */
     public function show(Project $project)
     {
+        // Load relationships
+        $project->load(['features', 'pricingPlans', 'techStacks']);
+
         // Media collections naming conventions
-        $galleryImages = $project->getMedia('projects');
+        $galleryImages = $project->getMedia('gallery');
+        if ($galleryImages->isEmpty() && $project->getFirstMedia('projects')) {
+            $galleryImages = collect([$project->getFirstMedia('projects')]);
+        }
         $videoMedia = $project->getFirstMedia('videos');
         $brochureMedia = $project->getFirstMedia('brochure');
 
-        $videoUrl = $videoMedia ? $videoMedia->getUrl() : asset('video/1.mp4');
-        $brochureAvailable = (bool) $brochureMedia;
+        $videoUrl = $project->video_url ?: ($videoMedia ? $videoMedia->getUrl() : null);
+        $videoMime = $videoMedia ? $videoMedia->mime_type : null;
 
-        // Features per project are not modeled yet; show fallback derived from description
-        $derivedFeatures = collect(
-            preg_split(
-                '/[\r\n]+|[\x{2022}\x{2023}\x{25E6}\x{2043}\x{2219}]|[.;]+/u',
-                (string) $project->description,
-                -1,
-                PREG_SPLIT_NO_EMPTY
-            )
-        )
-            ->map(fn ($line) => trim($line))
-            ->filter(fn ($line) => $line !== '')
-            ->take(6);
+        // Detect YouTube/Vimeo embed URLs if a remote URL is provided
+        $videoEmbedUrl = null;
+        if ($project->video_url) {
+            $url = $project->video_url;
+            if (preg_match('~(youtube\.com|youtu\.be)~i', $url)) {
+                // Convert to embeddable URL
+                if (preg_match('~youtu\.be/([^?&]+)~', $url, $m)) {
+                    $videoEmbedUrl = 'https://www.youtube.com/embed/' . $m[1];
+                } elseif (preg_match('~v=([^&]+)~', $url, $m)) {
+                    $videoEmbedUrl = 'https://www.youtube.com/embed/' . $m[1];
+                }
+            } elseif (preg_match('~vimeo\.com/(\d+)~i', $url, $m)) {
+                $videoEmbedUrl = 'https://player.vimeo.com/video/' . $m[1];
+            }
+        }
+        $brochureAvailable = (bool) $brochureMedia;
 
         return view('user.project-show', [
             'project' => $project,
             'galleryImages' => $galleryImages,
             'videoUrl' => $videoUrl,
+            'videoMime' => $videoMime,
+            'videoEmbedUrl' => $videoEmbedUrl,
             'brochureAvailable' => $brochureAvailable,
-            'derivedFeatures' => $derivedFeatures,
         ]);
     }
 

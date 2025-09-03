@@ -85,7 +85,7 @@
                             @if($project->getFirstMedia('projects'))
                                 <div class="col-md-6 mb-3">
                                     <div class="card">
-                                        <img src="{{ $project->getFirstMedia('projects')->getUrl() }}" 
+                                        <img src="{{ $project->getFirstMedia('projects')->getUrl() }}"
                                              class="card-img-top" style="height: 200px; object-fit: cover;">
                                         <div class="card-body p-2">
                                             <small class="text-muted fw-bold">Main Image</small>
@@ -96,7 +96,7 @@
                             @foreach($project->getMedia('gallery') as $media)
                                 <div class="col-md-6 mb-3">
                                     <div class="card">
-                                        <img src="{{ $media->getUrl() }}" 
+                                        <img src="{{ $media->getUrl() }}"
                                              class="card-img-top" style="height: 200px; object-fit: cover;">
                                         <div class="card-body p-2">
                                             <small class="text-muted">Gallery Image</small>
@@ -121,7 +121,7 @@
                                 <div class="col-md-6 mb-4">
                                     <div class="d-flex align-items-start">
                                         <div class="flex-shrink-0 me-3">
-                                            <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" 
+                                            <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center"
                                                  style="width: 40px; height: 40px;">
                                                 <i class="{{ $feature->icon }}"></i>
                                             </div>
@@ -291,7 +291,7 @@
                                 <i class="fas fa-eye"></i> Activate
                             </button>
                         @endif
-                        <form action="{{ route('admin.projects.destroy', $project) }}" method="POST" 
+                        <form action="{{ route('admin.projects.destroy', $project) }}" method="POST"
                               onsubmit="return confirm('Are you sure you want to delete this project?');">
                             @csrf
                             @method('DELETE')
@@ -315,22 +315,22 @@ function toggleStatus(projectId, status) {
         const form = document.createElement('form');
         form.method = 'POST';
         form.action = `/admin/projects/${projectId}`;
-        
+
         const csrfInput = document.createElement('input');
         csrfInput.type = 'hidden';
         csrfInput.name = '_token';
         csrfInput.value = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-        
+
         const methodInput = document.createElement('input');
         methodInput.type = 'hidden';
         methodInput.name = '_method';
         methodInput.value = 'PUT';
-        
+
         const statusInput = document.createElement('input');
         statusInput.type = 'hidden';
         statusInput.name = 'is_active';
         statusInput.value = status ? '1' : '0';
-        
+
         // Copy all current form data
         const currentData = @json($project->toArray());
         Object.keys(currentData).forEach(key => {
@@ -342,11 +342,11 @@ function toggleStatus(projectId, status) {
                 form.appendChild(input);
             }
         });
-        
+
         form.appendChild(csrfInput);
         form.appendChild(methodInput);
         form.appendChild(statusInput);
-        
+
         document.body.appendChild(form);
         form.submit();
     }

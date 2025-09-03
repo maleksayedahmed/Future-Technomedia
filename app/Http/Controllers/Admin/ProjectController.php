@@ -42,18 +42,22 @@ class ProjectController extends Controller
             // Create the project
             $projectData = $request->only([
                 'title', 'description', 'project_category', 'live_url', 'github_url',
-                'video_url', 'pricing_type', 'fixed_price', 'discount_amount', 
+                'video_url', 'pricing_type', 'fixed_price', 'discount_amount',
                 'discount_type', 'order'
             ]);
-            
+
             $projectData['is_active'] = $request->has('is_active');
-            
+
             $project = Project::create($projectData);
 
-            // Handle PDF upload
+            // Handle brochure PDF via Spatie media library
             if ($request->hasFile('pdf_file')) {
-                $pdfPath = $request->file('pdf_file')->store('projects/pdfs', 'public');
-                $project->update(['pdf_file' => $pdfPath]);
+                $project->addMediaFromRequest('pdf_file')->toMediaCollection('brochure');
+            }
+
+            // Handle video upload (optional single video)
+            if ($request->hasFile('video_file')) {
+                $project->addMediaFromRequest('video_file')->toMediaCollection('videos');
             }
 
             // Handle gallery images
@@ -155,22 +159,24 @@ class ProjectController extends Controller
             // Update project data
             $projectData = $request->only([
                 'title', 'description', 'project_category', 'live_url', 'github_url',
-                'video_url', 'pricing_type', 'fixed_price', 'discount_amount', 
+                'video_url', 'pricing_type', 'fixed_price', 'discount_amount',
                 'discount_type', 'order'
             ]);
-            
+
             $projectData['is_active'] = $request->has('is_active');
-            
+
             $project->update($projectData);
 
-            // Handle PDF upload
+            // Handle brochure PDF via Spatie media library (replace existing)
             if ($request->hasFile('pdf_file')) {
-                // Delete old PDF if exists
-                if ($project->pdf_file) {
-                    Storage::disk('public')->delete($project->pdf_file);
-                }
-                $pdfPath = $request->file('pdf_file')->store('projects/pdfs', 'public');
-                $project->update(['pdf_file' => $pdfPath]);
+                $project->clearMediaCollection('brochure');
+                $project->addMediaFromRequest('pdf_file')->toMediaCollection('brochure');
+            }
+
+            // Handle video upload (replace existing to keep one video)
+            if ($request->hasFile('video_file')) {
+                $project->clearMediaCollection('videos');
+                $project->addMediaFromRequest('video_file')->toMediaCollection('videos');
             }
 
             // Handle gallery images
@@ -265,6 +271,8 @@ class ProjectController extends Controller
             // Delete associated media
             $project->clearMediaCollection('projects');
             $project->clearMediaCollection('gallery');
+            $project->clearMediaCollection('brochure');
+            $project->clearMediaCollection('videos');
 
             // Delete related records (will cascade automatically due to foreign key constraints)
             $project->delete();
