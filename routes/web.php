@@ -23,7 +23,7 @@ Route::get('/', function () {
     $testimonials = Testimonial::active()->ordered()->get();
     $clients = Client::active()->ordered()->get();
     return view('user.index', compact('sliders', 'features', 'projects', 'testimonials', 'clients'));
-});
+})->name('home');
 
 
 
