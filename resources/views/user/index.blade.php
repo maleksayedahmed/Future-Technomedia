@@ -30,27 +30,37 @@
             <div class="half-slider-img-wrap">
                 <!-- half-slider-img-->
                 <div class="half-slider-img fl-wrap full-height">
-                    <!-- half-slider-img item-->
-                    <div class="half-slider-img-item">
-                        <div class="bg" data-bg="images/bg/1.jpg" data-scrollax="properties: { translateY: '250px' }">
+                    @forelse($sliders as $slider)
+                        <!-- half-slider-img item-->
+                        <div class="half-slider-img-item">
+                            <div class="bg" data-bg="{{ $slider->getFirstMediaUrl('slider_images', 'slider') ?: asset('images/bg/1.jpg') }}" data-scrollax="properties: { translateY: '250px' }">
+                            </div>
+                            <div class="overlay"></div>
                         </div>
-                        <div class="overlay"></div>
-                    </div>
-                    <!-- half-slider-img item end-->
-                    <!-- half-slider-img item-->
-                    <div class="half-slider-img-item">
-                        <div class="bg" data-bg="images/bg/1.jpg" data-scrollax="properties: { translateY: '250px' }">
+                        <!-- half-slider-img item end-->
+                    @empty
+                        <!-- half-slider-img item-->
+                        <div class="half-slider-img-item">
+                            <div class="bg" data-bg="images/bg/1.jpg" data-scrollax="properties: { translateY: '250px' }">
+                            </div>
+                            <div class="overlay"></div>
                         </div>
-                        <div class="overlay"></div>
-                    </div>
-                    <!-- half-slider-img item end-->
-                    <!-- half-slider-img item-->
-                    <div class="half-slider-img-item">
-                        <div class="bg" data-bg="images/bg/1.jpg" data-scrollax="properties: { translateY: '250px' }">
+                        <!-- half-slider-img item end-->
+                        <!-- half-slider-img item-->
+                        <div class="half-slider-img-item">
+                            <div class="bg" data-bg="images/bg/1.jpg" data-scrollax="properties: { translateY: '250px' }">
+                            </div>
+                            <div class="overlay"></div>
                         </div>
-                        <div class="overlay"></div>
-                    </div>
-                    <!-- half-slider-img item end-->
+                        <!-- half-slider-img item end-->
+                        <!-- half-slider-img item-->
+                        <div class="half-slider-img-item">
+                            <div class="bg" data-bg="images/bg/1.jpg" data-scrollax="properties: { translateY: '250px' }">
+                            </div>
+                            <div class="overlay"></div>
+                        </div>
+                        <!-- half-slider-img item end-->
+                    @endforelse
                 </div>
                 <!-- half-slider-img end-->
             </div>
@@ -60,36 +70,55 @@
                 <!-- slider-nav-->
                 <div class="slider-nav cur_carousel-slider-container"
                     data-slick='{"autoplay": true, "autoplaySpeed": 4000 , "pauseOnHover": false}'>
-                    <!-- half-slider-item-->
-                    <div class="half-slider-item fl-wrap">
-                        <div class="half-hero-wrap">
-                            <h1>Hey there ! <br>I'm Martin Solonick<br>Independent <span> Digital Designer </span></h1>
-                            <h4>I create web and graphic design</h4>
-                            <div class="clearfix"></div>
-                            <a href="#sec2" class="custom-scroll-link btn float-btn flat-btn color-btn mar-top">Let's
-                                Start</a>
+                    @forelse($sliders as $slider)
+                        <!-- half-slider-item-->
+                        <div class="half-slider-item fl-wrap">
+                            <div class="half-hero-wrap">
+                                <h1>{!! nl2br(e($slider->title ?: '')) !!}</h1>
+                                @if($slider->description)
+                                    <h4>{!! nl2br(e($slider->description)) !!}</h4>
+                                @else
+                                    <h4>I create web and graphic design</h4>
+                                @endif
+                                <div class="clearfix"></div>
+                                @if($slider->button_text && $slider->button_link)
+                                    <a href="{{ $slider->button_link }}" class="custom-scroll-link btn float-btn flat-btn color-btn mar-top">{{ $slider->button_text }}</a>
+                                @endif
+                            </div>
                         </div>
-                    </div>
-                    <!-- half-slider-item end-->
-                    <!-- half-slider-item-->
-                    <div class="half-slider-item fl-wrap">
-                        <div class="half-hero-wrap">
-                            <h1>Design<br> Classy and Stylish <br> <span>Brand Perception.</span></h1>
-                            <h4>I create web and graphic design</h4>
-                            <div class="clearfix"></div>
+                        <!-- half-slider-item end-->
+                    @empty
+                        <!-- half-slider-item-->
+                        <div class="half-slider-item fl-wrap">
+                            <div class="half-hero-wrap">
+                                <h1>Hey there ! <br>I'm Martin Solonick<br>Independent <span> Digital Designer </span></h1>
+                                <h4>I create web and graphic design</h4>
+                                <div class="clearfix"></div>
+                                <a href="#sec2" class="custom-scroll-link btn float-btn flat-btn color-btn mar-top">Let's
+                                    Start</a>
+                            </div>
                         </div>
-                    </div>
-                    <!-- half-slider-item end-->
-                    <!-- half-slider-item-->
-                    <div class="half-slider-item fl-wrap">
-                        <div class="half-hero-wrap">
-                            <h1>Original Design <br> Features <br>With High <span> Quality Code.</span></h1>
-                            <h4>I create web and graphic design</h4>
-                            <div class="clearfix"></div>
+                        <!-- half-slider-item end-->
+                        <!-- half-slider-item-->
+                        <div class="half-slider-item fl-wrap">
+                            <div class="half-hero-wrap">
+                                <h1>Design<br> Classy and Stylish <br> <span>Brand Perception.</span></h1>
+                                <h4>I create web and graphic design</h4>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                        <!-- half-slider-item end-->
+                        <!-- half-slider-item-->
+                        <div class="half-slider-item fl-wrap">
+                            <div class="half-hero-wrap">
+                                <h1>Original Design <br> Features <br>With High <span> Quality Code.</span></h1>
+                                <h4>I create web and graphic design</h4>
+                                <div class="clearfix"></div>
 
+                            </div>
                         </div>
-                    </div>
-                    <!-- half-slider-item end-->
+                        <!-- half-slider-item end-->
+                    @endforelse
                 </div>
                 <!--  slider nav end-->
                 <div class="sp-cont sarr-contr sp-cont-prev"><i class="fal fa-arrow-left"></i></div>

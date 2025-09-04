@@ -18,4 +18,6 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::resource('testimonials', TestimonialController::class);
     Route::resource('clients', ClientController::class);
     Route::resource('settings', SettingController::class);
+    // Bulk update route for settings form (used in admin settings index view)
+    Route::patch('settings/bulk-update', [SettingController::class, 'bulkUpdate'])->name('settings.bulk-update');
 });
