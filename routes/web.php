@@ -25,6 +25,9 @@ Route::get('/', function () {
     return view('user.index', compact('sliders', 'features', 'projects', 'testimonials', 'clients'));
 })->name('home');
 
+Route::get('/project', function () {
+    return view('user.project');
+})->name('project');
 
 
 Route::middleware('auth')->group(function () {
