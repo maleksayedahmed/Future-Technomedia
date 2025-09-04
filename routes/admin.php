@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('dashboard');
-    
+
     Route::resource('sliders', SliderController::class);
     Route::resource('features', FeatureController::class);
     Route::resource('projects', ProjectController::class);

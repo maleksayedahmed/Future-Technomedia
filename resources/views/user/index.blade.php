@@ -74,9 +74,9 @@
                         <!-- half-slider-item-->
                         <div class="half-slider-item fl-wrap">
                             <div class="half-hero-wrap">
-                                <h1>{!! nl2br(e($slider->title ?: '')) !!}</h1>
+                                <h1>{!! $slider->title ?: '' !!}</h1>
                                 @if($slider->description)
-                                    <h4>{!! nl2br(e($slider->description)) !!}</h4>
+                                    <h4>{!! $slider->description ?: ''!!}</h4>
                                 @else
                                     <h4>I create web and graphic design</h4>
                                 @endif
