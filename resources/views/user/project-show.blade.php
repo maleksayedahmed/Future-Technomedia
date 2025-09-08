@@ -16,7 +16,7 @@
         .project-hero-section {
             background: rgba(255, 255, 255, 0.95);
             border-radius: 32px;
-            margin-bottom: 4rem;
+            /* margin-bottom: 4rem; */
             position: relative;
             overflow: hidden;
         }
@@ -31,7 +31,7 @@
         }
 
         .project-main-title {
-            font-size: 3.8rem;
+            font-size: 2.4rem;
             font-weight: 900;
             color: #1a1a1a;
             margin-bottom: 0.5rem;
@@ -43,10 +43,10 @@
         }
 
         .project-subtitle {
-            font-size: 1.4rem;
+            font-size: 1rem;
             color: #64748b;
-            text-align: center;
-            max-width: 700px;
+            text-align: left;
+            max-width: 474px;
             /* margin: 0 auto 3rem; */
             line-height: 1.6;
         }
@@ -849,9 +849,9 @@
 
         .action-btn-primary,
         .action-btn-secondary {
-            padding: 1.2rem 3rem;
+            padding: 1.2rem 1rem;
             border: none;
-            border-radius: 60px;
+            border-radius: 20px;
             font-size: 1.1rem;
             font-weight: 700;
             cursor: pointer;
@@ -860,7 +860,7 @@
             display: inline-flex;
             align-items: center;
             gap: 0.7rem;
-            min-width: 200px;
+            min-width: 100px;
             justify-content: center;
         }
 
@@ -924,14 +924,16 @@
     </style>
 @endsection
 @section('content')
-    <div class="scroll-nav-wrap " style="top: 0px; display: flex;">
-        <div class="go-back-wrap">
-            <div class="go-back-button" style="" onclick="window.history.back()">
-                <span style="font-size: 18px;">←</span>
-                <span>Go Back</span>
-            </div>
+<div class="single-page-decor"></div>
+<div class="single-page-fixed-row">
+    <div class="scroll-down-wrap">
+        <div class="mousey">
+            <div class="scroller"></div>
         </div>
+        <span>Scroll Down</span>
     </div>
+    <a href="index.html" class="single-page-fixed-row-link"><i class="fal fa-arrow-left"></i> <span>Back to home</span></a>
+</div>
 
 
 

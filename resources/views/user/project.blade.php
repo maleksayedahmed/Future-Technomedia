@@ -175,7 +175,7 @@
         /* Modern Content Grid */
         .project-content-grid {
             display: grid;
-            grid-template-columns: 1.7fr 1.2fr;
+            grid-template-columns: 2fr 1fr;
             gap: 1rem;
             margin: 0rem 0;
         }
@@ -238,27 +238,10 @@
         }
 
         .gallery-grid {
-            display: flex;
-            flex-direction: column;
+            display: grid;
+            grid-template-columns: 1fr 0fr;
             gap: 1.5rem;
-        }
-
-        .video-section {
-            background: linear-gradient(135deg, #1a1a1a, #374151);
-            border-radius: 20px;
-            position: relative;
-            overflow: hidden;
-            height: 300px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .video-section:hover {
-            transform: scale(1.02);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            height: 670px;
         }
 
         .main-preview {
@@ -309,90 +292,8 @@
 
         .thumbnail-grid {
             display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        .image-block {
-            background: #f1f5f9;
-            border-radius: 16px;
-            min-width: 180px;
-            height: 180px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            color: #64748b;
-            font-size: 0.9rem;
-            text-align: center;
-            flex: 1 1 180px;
-            border: 2px solid transparent;
-        }
-
-        .image-block:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-            border-color: #F1C232;
-        }
-
-        .image-block img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 12px;
-            transition: transform 0.3s ease;
-        }
-
-        .image-block:hover img {
-            transform: scale(1.1);
-        }
-
-        /* Fallback for missing images */
-        .image-block::before {
-            content: attr(data-fallback);
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 2rem;
-            opacity: 0.5;
-            z-index: -1;
-        }
-
-        .image-block.tall {
-            height: 370px;
-            flex: 1 1 180px;
-        }
-
-        .image-block.wide {
-            flex: 2 1 370px;
-            height: 180px;
-        }
-
-        .image-block.large {
-            flex: 2 1 370px;
-            height: 370px;
-        }
-
-        .upload-placeholder {
-            border: 2px dashed #cbd5e1;
-            background: transparent;
-            font-size: 0.8rem;
-            padding: 1rem;
-            display: flex;
             flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .upload-placeholder:hover {
-            border-color: #F1C232;
-            background: rgba(241, 194, 50, 0.05);
-            color: #1a1a1a;
+            gap: 1rem;
         }
 
         .thumbnail {
@@ -579,13 +480,6 @@
             transform: scale(1.1) rotate(5deg);
         }
 
-        .feature-header{
-            display: flex;
-            /* justify-content: space-evenly; */
-            align-items: center;
-            gap: 15px;
-        }
-
         .feature-name {
             font-size: 1.3rem;
             font-weight: 700;
@@ -712,26 +606,14 @@
                 height: auto;
             }
 
-            .video-section {
-                height: 200px;
-            }
-
             .thumbnail-grid {
                 flex-direction: row;
-                gap: 0.75rem;
+                height: 100px;
             }
 
-            .image-block {
-                min-width: 120px;
-                height: 120px;
-                flex: 1 1 120px;
-            }
-
-            .image-block.wide,
-            .image-block.tall,
-            .image-block.large {
-                flex: 1 1 120px;
-                height: 120px;
+            .thumbnail {
+                height: 100%;
+                width: calc(50% - 0.5rem);
             }
 
             .tech-categories {
@@ -772,138 +654,17 @@
         html {
             scroll-behavior: smooth;
         }
-        .content{
-            padding-top: 70px
-        }
-        .go-back-wrap {
-            width: fit-content;
-            display: flex;
-            align-content: center !important;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: nowrap;
-            flex-direction: column;
-            padding-left: 15px;
-        }
-
-        .go-back-button {
-            background: #F1C232;
-            color: #1a1a1a;
-            padding: 12px 20px;
-            border-radius: 12px;
-            cursor: pointer;
-            font-weight: 600;
-            box-shadow: 0 4px 15px rgba(241, 194, 50, 0.3);
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-
-        .project-pricing-display {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.8rem;
-        margin: 2rem auto;
-        padding: 1.5rem 3rem;
-        background: linear-gradient(135deg, #FFD700, #FFA500);
-        border-radius: 60px;
-        max-width: 450px;
-        box-shadow: 0 15px 35px rgba(255, 215, 0, 0.3);
-        transition: all 0.3s ease;
-    }
-
-    .project-pricing-display:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 20px 45px rgba(255, 215, 0, 0.4);
-    }
-
-    .price-label {
-        color: #1a1a1a;
-        font-size: 1rem;
-        font-weight: 600;
-    }
-
-    .price-amount {
-        font-size: 2.8rem;
-        font-weight: 900;
-        color: #1a1a1a;
-        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .price-period {
-        color: #1a1a1a;
-        font-size: 1rem;
-        font-weight: 600;
-    }
-
-    .project-action-buttons {
-        display: flex;
-        justify-content: center;
-        gap: 2rem;
-        margin-top: 2.5rem;
-    }
-
-    .action-btn-primary,
-    .action-btn-secondary {
-        padding: 1.2rem 3rem;
-        border: none;
-        border-radius: 60px;
-        font-size: 1.1rem;
-        font-weight: 700;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        text-decoration: none;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.7rem;
-        min-width: 200px;
-        justify-content: center;
-    }
-
-    .action-btn-primary {
-        background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
-        color: #FFD700;
-        box-shadow: 0 12px 35px rgba(26, 26, 26, 0.4);
-        border: 2px solid transparent;
-    }
-
-    .action-btn-primary:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 18px 45px rgba(26, 26, 26, 0.5);
-        background: linear-gradient(135deg, #2d2d2d, #1a1a1a);
-    }
-
-    .action-btn-secondary {
-        background: transparent;
-        color: #1a1a1a;
-        border: 2px solid #1a1a1a;
-    }
-
-    .action-btn-secondary:hover {
-        background: #1a1a1a;
-        color: #FFD700;
-        transform: translateY(-3px);
-        box-shadow: 0 12px 35px rgba(26, 26, 26, 0.3);
-    }
-
-    
     </style>
 @endsection
 @section('content')
-    <div class="scroll-nav-wrap " style="top: 0px; display: flex;">
-        <div class="go-back-wrap" >
-        <div class="go-back-button" style="" onclick="window.history.back()">
-            <span style="font-size: 18px;">←</span>
-            <span>Go Back</span>
+    <div class="scroll-nav-wrap">
+        <div class="scroll-down-wrap">
+            <div class="mousey">
+                <div class="scroller"></div>
+            </div>
+            <span>Scroll Down</span>
         </div>
     </div>
-    </div>
-
-
-
 
     <div class="content">
         <section class="project-showcase-container">
@@ -912,14 +673,6 @@
                 <h1 class="project-main-title">E-Commerce Platform Pro</h1>
                 <p class="project-subtitle">Advanced multi-vendor marketplace solution with AI-powered recommendations and
                     seamless user experience</p>
-                    <div class="project-action-buttons">
-                <a href="#" class="action-btn-primary" onclick="downloadBrochure()">
-                    📄 Download Brochure
-                </a>
-                <a href="#" class="action-btn-secondary" onclick="requestDemo()">
-                    🎯 Request Demo
-                </a>
-            </div>
 
                 <div class="pricing-grid">
                     <div class="pricing-card">
@@ -996,44 +749,17 @@
                     </div>
 
                     <div class="gallery-grid">
-                        <!-- Video Section -->
-                        <div class="video-section" onclick="playDemo()">
-                            <div class="play-overlay">
-                                <div class="play-button">▶️</div>
-                            </div>
-                            <span style="color: white; font-weight: 600;">Demo Video</span>
-                        </div>
 
-                        <!-- Images Grid -->
-                        <div class="thumbnail-grid" id="imagesGrid">
-                            <div class="image-block" onclick="viewFullscreen('https://picsum.photos/400/400?random=1')" data-fallback="📷">
-                                <img src="https://picsum.photos/400/400?random=1" alt="Project Main View" onerror="this.style.display='none'">
+                        <div class="thumbnail-grid">
+                            <div class="thumbnail" onclick="playDemo()">
+                                <div class="play-overlay">
+                                    <div class="play-button">▶️</div>
+                                </div>
+                                <span>Demo Video</span>
                             </div>
-                            <div class="image-block wide" onclick="viewFullscreen('https://picsum.photos/800/400?random=2')" data-fallback="🖼️">
-                                <img src="https://picsum.photos/800/400?random=2" alt="Wide Project View" onerror="this.style.display='none'">
-                            </div>
-                            <div class="image-block" onclick="viewFullscreen('https://picsum.photos/400/400?random=3')" data-fallback="📸">
-                                <img src="https://picsum.photos/400/400?random=3" alt="Project Screenshot" onerror="this.style.display='none'">
-                            </div>
-                            <div class="image-block " onclick="viewFullscreen('https://picsum.photos/400/800?random=4')" data-fallback="🎨">
-                                <img src="https://picsum.photos/400/800?random=4" alt="Tall Project View" onerror="this.style.display='none'">
-                            </div>
-                            <div class="image-block" onclick="viewFullscreen('https://picsum.photos/400/400?random=5')" data-fallback="💻">
-                                <img src="https://picsum.photos/400/400?random=5" alt="Desktop View" onerror="this.style.display='none'">
-                            </div>
-                            <div class="image-block" onclick="viewFullscreen('https://picsum.photos/400/400?random=6')" data-fallback="📱">
-                                <img src="https://picsum.photos/400/400?random=6" alt="Mobile View" onerror="this.style.display='none'">
-                            </div>
-                            <div class="image-block large" onclick="viewFullscreen('https://picsum.photos/800/800?random=7')" data-fallback="🌟">
-                                <img src="https://picsum.photos/800/800?random=7" alt="Featured Project Image" onerror="this.style.display='none'">
-                            </div>
-                            <div class="image-block" onclick="viewFullscreen('https://picsum.photos/400/400?random=8')" data-fallback="🔍">
-                                <img src="https://picsum.photos/400/400?random=8" alt="Project Detail View" onerror="this.style.display='none'">
-                            </div>
-                            <div class="image-block upload-placeholder" onclick="uploadImage(this)">
-                                <span>�</span>
-                                <span>Mobile View</span>
-                            </div>
+                            {{-- <div class="thumbnail" onclick="uploadThumbnail(this)">
+                                📸 Mobile View
+                            </div> --}}
                         </div>
                     </div>
                 </div>
@@ -1051,31 +777,24 @@
                     <div id="coreTab" class="feature-content active">
                         <div class="feature-grid">
                             <div class="feature-card">
-                                <div class="feature-header">
-                                    <div class="feature-icon">🏪</div>
-                                    <div class="feature-name">Multi-Vendor Hub</div>
-                                </div>
-
+                                <div class="feature-icon">🏪</div>
+                                <div class="feature-name">Multi-Vendor Hub</div>
                                 <div class="feature-description">Unlimited vendor support with individual dashboards and
                                     commission management</div>
 
                             </div>
 
                             <div class="feature-card">
-                                <div class="feature-header">
-                                    <div class="feature-icon">💳</div>
-                                    <div class="feature-name">Smart Payments</div>
-                                </div>
+                                <div class="feature-icon">💳</div>
+                                <div class="feature-name">Smart Payments</div>
                                 <div class="feature-description">Secure payment processing with multiple gateway
                                     integrations</div>
 
                             </div>
 
                             <div class="feature-card">
-                                <div class="feature-header">
-                                    <div class="feature-icon">📱</div>
-                                    <div class="feature-name">Mobile First</div>
-                                </div>
+                                <div class="feature-icon">📱</div>
+                                <div class="feature-name">Mobile First</div>
                                 <div class="feature-description">Progressive web app with offline capabilities and push
                                     notifications</div>
 
@@ -1216,65 +935,6 @@
                 });
             };
             input.click();
-        }
-
-        function uploadImage(element) {
-            const input = document.createElement('input');
-            input.type = 'file';
-            input.accept = 'image/*';
-
-            input.onchange = function(e) {
-                const file = e.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function(event) {
-                        element.innerHTML = `<img src="${event.target.result}" alt="Project Image" onclick="viewFullscreen('${event.target.result}')">`;
-                        element.classList.remove('upload-placeholder');
-
-                        // Add hover effect to view fullscreen
-                        element.style.cursor = 'pointer';
-                        element.addEventListener('mouseenter', function() {
-                            this.style.transform = 'scale(1.05)';
-                        });
-                        element.addEventListener('mouseleave', function() {
-                            this.style.transform = 'scale(1)';
-                        });
-                    };
-                    reader.readAsDataURL(file);
-                }
-            };
-            input.click();
-        }
-
-        function viewFullscreen(imageSrc) {
-            const modal = document.createElement('div');
-            modal.style.cssText = `
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100vw;
-                height: 100vh;
-                background: rgba(0,0,0,0.9);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                z-index: 9999;
-                cursor: pointer;
-            `;
-
-            const img = document.createElement('img');
-            img.src = imageSrc;
-            img.style.cssText = `
-                max-width: 90vw;
-                max-height: 90vh;
-                object-fit: contain;
-                border-radius: 12px;
-                box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
-            `;
-
-            modal.appendChild(img);
-            modal.onclick = () => document.body.removeChild(modal);
-            document.body.appendChild(modal);
         }
 
         function uploadThumbnail(element) {
