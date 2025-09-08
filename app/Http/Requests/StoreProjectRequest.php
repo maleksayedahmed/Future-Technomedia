@@ -23,7 +23,7 @@ class StoreProjectRequest extends FormRequest
         return [
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'project_category' => 'required|string|max:255',
+            // 'project_category' => 'required|string|max:255',
             'live_url' => 'nullable|url',
             'github_url' => 'nullable|url',
             'video_url' => 'nullable|url',
