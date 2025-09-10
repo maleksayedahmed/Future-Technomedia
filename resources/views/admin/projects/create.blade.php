@@ -41,7 +41,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                {{-- <div class="col-md-4">
                                     <div class="mb-3">
                                         <label for="project_category" class="form-label">Category <span
                                                 class="text-danger">*</span></label>
@@ -54,7 +54,7 @@
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
 
                             <div class="mb-3">
