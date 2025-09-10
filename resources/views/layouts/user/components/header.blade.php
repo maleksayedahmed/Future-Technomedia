@@ -15,20 +15,41 @@
                 </div>
                 <!-- nav-button-wrap end-->
                 <div class="header-social">
-                    <ul >
-                        @if(setting('social_facebook'))
-                            <li><a href="{{ setting('social_facebook') }}" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
-                        @endif
-                        @if(setting('social_instagram'))
-                            <li><a href="{{ setting('social_instagram') }}" target="_blank"><i class="fab fa-instagram"></i></a></li>
-                        @endif
-                        @if(setting('social_twitter'))
-                            <li><a href="{{ setting('social_twitter') }}" target="_blank"><i class="fab fa-twitter"></i></a></li>
-                        @endif
-                        @if(setting('social_vk'))
-                            <li><a href="{{ setting('social_vk') }}" target="_blank"><i class="fab fa-vk"></i></a></li>
-                        @endif
-                    </ul>
+                    @php
+                        // Fetch all settings in the 'social' group (key => value)
+                        $socialSettings = settings('social');
+                        // Map platform (key suffix) to Font Awesome icon classes
+                        $iconMap = [
+                            'facebook' => 'fab fa-facebook-f',
+                            'instagram' => 'fab fa-instagram',
+                            'twitter' => 'fab fa-twitter', // keep old twitter icon
+                            'x' => 'fab fa-x-twitter',
+                            'vk' => 'fab fa-vk',
+                            'linkedin' => 'fab fa-linkedin-in',
+                            'youtube' => 'fab fa-youtube',
+                            'github' => 'fab fa-github',
+                            'dribbble' => 'fab fa-dribbble',
+                            'behance' => 'fab fa-behance',
+                            'tiktok' => 'fab fa-tiktok',
+                            'pinterest' => 'fab fa-pinterest-p',
+                        ];
+                    @endphp
+                    @if($socialSettings && $socialSettings->count())
+                        <ul>
+                            @foreach($socialSettings as $key => $url)
+                                @continue(empty($url))
+                                @php
+                                    $platform = \Illuminate\Support\Str::after($key, 'social_');
+                                    $icon = $iconMap[$platform] ?? 'fas fa-globe';
+                                @endphp
+                                <li>
+                                    <a href="{{ $url }}" target="_blank" rel="noopener noreferrer">
+                                        <i class="{{ $icon }}"></i>
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @endif
                 </div>
                 <!--  showshare -->
                 {{-- <div class="show-share showshare">
