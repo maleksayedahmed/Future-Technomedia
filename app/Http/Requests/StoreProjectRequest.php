@@ -27,8 +27,8 @@ class StoreProjectRequest extends FormRequest
             'live_url' => 'nullable|url',
             'github_url' => 'nullable|url',
             'video_url' => 'nullable|url',
-            'pdf_file' => 'nullable|file|mimes:pdf|max:10240', // 10MB max
-            'video_file' => 'nullable|file|mimetypes:video/mp4,video/webm,video/ogg|max:51200', // 50MB max
+            'pdf_file' => 'nullable|file|mimes:pdf|max:10240', 
+            'video_file' => 'nullable|file|mimetypes:video/mp4,video/webm,video/ogg|max:102400', 
             'order' => 'required|integer|min:0',
             'is_active' => 'boolean',
 

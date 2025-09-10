@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class SettingController extends Controller
 {
@@ -32,8 +33,28 @@ class SettingController extends Controller
      */
     public function store(Request $request)
     {
+        $socialKeys = [
+            'social_facebook',
+            'social_instagram',
+            'social_twitter',
+            'social_x',
+            'social_vk',
+            'social_linkedin',
+            'social_youtube',
+            'social_github',
+            'social_dribbble',
+            'social_behance',
+            'social_tiktok',
+            'social_pinterest',
+        ];
+
+        $keyRules = ['required', 'string', 'max:255', Rule::unique('settings', 'key')];
+        if ($request->input('group') === 'social') {
+            $keyRules[] = Rule::in($socialKeys);
+        }
+
         $request->validate([
-            'key' => 'required|string|unique:settings,key|max:255',
+            'key' => $keyRules,
             'value' => 'nullable|string',
             'type' => 'required|in:text,textarea,image,url,boolean',
             'group' => 'required|string|max:255',
@@ -82,8 +103,28 @@ class SettingController extends Controller
      */
     public function update(Request $request, Setting $setting)
     {
+        $socialKeys = [
+            'social_facebook',
+            'social_instagram',
+            'social_twitter',
+            'social_x',
+            'social_vk',
+            'social_linkedin',
+            'social_youtube',
+            'social_github',
+            'social_dribbble',
+            'social_behance',
+            'social_tiktok',
+            'social_pinterest',
+        ];
+
+        $keyRules = ['required', 'string', 'max:255', Rule::unique('settings', 'key')->ignore($setting->id)];
+        if ($request->input('group') === 'social') {
+            $keyRules[] = Rule::in($socialKeys);
+        }
+
         $request->validate([
-            'key' => 'required|string|max:255|unique:settings,key,' . $setting->id,
+            'key' => $keyRules,
             'value' => 'nullable|string',
             'type' => 'required|in:text,textarea,image,url,boolean',
             'group' => 'required|string|max:255',

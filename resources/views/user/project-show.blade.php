@@ -261,6 +261,24 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
+        .video-section video {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 12px;
+            display: block;
+        }
+
+        .video-section.video-landscape video {
+            width: 100%;
+            height: auto;
+        }
+
+        .video-section.video-portrait video {
+            width: auto;
+            height: 100%;
+        }
+
         .main-preview {
             background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
             border-radius: 20px;
@@ -924,16 +942,16 @@
     </style>
 @endsection
 @section('content')
-<div class="single-page-decor"></div>
-<div class="single-page-fixed-row">
-    <div class="scroll-down-wrap">
-        <div class="mousey">
-            <div class="scroller"></div>
+    <div class="single-page-decor"></div>
+    <div class="single-page-fixed-row">
+        <div class="scroll-down-wrap">
+            <div class="mousey">
+                <div class="scroller"></div>
+            </div>
+            <span>Scroll Down</span>
         </div>
-        <span>Scroll Down</span>
+        <a href="index.html" class="single-page-fixed-row-link"><i class="fal fa-arrow-left"></i> <span>Back to home</span></a>
     </div>
-    <a href="index.html" class="single-page-fixed-row-link"><i class="fal fa-arrow-left"></i> <span>Back to home</span></a>
-</div>
 
 
 
@@ -959,13 +977,12 @@
                     <div class="project-action-buttons">
 
                         @if (isset($brochureAvailable) && $brochureAvailable)
-                            
                             <a class="action-btn-primary" href="{{ route('projects.brochure', $project) }}">
                                 📄 Download Brochure
                             </a>
                         @endif
 
-                        
+
                         <a href="#" class="action-btn-secondary" onclick="requestDemo()">
                             🎯 Request Demo
                         </a>
@@ -1057,7 +1074,13 @@
                                 @foreach ($project->features as $feature)
                                     <div class="feature-card">
                                         <div class="feature-header">
-                                            <div class="feature-icon">{{ $feature->icon ?: '✨' }}</div>
+                                            <div class="feature-icon">
+                                                @if (!empty($feature->icon))
+                                                    <i class="fa-fw {{ $feature->icon }}"></i>
+                                                @else
+                                                    ✨
+                                                @endif
+                                            </div>
                                             <div class="feature-name">{{ $feature->title }}</div>
                                         </div>
                                         <div class="feature-description">{{ $feature->description }}</div>
@@ -1677,6 +1700,29 @@
             lightboxImages = Array.from(document.querySelectorAll('#imagesGrid .image-block img'))
                 .map(img => img.getAttribute('src'))
                 .filter(Boolean);
+
+            // Detect video orientation and toggle classes
+            const videoEl = document.querySelector('.video-section video');
+            if (videoEl) {
+                const container = videoEl.closest('.video-section');
+
+                function applyVideoOrientation() {
+                    if (!container) return;
+                    const isPortrait = videoEl.videoHeight > videoEl.videoWidth;
+                    container.classList.toggle('video-portrait', isPortrait);
+                    container.classList.toggle('video-landscape', !isPortrait);
+                }
+
+                if (videoEl.readyState >= 1) {
+                    applyVideoOrientation();
+                } else {
+                    videoEl.addEventListener('loadedmetadata', applyVideoOrientation, {
+                        once: true
+                    });
+                }
+
+                window.addEventListener('resize', applyVideoOrientation);
+            }
         });
 
         // Add keyboard navigation for gallery

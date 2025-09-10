@@ -31,6 +31,16 @@
                             <h6 class="m-0 font-weight-bold text-primary">Basic Information</h6>
                         </div>
                         <div class="card-body">
+                            <div class=" alert-info bg-light    ">
+                                <div class="fw-bold mb-1">Media catalog (recommended minimums):</div>
+                                <ul class="mb-0 ps-3">
+                                    <li>Wide highlight (first gallery image): <strong>740px * 360px</strong>+</li>
+                                    <li>Regular gallery images: <strong>360px * 360px</strong>+</li>
+                                    <li>Video (landscape): <strong>1280px * 720px</strong>+ &nbsp;|&nbsp; Video (portrait):
+                                        <strong>1080px * 1920px</strong>+
+                                    </li>
+                                </ul>
+                            </div>
                             <div class="row">
                                 <div class="col-md-8">
                                     <div class="mb-3">
@@ -75,8 +85,7 @@
                                     <div class="mb-3">
                                         <label for="live_url" class="form-label">Live URL</label>
                                         <input type="url" class="form-control @error('live_url') is-invalid @enderror"
-                                            id="live_url" name="live_url"
-                                            value="{{ old('live_url', $project->live_url) }}"
+                                            id="live_url" name="live_url" value="{{ old('live_url', $project->live_url) }}"
                                             placeholder="https://example.com">
                                         @error('live_url')
                                             <div class="invalid-feedback">{{ $message }}</div>
@@ -143,7 +152,12 @@
                                                     <img src="{{ $project->getFirstMedia('projects')->getUrl() }}"
                                                         class="card-img-top" style="height: 150px; object-fit: cover;">
                                                     <div class="card-body p-2">
+                                                        @php($mi = $project->getFirstMedia('projects'))
                                                         <small class="text-muted">Main Image</small>
+                                                        @if ($mi && $mi->hasCustomProperty('generated_conversions'))
+                                                        @endif
+                                                        <div class="small text-muted mt-1">{{ $mi->file_name }} —
+                                                            {{ number_format(($mi->size ?? 0) / 1024, 1) }} KB</div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -155,6 +169,8 @@
                                                         style="height: 150px; object-fit: cover;">
                                                     <div class="card-body p-2">
                                                         <small class="text-muted">Gallery Image</small>
+                                                        <div class="small text-muted mt-1">{{ $media->file_name }} —
+                                                            {{ number_format(($media->size ?? 0) / 1024, 1) }} KB</div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -173,6 +189,7 @@
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                         <div class="form-text">Upload new main project image (JPEG, PNG, JPG, GIF)</div>
+                                        <div id="mainImageMeta" class="small text-muted mt-1"></div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -184,6 +201,7 @@
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                         <div class="form-text">Upload new additional project images</div>
+                                        <div id="imagesMeta" class="small text-muted mt-1"></div>
                                     </div>
                                 </div>
                             </div>
@@ -225,6 +243,7 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                                 <div class="form-text">Upload a demo video (MP4/WebM, Max 50MB)</div>
+                                <div id="videoMeta" class="small text-muted mt-1"></div>
                             </div>
                         </div>
                     </div>
@@ -251,9 +270,19 @@
                                             <div class="col-md-4">
                                                 <div class="mb-3">
                                                     <label class="form-label">Icon</label>
-                                                    <input type="text" class="form-control"
-                                                        name="features[{{ $index }}][icon]"
-                                                        value="{{ $feature->icon }}" placeholder="fas fa-icon-name">
+                                                    <div class="input-group">
+                                                        <span class="input-group-text"><i class="fa-fw"
+                                                                data-role="icon-preview"></i></span>
+                                                        <input type="text" class="form-control feature-icon-input"
+                                                            name="features[{{ $index }}][icon]"
+                                                            value="{{ $feature->icon }}"
+                                                            placeholder="e.g., fa fa-address-book">
+                                                        <button type="button"
+                                                            class="btn btn-outline-secondary icon-picker-trigger">Browse</button>
+                                                    </div>
+                                                    <div class="form-text">Font Awesome class, e.g., <code>fa
+                                                            fa-address-book</code> or <code>fas fa-star</code>. Click Browse
+                                                        to pick.</div>
                                                 </div>
                                             </div>
                                             <div class="col-md-8">
@@ -314,13 +343,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Icon (optional)</label>
-                                            <input type="text" class="form-control"
-                                                name="tech_stacks[{{ $index }}][icon]"
-                                                value="{{ $techStack->icon }}"
-                                                placeholder="fas fa-icon-name or image URL">
-                                        </div>
+
                                     </div>
                                 @endforeach
                             </div>
@@ -539,8 +562,12 @@
                     <div class="col-md-4">
                         <div class="mb-3">
                             <label class="form-label">Icon</label>
-                            <input type="text" class="form-control" name="features[${featureIndex}][icon]"
-                                   placeholder="fas fa-icon-name">
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fa-fw" data-role="icon-preview"></i></span>
+                                <input type="text" class="form-control feature-icon-input" name="features[${featureIndex}][icon]" placeholder="e.g., fas fa-star">
+                                <button type="button" class="btn btn-outline-secondary icon-picker-trigger">Browse</button>
+                            </div>
+                            <div class="form-text">Font Awesome class, e.g., <code>fas fa-star</code>. Click Browse to pick.</div>
                         </div>
                     </div>
                     <div class="col-md-8">
@@ -560,6 +587,7 @@
         `;
                 container.insertAdjacentHTML('beforeend', featureHtml);
                 featureIndex++;
+                wireUpFeatureRow(container.lastElementChild);
             });
 
             // Remove feature
@@ -595,11 +623,6 @@
                                    placeholder="e.g., React.js, Laravel">
                         </div>
                     </div>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Icon (optional)</label>
-                    <input type="text" class="form-control" name="tech_stacks[${techStackIndex}][icon]"
-                           placeholder="fas fa-icon-name or image URL">
                 </div>
             </div>
         `;
@@ -693,6 +716,207 @@
                     });
                 });
             });
+            // Utilities
+            function formatBytes(bytes) {
+                if (!bytes && bytes !== 0) return '';
+                const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+                if (bytes === 0) return '0 Bytes';
+                const i = Math.floor(Math.log(bytes) / Math.log(1024));
+                return parseFloat((bytes / Math.pow(1024, i)).toFixed(2)) + ' ' + sizes[i];
+            }
+
+            async function readImageMeta(file) {
+                return new Promise((resolve) => {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const img = new Image();
+                        img.onload = function() {
+                            resolve({
+                                width: img.naturalWidth,
+                                height: img.naturalHeight
+                            });
+                        };
+                        img.src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+
+            // Media metadata previews (sequential)
+            const mainImageInput = document.getElementById('image');
+            const additionalImagesInput = document.getElementById('images');
+            const videoInput = document.getElementById('video_file');
+
+            mainImageInput.addEventListener('change', async function() {
+                const metaDiv = document.getElementById('mainImageMeta');
+                metaDiv.textContent = '';
+                const file = this.files && this.files[0];
+                if (!file) return;
+                const meta = await readImageMeta(file);
+                const rec = {
+                    w: 800,
+                    h: 600
+                };
+                const warn = (meta.width < rec.w || meta.height < rec.h) ?
+                    ` (below recommended ${rec.w}px * ${rec.h}px)` :
+                    '';
+                metaDiv.textContent =
+                    `${file.name} — ${meta.width}px * ${meta.height}px — ${formatBytes(file.size)}${warn}`;
+            });
+
+            additionalImagesInput.addEventListener('change', async function() {
+                const metaDiv = document.getElementById('imagesMeta');
+                metaDiv.innerHTML = '';
+                const files = Array.from(this.files || []);
+                if (!files.length) return;
+                let processed = 0;
+                const list = document.createElement('div');
+                list.className = 'mt-1';
+                metaDiv.appendChild(list);
+                for (const file of files) {
+                    processed++;
+                    const progress = document.createElement('div');
+                    progress.className = 'small text-muted';
+                    progress.textContent = `Processing ${processed}/${files.length}…`;
+                    metaDiv.appendChild(progress);
+                    const meta = await readImageMeta(file);
+                    const item = document.createElement('div');
+                    item.className = 'small';
+                    const isFirst = processed === 1;
+                    const rec = isFirst ? {
+                        w: 740,
+                        h: 360
+                    } : {
+                        w: 360,
+                        h: 360
+                    };
+                    const warn = (meta.width < rec.w || meta.height < rec.h) ?
+                        ` (below recommended ${rec.w}px * ${rec.h}px${isFirst ? ' for wide slot' : ''})` :
+                        '';
+                    item.textContent =
+                        `${file.name} — ${meta.width}px * ${meta.height}px — ${formatBytes(file.size)}${warn}`;
+                    list.appendChild(item);
+                    progress.remove();
+                }
+            });
+
+            videoInput.addEventListener('change', function() {
+                const metaDiv = document.getElementById('videoMeta');
+                metaDiv.textContent = '';
+                const file = this.files && this.files[0];
+                if (!file) return;
+                const url = URL.createObjectURL(file);
+                const video = document.createElement('video');
+                video.preload = 'metadata';
+                video.onloadedmetadata = function() {
+                    const w = video.videoWidth;
+                    const h = video.videoHeight;
+                    const isLandscape = w >= h;
+                    const rec = isLandscape ? {
+                        w: 1280,
+                        h: 720
+                    } : {
+                        w: 1080,
+                        h: 1920
+                    };
+                    const warn = (w < rec.w || h < rec.h) ?
+                        ` (below recommended ${rec.w}px * ${rec.h}px for ${isLandscape ? 'landscape' : 'portrait'})` :
+                        '';
+                    metaDiv.textContent =
+                        `${file.name} — ${w}px * ${h}px — ${formatBytes(file.size)}${warn}`;
+                    URL.revokeObjectURL(url);
+                };
+                video.src = url;
+            });
+
+            // Icon picker and preview for features
+            const ICONS = [
+                'fa fa-address-book', 'fa fa-star', 'fa fa-cog', 'fa fa-bolt', 'fa fa-heart', 'fa fa-lock',
+                'fa fa-shield', 'fa fa-line-chart', 'fa fa-mobile', 'fa fa-cloud', 'fa fa-rocket',
+                'fa fa-users', 'fa fa-magic', 'fa fa-thumbs-up', 'fa fa-lightbulb-o', 'fa fa-headphones',
+                'fa fa-search', 'fa fa-code',
+                'fas fa-star', 'fas fa-check', 'fas fa-cog', 'fas fa-bolt', 'fas fa-heart', 'fas fa-lock',
+                'fas fa-shield-alt', 'fas fa-chart-line', 'fas fa-mobile-alt', 'fas fa-cloud', 'fas fa-rocket',
+                'fas fa-users', 'fas fa-magic', 'fas fa-thumbs-up', 'fas fa-lightbulb', 'fas fa-headset',
+                'fas fa-search', 'fas fa-code',
+                'fab fa-laravel', 'fab fa-react', 'fab fa-vuejs', 'fab fa-php', 'fas fa-database'
+            ];
+
+            function openIconPicker(targetInput) {
+                const overlay = document.createElement('div');
+                overlay.style.cssText =
+                    'position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1055;display:flex;align-items:center;justify-content:center;';
+                const panel = document.createElement('div');
+                panel.className = 'bg-white p-3 rounded shadow';
+                panel.style.cssText = 'width:720px;max-width:95vw;max-height:80vh;overflow:auto;';
+                panel.innerHTML = `
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <strong>Select Icon</strong>
+                        <button type="button" class="btn btn-sm btn-outline-secondary" data-close>&times;</button>
+                    </div>
+                    <input type="text" class="form-control mb-2" placeholder="Search icons" data-search>
+                    <div class="row row-cols-6 g-2" data-grid></div>
+                    <div class="mt-2 small text-muted">Looking for more? Visit <a href="https://fontawesome.com/search?m=free&s=solid,regular,brands" target="_blank" rel="noopener">Font Awesome search</a>.</div>
+                `;
+                overlay.appendChild(panel);
+                document.body.appendChild(overlay);
+                const grid = panel.querySelector('[data-grid]');
+
+                function render(list) {
+                    grid.innerHTML = '';
+                    list.forEach(cls => {
+                        const col = document.createElement('div');
+                        col.innerHTML =
+                            `<button type="button" class="btn btn-light w-100" data-choose="${cls}"><i class="${cls}"></i></button>`;
+                        grid.appendChild(col);
+                    });
+                }
+                render(ICONS);
+                panel.querySelector('[data-search]').addEventListener('input', function() {
+                    const q = this.value.trim().toLowerCase();
+                    render(ICONS.filter(c => c.toLowerCase().includes(q)));
+                });
+                panel.addEventListener('click', function(e) {
+                    if (e.target.matches('[data-close]')) {
+                        document.body.removeChild(overlay);
+                    }
+                    const btn = e.target.closest('[data-choose]');
+                    if (btn) {
+                        const cls = btn.getAttribute('data-choose');
+                        targetInput.value = cls;
+                        const preview = targetInput.parentElement.querySelector(
+                            '[data-role=\"icon-preview\"]');
+                        if (preview) {
+                            preview.className = 'fa-fw ' + cls;
+                        }
+                        document.body.removeChild(overlay);
+                    }
+                });
+                overlay.addEventListener('click', function(e) {
+                    if (e.target === overlay) document.body.removeChild(overlay);
+                });
+            }
+
+            function wireUpFeatureRow(row) {
+                const input = row.querySelector('.feature-icon-input');
+                const preview = row.querySelector('[data-role="icon-preview"]');
+                const trigger = row.querySelector('.icon-picker-trigger');
+                if (input && preview) {
+                    input.addEventListener('input', function() {
+                        preview.className = 'fa-fw ' + (this.value || '');
+                    });
+                    // set existing value preview
+                    if (input.value) preview.className = 'fa-fw ' + input.value;
+                }
+                if (trigger && input) {
+                    trigger.addEventListener('click', function() {
+                        openIconPicker(input);
+                    });
+                }
+            }
+
+            // Wire existing feature rows
+            document.querySelectorAll('#featuresContainer .feature-item').forEach(wireUpFeatureRow);
         });
     </script>
 @endpush
