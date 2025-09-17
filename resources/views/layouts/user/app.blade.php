@@ -16,7 +16,8 @@
             @include('layouts.user.components.navigation')
 
             <!-- wrapper-->
-            <div id="wrapper">
+            <div id="wrapper" class="@yield('wrapper_class')">
+            {{-- <div id="wrapper" class="{{ isset($__data['class']) ? $__data['class'] : '' }}"> --}}
 
                 @yield('content')
 

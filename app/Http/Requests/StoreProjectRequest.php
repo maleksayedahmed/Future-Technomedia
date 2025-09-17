@@ -26,9 +26,9 @@ class StoreProjectRequest extends FormRequest
             // 'project_category' => 'required|string|max:255',
             'live_url' => 'nullable|url',
             'github_url' => 'nullable|url',
-            'video_url' => 'nullable|url',
             'pdf_file' => 'nullable|file|mimes:pdf|max:10240', 
             'video_file' => 'nullable|file|mimetypes:video/mp4,video/webm,video/ogg|max:102400', 
+            'video_poster' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
             'order' => 'required|integer|min:0',
             'is_active' => 'boolean',
 

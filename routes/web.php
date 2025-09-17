@@ -29,6 +29,9 @@ Route::get('/project', function () {
     return view('user.project');
 })->name('project');
 
+Route::get('/project-show-new', function () {
+    return view('user.project-show-new');
+})->name('project');
 
 Route::get('/contact', function () {
     return view('user.contact');
@@ -42,7 +45,9 @@ Route::middleware('auth')->group(function () {
 
 // Public Project routes
 Route::get('/projects/{project}', [ProjectPublicController::class, 'show'])->name('projects.show');
-Route::get('/projects/{project}/brochure', [ProjectPublicController::class, 'downloadBrochure'])->name('projects.brochure');
+Route::get('/projects/{project}/brochure/preview', [ProjectPublicController::class, 'previewBrochure'])->name('projects.brochure.preview');
+Route::get('/projects/{project}/brochure', [ProjectPublicController::class, 'viewBrochure'])->name('projects.brochure');
+Route::get('/projects/{project}/brochure/download', [ProjectPublicController::class, 'downloadBrochure'])->name('projects.brochure.download');
 Route::post('/projects/{project}/request-demo', [ProjectPublicController::class, 'requestDemo'])->name('projects.request-demo');
 require __DIR__.'/auth.php';
 require __DIR__.'/admin.php';

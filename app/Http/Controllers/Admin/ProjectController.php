@@ -42,7 +42,7 @@ class ProjectController extends Controller
             // Create the project
             $projectData = $request->only([
                 'title', 'description', 'project_category', 'live_url', 'github_url',
-                'video_url', 'pricing_type', 'fixed_price', 'discount_amount',
+                'pricing_type', 'fixed_price', 'discount_amount',
                 'discount_type', 'order'
             ]);
 
@@ -58,6 +58,11 @@ class ProjectController extends Controller
             // Handle video upload (optional single video)
             if ($request->hasFile('video_file')) {
                 $project->addMediaFromRequest('video_file')->toMediaCollection('videos');
+            }
+
+            // Handle video poster image (optional)
+            if ($request->hasFile('video_poster')) {
+                $project->addMediaFromRequest('video_poster')->toMediaCollection('video_poster');
             }
 
             // Handle gallery images
@@ -159,7 +164,7 @@ class ProjectController extends Controller
             // Update project data
             $projectData = $request->only([
                 'title', 'description', 'project_category', 'live_url', 'github_url',
-                'video_url', 'pricing_type', 'fixed_price', 'discount_amount',
+                'pricing_type', 'fixed_price', 'discount_amount',
                 'discount_type', 'order'
             ]);
 
@@ -177,6 +182,12 @@ class ProjectController extends Controller
             if ($request->hasFile('video_file')) {
                 $project->clearMediaCollection('videos');
                 $project->addMediaFromRequest('video_file')->toMediaCollection('videos');
+            }
+
+            // Handle video poster (replace existing)
+            if ($request->hasFile('video_poster')) {
+                $project->clearMediaCollection('video_poster');
+                $project->addMediaFromRequest('video_poster')->toMediaCollection('video_poster');
             }
 
             // Handle gallery images

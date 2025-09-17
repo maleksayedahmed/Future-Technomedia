@@ -24,26 +24,18 @@ class ProjectPublicController extends Controller
             $galleryImages = collect([$project->getFirstMedia('projects')]);
         }
         $videoMedia = $project->getFirstMedia('videos');
+        $videoPosterMedia = $project->getFirstMedia('video_poster');
         $brochureMedia = $project->getFirstMedia('brochure');
 
-        $videoUrl = $project->video_url ?: ($videoMedia ? $videoMedia->getUrl() : null);
+        $videoUrl = $videoMedia ? $videoMedia->getUrl() : null;
         $videoMime = $videoMedia ? $videoMedia->mime_type : null;
+        $videoPosterUrl = $videoPosterMedia
+            ? $videoPosterMedia->getUrl()
+            : ($galleryImages && $galleryImages->count() > 0 ? $galleryImages->first()->getUrl() : null);
 
         // Detect YouTube/Vimeo embed URLs if a remote URL is provided
         $videoEmbedUrl = null;
-        if ($project->video_url) {
-            $url = $project->video_url;
-            if (preg_match('~(youtube\.com|youtu\.be)~i', $url)) {
-                // Convert to embeddable URL
-                if (preg_match('~youtu\.be/([^?&]+)~', $url, $m)) {
-                    $videoEmbedUrl = 'https://www.youtube.com/embed/' . $m[1];
-                } elseif (preg_match('~v=([^&]+)~', $url, $m)) {
-                    $videoEmbedUrl = 'https://www.youtube.com/embed/' . $m[1];
-                }
-            } elseif (preg_match('~vimeo\.com/(\d+)~i', $url, $m)) {
-                $videoEmbedUrl = 'https://player.vimeo.com/video/' . $m[1];
-            }
-        }
+        // No external video URLs; rely on uploaded videos only
         $brochureAvailable = (bool) $brochureMedia;
 
         return view('user.project-show', [
@@ -53,6 +45,43 @@ class ProjectPublicController extends Controller
             'videoMime' => $videoMime,
             'videoEmbedUrl' => $videoEmbedUrl,
             'brochureAvailable' => $brochureAvailable,
+            'videoPosterUrl' => $videoPosterUrl,
+        ]);
+    }
+
+    /**
+     * Display the project's brochure inline for preview.
+     */
+    public function viewBrochure(Project $project)
+    {
+        $brochure = $project->getFirstMedia('brochure');
+        if (!$brochure) {
+            abort(404);
+        }
+
+        // Return PDF with headers that force inline display
+        return response()->file($brochure->getPath(), [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="' . $brochure->file_name . '"',
+        ]);
+    }
+
+    /**
+     * Show PDF in an embedded viewer page.
+     */
+    public function previewBrochure(Project $project)
+    {
+        $brochure = $project->getFirstMedia('brochure');
+        if (!$brochure) {
+            abort(404);
+        }
+
+        $pdfUrl = route('projects.brochure', $project);
+        
+        return view('user.pdf-preview', [
+            'project' => $project,
+            'pdfUrl' => $pdfUrl,
+            'fileName' => $brochure->file_name
         ]);
     }
 

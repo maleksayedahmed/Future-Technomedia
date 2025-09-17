@@ -109,18 +109,6 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label for="video_url" class="form-label">Video URL</label>
-                                        <input type="url" class="form-control @error('video_url') is-invalid @enderror"
-                                            id="video_url" name="video_url"
-                                            value="{{ old('video_url', $project->video_url) }}"
-                                            placeholder="https://youtube.com/watch?v=...">
-                                        @error('video_url')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
                                         <label for="order" class="form-label">Display Order <span
                                                 class="text-danger">*</span></label>
                                         <input type="number" class="form-control @error('order') is-invalid @enderror"
@@ -131,6 +119,7 @@
                                         @enderror
                                     </div>
                                 </div>
+                                <div class="col-md-6"></div>
                             </div>
                         </div>
                     </div>
@@ -244,6 +233,20 @@
                                 @enderror
                                 <div class="form-text">Upload a demo video (MP4/WebM, Max 50MB)</div>
                                 <div id="videoMeta" class="small text-muted mt-1"></div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="video_poster" class="form-label">Replace Video Poster Image (optional)</label>
+                                <input type="file" class="form-control @error('video_poster') is-invalid @enderror"
+                                    id="video_poster" name="video_poster" accept="image/*">
+                                @error('video_poster')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                                @php($poster = $project->getFirstMedia('video_poster'))
+                                @if ($poster)
+                                    <div class="form-text">Current poster: <a href="{{ $poster->getUrl() }}"
+                                            target="_blank">View</a></div>
+                                @endif
                             </div>
                         </div>
                     </div>
