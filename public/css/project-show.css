@@ -72,7 +72,8 @@
 
 .features-subtitle {
     color: #64748b;
-    font-size: 1.1rem;
+    font-size: 1.25rem;
+    line-height: 1.6;
 }
 
 .feature-content {
@@ -240,7 +241,7 @@
 
 .pricing-subtitle {
     color: #64748b;
-    font-size: 0.9rem;
+    font-size: 1.05rem;
 }
 
 .price-display {
@@ -383,33 +384,34 @@
     right: 0;
     bottom: 20px;
     display: flex;
-    gap: .75rem;
+    gap: 1rem;
     align-items: center;
     padding: .75rem 1rem;
-    background: rgba(255, 0, 0, 0.8) !important;
-    /* Red background for debugging */
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, .55) 35%, rgba(0, 0, 0, .8) 100%);
     color: #fff;
-    z-index: 9999 !important;
-    opacity: 1 !important;
+    z-index: 9999;
+    opacity: 1;
     pointer-events: all;
     transition: opacity 0.3s ease;
-    border: 2px solid yellow;
-    /* Yellow border for debugging */
 }
 
 .cvp-btn {
     background: rgba(255, 255, 255, .12);
     color: #fff;
     border: 0;
-    padding: .4rem .6rem;
+    padding: .6rem .8rem;
     border-radius: 8px;
     cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
 }
 
 .cvp-time {
     font-variant-numeric: tabular-nums;
-    font-size: 13px;
+    font-size: 16px;
     opacity: .9;
+    font-weight: 500;
+    min-width: 100px;
 }
 
 .cvp-progress {
@@ -432,5 +434,7 @@
 }
 
 .cvp-volume {
-    width: 80px;
+    width: 100px;
+    height: 6px;
+    cursor: pointer;
 }

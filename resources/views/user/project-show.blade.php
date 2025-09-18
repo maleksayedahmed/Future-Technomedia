@@ -351,6 +351,38 @@
                 }
                 render();
             });
+
+            // If Slick carousel is present, pause video when slide changes and refresh controls state
+            if (window.jQuery) {
+                var $slider = jQuery('.show-case-slider');
+
+                function bindSlickHandlers($el) {
+                    $el.on('beforeChange', function() {
+                        $el.find('video').each(function() {
+                            this.pause();
+                        });
+                        $el.find('.custom-video-player').removeClass('playing');
+                    });
+                    $el.on('afterChange', function() {
+                        // Re-render controls state for visible slides
+                        $el.find('.custom-video-player').each(function() {
+                            var v = this.querySelector('video');
+                            if (!v) return;
+                            if (!v.paused) this.classList.add('playing');
+                            else this.classList.remove('playing');
+                        });
+                    });
+                }
+                if ($slider.length) {
+                    if ($slider.hasClass('slick-initialized')) {
+                        bindSlickHandlers($slider);
+                    } else {
+                        $slider.on('init', function() {
+                            bindSlickHandlers(jQuery(this));
+                        });
+                    }
+                }
+            }
         });
 
         function selectPackage(packageType) {
