@@ -25,7 +25,7 @@
                         <div class="card-header bg-transparent">
                             <h5 class="card-title mb-0">
                                 <i
-                                    class="fas fa-{{ $group === 'general' ? 'cog' : ($group === 'social' ? 'share-alt' : ($group === 'contact' ? 'phone' : 'info-circle')) }} me-2"></i>
+                                    class="fas fa-{{ $group === 'general' ? 'cog' : ($group === 'social' ? 'share-alt' : ($group === 'contact' ? 'phone' : ($group === 'location' ? 'map-marker-alt' : 'info-circle'))) }} me-2"></i>
                                 {{ ucfirst($group) }} Settings
                             </h5>
                         </div>

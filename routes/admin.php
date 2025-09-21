@@ -7,6 +7,8 @@ use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\FactController;
+use App\Http\Controllers\Admin\FactSectionController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
@@ -18,6 +20,8 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::resource('testimonials', TestimonialController::class);
     Route::resource('clients', ClientController::class);
     Route::resource('settings', SettingController::class);
+    Route::resource('fact-sections', FactSectionController::class);
+    Route::resource('facts', FactController::class);
     // Bulk update route for settings form (used in admin settings index view)
     Route::patch('settings/bulk-update', [SettingController::class, 'bulkUpdate'])->name('settings.bulk-update');
 });

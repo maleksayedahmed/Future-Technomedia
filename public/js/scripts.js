@@ -456,17 +456,78 @@ function initSolonick() {
             download: false,
             counter: false
         });
-        var o = $(".lightgallery"),
-            p = o.data("looped");
-        o.lightGallery({
-            selector: ".lightgallery a.popup-image",
-            cssEasing: "cubic-bezier(0.25, 0, 0.25, 1)",
-            download: false,
-            loop: false,
-            counter: false
+        var $lgContainers = $(".lightgallery");
+        $lgContainers.each(function () {
+            var $container = $(this);
+            $container.find("a.popup-image").off("click.lgDyn").on("click.lgDyn", function (ev) {
+                ev.preventDefault();
+                var $anchors = $container.find("a.popup-image");
+                var clickedIndex = $anchors.index(this);
+                var dynamicEl = [];
+                var $videoLink = $container.find(".video-popup").first();
+                if ($videoLink.length) {
+                    var vsrc = $videoLink.attr("href");
+                    var vposter = $container.find(".video-box img").attr("src") || "";
+                    if (vsrc) {
+                        dynamicEl.push({
+                            html: '<video class="lg-html5" controls autoplay preload="metadata" playsinline webkit-playsinline controlsList="nodownload"' + (vposter ? ' poster="' + vposter + '"' : '') + ' style="display:block;width:100%;height:-webkit-fill-available;max-height:90vh;">\n' +
+                                  '<source src="' + vsrc + '">\n' +
+                                  'Your browser does not support the video tag.' +
+                                  '</video>'
+                        });
+                    }
+                }
+                $anchors.each(function () {
+                    var src = $(this).attr("href");
+                    if (src) dynamicEl.push({ src: src });
+                });
+                if ($container.data("lightGallery")) {
+                    $container.data("lightGallery").destroy(true);
+                }
+                $container.lightGallery({
+                    dynamic: true,
+                    dynamicEl: dynamicEl,
+                    index: clickedIndex + ($videoLink.length ? 1 : 0),
+                    download: false,
+                    counter: false,
+                    loop: false,
+                    mode: "lg-fade",
+                    cssEasing: "cubic-bezier(0.25, 0, 0.25, 1)",
+                    videoMaxWidth: "90vw"
+                });
+                return false;
+            });
         });
     }
     lightGalleryInit();
+    //   video popup (HTML5) ------------------
+    $(document).on("click", ".video-popup", function (e) {
+        e.preventDefault();
+        var $link = $(this);
+        var videoSrc = $link.attr("href");
+        if (!videoSrc) return false;
+        var poster = $link.closest(".video-box").find("img").attr("src") || "";
+        // Destroy any previous instance bound to this element to avoid duplicates
+        if ($link.data("lightGallery")) {
+            $link.data("lightGallery").destroy(true);
+        }
+        $link.lightGallery({
+            dynamic: true,
+            selector: "this",
+            download: false,
+            counter: false,
+            zoom: false,
+            mode: "lg-fade",
+            videoMaxWidth: "90vw",
+            dynamicEl: [{
+                html: '<video class="lg-html5" controls autoplay preload="metadata" playsinline webkit-playsinline controlsList="nodownload"' + (poster ? ' poster="' + poster + '"' : '') + ' style="display:block;width:100%;height:-webkit-fill-available;max-height:90vh;">\n' +
+                      '<source src="' + videoSrc + '">\n' +
+                      'Your browser does not support the video tag.' +
+                      '</video>'
+            }]
+        });
+        return false;
+    });
     //   appear------------------
     $(".stats").appear(function () {
         $(".num").countTo();

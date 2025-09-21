@@ -111,15 +111,23 @@ class ProjectController extends Controller
             if ($request->has('pricing_plans') && $request->pricing_type === 'plans') {
                 foreach ($request->pricing_plans as $index => $planData) {
                     if (!empty($planData['title'])) {
-                        ProjectPricingPlan::create([
+                        $pricingPlan = ProjectPricingPlan::create([
                             'project_id' => $project->id,
                             'title' => $planData['title'],
                             'subtitle' => $planData['subtitle'] ?? null,
-                            'price' => $planData['price'],
+                            'price' => $planData['price'] ?? null,
+                            'per_user_price' => $planData['per_user_price'] ?? null,
+                            'pricing_type' => $planData['pricing_type'] ?? 'fixed',
                             'features' => $planData['features'] ?? [],
                             'is_popular' => isset($planData['is_popular']) && $planData['is_popular'],
                             'order' => $index
                         ]);
+
+                        // Handle currency icon upload
+                        if (isset($planData['currency_icon']) && $planData['currency_icon']) {
+                            $pricingPlan->addMediaFromRequest("pricing_plans.{$index}.currency_icon")
+                                ->toMediaCollection('currency_icon');
+                        }
                     }
                 }
             }
@@ -242,15 +250,23 @@ class ProjectController extends Controller
             if ($request->has('pricing_plans') && $request->pricing_type === 'plans') {
                 foreach ($request->pricing_plans as $index => $planData) {
                     if (!empty($planData['title'])) {
-                        ProjectPricingPlan::create([
+                        $pricingPlan = ProjectPricingPlan::create([
                             'project_id' => $project->id,
                             'title' => $planData['title'],
                             'subtitle' => $planData['subtitle'] ?? null,
-                            'price' => $planData['price'],
+                            'price' => $planData['price'] ?? null,
+                            'per_user_price' => $planData['per_user_price'] ?? null,
+                            'pricing_type' => $planData['pricing_type'] ?? 'fixed',
                             'features' => $planData['features'] ?? [],
                             'is_popular' => isset($planData['is_popular']) && $planData['is_popular'],
                             'order' => $index
                         ]);
+
+                        // Handle currency icon upload
+                        if (isset($planData['currency_icon']) && $planData['currency_icon']) {
+                            $pricingPlan->addMediaFromRequest("pricing_plans.{$index}.currency_icon")
+                                ->toMediaCollection('currency_icon');
+                        }
                     }
                 }
             }

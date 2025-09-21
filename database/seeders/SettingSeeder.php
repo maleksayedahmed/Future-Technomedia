@@ -148,6 +148,44 @@ class SettingSeeder extends Seeder
                 'order' => 4,
             ],
 
+            // Location Settings for Hero Section
+            [
+                'key' => 'hero_latitude',
+                'value' => '40.7143528',
+                'type' => 'text',
+                'group' => 'location',
+                'label' => 'Latitude',
+                'description' => 'Latitude coordinate for the hero location display',
+                'order' => 1,
+            ],
+            [
+                'key' => 'hero_longitude',
+                'value' => '-74.0059731',
+                'type' => 'text',
+                'group' => 'location',
+                'label' => 'Longitude',
+                'description' => 'Longitude coordinate for the hero location display',
+                'order' => 2,
+            ],
+            [
+                'key' => 'hero_location_name',
+                'value' => 'Based In NewYork',
+                'type' => 'text',
+                'group' => 'location',
+                'label' => 'Location Name',
+                'description' => 'Display name for the location in hero section',
+                'order' => 3,
+            ],
+            [
+                'key' => 'hero_maps_url',
+                'value' => 'https://www.google.com/maps/',
+                'type' => 'url',
+                'group' => 'location',
+                'label' => 'Google Maps URL',
+                'description' => 'URL to open when clicking on the location tooltip',
+                'order' => 4,
+            ],
+
             // Other Settings
             [
                 'key' => 'contact_button_text',

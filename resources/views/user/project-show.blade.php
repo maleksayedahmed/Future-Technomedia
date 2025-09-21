@@ -41,53 +41,26 @@
                 <div class="sp-cont sarr-contr sp-cont-next"><i class="fal fa-arrow-right"></i></div>
                 <div class="show-case-slider cur_carousel-slider-container lightgallery fl-wrap full-height"
                     data-slick='{"centerMode": false}'>
-                    <!-- Video first if exists; otherwise use poster as first slide -->
-                    @if (!empty($videoUrl))
-                        <div class="show-case-item" data-curtext="{{ $project->title }}">
+                    <!-- Video section with Vimeo embed -->
+                    @if (!empty($videoUrl) || !empty($videoPosterUrl))
+                        {{-- <div class="show-case-item" data-curtext="{{ $project->title }}">
                             <div class="show-case-wrapper fl-wrap full-height"
                                 style="height:70vh;width:940px;max-width:90vw;display:flex;align-items:center;justify-content:center;">
-                                <div class="custom-video-player" data-autoinit>
-                                    <video @if (!empty($videoPosterUrl)) poster="{{ $videoPosterUrl }}" @endif
-                                        preload="metadata"
-                                        style="width:100%;height:100%;object-fit:cover;border-radius:12px;display:block;"><!-- no native controls -->
-                                        @if (!empty($videoMime))
-                                            <source src="{{ $videoUrl }}" type="{{ $videoMime }}">
-                                        @else
-                                            <source src="{{ $videoUrl }}">
-                                        @endif
-                                        Your browser does not support the video tag.
-                                    </video>
-                                    <button class="cvp-big-play" type="button" aria-label="Play">
-                                        ▶
-                                    </button>
-                                    <div class="cvp-controls">
-                                        <button class="cvp-btn cvp-play" type="button" aria-label="Play/Pause">▶</button>
-                                        <div class="cvp-time"><span class="cvp-time-current">0:00</span> / <span
-                                                class="cvp-time-duration">0:00</span></div>
-                                        <div class="cvp-progress" role="slider" aria-label="Seek">
-                                            <div class="cvp-progress-filled"></div>
-                                        </div>
-                                        <button class="cvp-btn cvp-mute" type="button" aria-label="Mute/Unmute">🔊</button>
-                                        <input class="cvp-volume" type="range" min="0" max="1"
-                                            step="0.01" value="1" aria-label="Volume">
-                                        <button class="cvp-btn cvp-fullscreen" type="button"
-                                            aria-label="Fullscreen">⤢</button>
-                                    </div>
+                                <div class="video-box fl-wrap">
+                                    <img src="{{ $videoPosterUrl ?: asset('images/all/2.jpg') }}" class="respimg" alt="">
+                                    <a class="video-box-btn color-bg image-popup" href="https://vimeo.com/110234211"><i class="fal fa-play" aria-hidden="true"></i></a>
                                 </div>
                             </div>
-                        </div>
-                    @elseif (!empty($videoPosterUrl))
+                        </div> --}}
+
+
                         <div class="show-case-item" data-curtext="{{ $project->title }}">
-                            <div class="show-case-wrapper fl-wrap full-height"
-                                style="height:70vh;width:940px;max-width:90vw;display:flex;align-items:center;justify-content:center;">
-                                <img src="{{ $videoPosterUrl }}" alt="{{ $project->title }} poster"
-                                    style="width:100%;height:100%;object-fit:cover;border-radius:12px;display:block;">
-                                <div class="show-info">
-                                    <span>Info</span>
-                                    <div class="tooltip-info">
-                                        <h5>{{ $project->title }}</h5>
-                                        <p>{{ Str::limit($project->description, 120) }}</p>
-                                    </div>
+                            <div class="show-case-wrapper fl-wrap full-height">
+                                <div class="video-box full-height">
+                                    <img src="{{ $videoPosterUrl ?: asset('images/all/2.jpg') }}" class="respimg"
+                                        alt="">
+                                    <a class="video-box-btn color-bg video-popup" href="{{ $videoUrl }}"><i
+                                            class="fal fa-play" aria-hidden="true"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -139,12 +112,14 @@
                                 <div class="pr-title fl-wrap">
                                     <div class="project-action-buttons">
                                         @if (isset($brochureAvailable) && $brochureAvailable)
-                                            <a class="btn flat-btn color-btn" href="{{ route('projects.brochure.preview', $project) }}" target="_blank">Preview Manual</a>
+                                            <a class="btn flat-btn color-btn"
+                                                href="{{ route('projects.brochure.preview', $project) }}"
+                                                target="_blank">Preview Manual</a>
                                         @endif
                                     </div>
                                 </div>
 
-                                <div class="ci-num"><span>01.</span></div>
+                                <div class="ci-num"><span>{{ str_pad($project->id, 2, '0', STR_PAD_LEFT) }}.</span></div>
                             </div>
                         </div>
                         <div class="col-md-8">
@@ -200,9 +175,43 @@
                                                     <div class="pricing-subtitle">{{ $plan->subtitle }}</div>
                                                 </div>
                                                 <div class="price-display">
-                                                    <span
-                                                        class="price-amount">${{ number_format($plan->price, 0) }}</span>
-                                                    <div class="price-period">one-time payment</div>
+                                                    @if ($plan->hasFixedPrice() && $plan->hasPerUserPrice())
+                                                        <!-- Both prices -->
+                                                        <div class="dual-price">
+                                                            @if ($plan->getCurrencyIcon())
+                                                                <img src="{{ $plan->getCurrencyIcon() }}" alt="currency"
+                                                                    class="currency-icon">
+                                                            @else
+                                                                <span class="currency-symbol">$</span>
+                                                            @endif
+                                                            <span
+                                                                class="price-amount">{{ number_format($plan->price, 0) }}</span>
+                                                            <div class="price-period">one-time +
+                                                                ${{ number_format($plan->per_user_price, 0) }}/user</div>
+                                                        </div>
+                                                    @elseif ($plan->hasPerUserPrice())
+                                                        <!-- Per user price -->
+                                                        @if ($plan->getCurrencyIcon())
+                                                            <img src="{{ $plan->getCurrencyIcon() }}" alt="currency"
+                                                                class="currency-icon">
+                                                        @else
+                                                            <span class="currency-symbol">$</span>
+                                                        @endif
+                                                        <span
+                                                            class="price-amount">{{ number_format($plan->per_user_price, 0) }}</span>
+                                                        <div class="price-period">per user</div>
+                                                    @else
+                                                        <!-- Fixed price -->
+                                                        @if ($plan->getCurrencyIcon())
+                                                            <img src="{{ $plan->getCurrencyIcon() }}" alt="currency"
+                                                                class="currency-icon">
+                                                        @else
+                                                            <span class="currency-symbol">$</span>
+                                                        @endif
+                                                        <span
+                                                            class="price-amount">{{ number_format($plan->price, 0) }}</span>
+                                                        <div class="price-period">one-time payment</div>
+                                                    @endif
                                                 </div>
                                                 @if ($plan->features && count($plan->features) > 0)
                                                     <ul class="pricing-features">
@@ -211,9 +220,9 @@
                                                         @endforeach
                                                     </ul>
                                                 @endif
-                                                <button class="btn flat-btn color-btn"
-                                                    onclick="selectPackage('{{ $plan->title }}')">
-                                                    {{ $plan->title }}</button>
+                                                <a href="{{ route('contact') }}?subject={{ urlencode('Order Project - ' . $plan->title) }}&project={{ urlencode($project->title) }}&package={{ urlencode($plan->title) }}"
+                                                    class="btn flat-btn color-btn">
+                                                    {{ $plan->title }}</a>
                                             </div>
                                         @endforeach
                                     </div>
@@ -254,7 +263,9 @@
                     <div class="col-md-8">
                         <h3>Ready To order Your Project ?</h3>
                     </div>
-                    <div class="col-md-4"><a href="{{ route('contact') }}" class="btn flat-btn color-btn">Get In
+                    <div class="col-md-4"><a
+                            href="{{ route('contact') }}?subject={{ urlencode('Order Project - ' . $project->title) }}&project={{ urlencode($project->title) }}"
+                            class="btn flat-btn color-btn">Get In
                             Touch</a> </div>
                 </div>
             </div>
@@ -264,195 +275,4 @@
 @endsection
 
 @section('js')
-    <script>
-        // Minimal custom video player wiring for elements with [data-autoinit]
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('.custom-video-player[data-autoinit]').forEach(function(root) {
-                const video = root.querySelector('video');
-                const btnBig = root.querySelector('.cvp-big-play');
-                const btnPlay = root.querySelector('.cvp-play');
-                const btnMute = root.querySelector('.cvp-mute');
-                const btnFs = root.querySelector('.cvp-fullscreen');
-                const vol = root.querySelector('.cvp-volume');
-                const progress = root.querySelector('.cvp-progress');
-                const progressFill = root.querySelector('.cvp-progress-filled');
-                const timeCur = root.querySelector('.cvp-time-current');
-                const timeDur = root.querySelector('.cvp-time-duration');
-
-                function fmt(s) {
-                    if (isNaN(s)) return '0:00';
-                    const m = Math.floor(s / 60);
-                    const ss = Math.floor(s % 60).toString().padStart(2, '0');
-                    return `${m}:${ss}`;
-                }
-
-                function togglePlay() {
-                    if (video.paused) video.play();
-                    else video.pause();
-                }
-
-                btnBig && btnBig.addEventListener('click', togglePlay);
-                btnPlay && btnPlay.addEventListener('click', togglePlay);
-                btnMute && btnMute.addEventListener('click', function() {
-                    video.muted = !video.muted;
-                    render();
-                });
-                vol && vol.addEventListener('input', function() {
-                    video.volume = parseFloat(this.value);
-                    video.muted = (video.volume === 0);
-                    render();
-                });
-                progress && progress.addEventListener('click', function(e) {
-                    const rect = progress.getBoundingClientRect();
-                    const p = (e.clientX - rect.left) / rect.width;
-                    video.currentTime = p * (video.duration || 0);
-                });
-                btnFs && btnFs.addEventListener('click', function() {
-                    if (document.fullscreenElement) {
-                        document.exitFullscreen();
-                    } else {
-                        root.requestFullscreen().catch(() => {});
-                    }
-                });
-
-                video.addEventListener('play', render);
-                video.addEventListener('pause', render);
-                video.addEventListener('timeupdate', render);
-                video.addEventListener('loadedmetadata', render);
-
-                function render() {
-                    if (btnBig) btnBig.style.display = video.paused ? 'grid' : 'none';
-                    if (btnPlay) btnPlay.textContent = video.paused ? '▶' : '❚❚';
-                    if (btnMute) btnMute.textContent = video.muted || video.volume === 0 ? '🔈' : '🔊';
-                    if (timeCur) timeCur.textContent = fmt(video.currentTime || 0);
-                    if (timeDur) timeDur.textContent = fmt(video.duration || 0);
-                    if (progressFill) {
-                        const p = (video.currentTime || 0) / (video.duration || 1);
-                        progressFill.style.width = `${Math.max(0, Math.min(1, p)) * 100}%`;
-                    }
-                    if (vol && document.activeElement !== vol) {
-                        vol.value = (video.muted ? 0 : (video.volume || 1));
-                    }
-
-                    // Add/remove playing class for CSS styling and prevent poster from reappearing
-                    if (video.paused) {
-                        root.classList.remove('playing');
-                    } else {
-                        root.classList.add('playing');
-                        // Remove poster attribute once video starts playing to prevent it from showing again
-                        if (video.poster && video.currentTime > 0) {
-                            video.removeAttribute('poster');
-                        }
-                    }
-                }
-                render();
-            });
-
-            // If Slick carousel is present, pause video when slide changes and refresh controls state
-            if (window.jQuery) {
-                var $slider = jQuery('.show-case-slider');
-
-                function bindSlickHandlers($el) {
-                    $el.on('beforeChange', function() {
-                        $el.find('video').each(function() {
-                            this.pause();
-                        });
-                        $el.find('.custom-video-player').removeClass('playing');
-                    });
-                    $el.on('afterChange', function() {
-                        // Re-render controls state for visible slides
-                        $el.find('.custom-video-player').each(function() {
-                            var v = this.querySelector('video');
-                            if (!v) return;
-                            if (!v.paused) this.classList.add('playing');
-                            else this.classList.remove('playing');
-                        });
-                    });
-                }
-                if ($slider.length) {
-                    if ($slider.hasClass('slick-initialized')) {
-                        bindSlickHandlers($slider);
-                    } else {
-                        $slider.on('init', function() {
-                            bindSlickHandlers(jQuery(this));
-                        });
-                    }
-                }
-            }
-        });
-
-        function selectPackage(packageType) {
-            const btn = event.target;
-            const t = btn.textContent;
-            btn.textContent = '✓ Package Selected!';
-            btn.style.pointerEvents = 'none';
-            setTimeout(() => {
-                showContactForm(packageType);
-                btn.textContent = t;
-                btn.style.pointerEvents = 'auto';
-            }, 1000);
-        }
-
-        function showContactForm(packageType) {
-            @if ($project->hasPricingPlans())
-                const packages = {
-                    @foreach ($project->pricingPlans as $plan)
-                        '{{ $plan->title }}': {
-                            name: '{{ $plan->title }}',
-                            price: '${{ number_format($plan->price, 0) }}',
-                            subtitle: '{{ $plan->subtitle }}'
-                        },
-                    @endforeach
-                };
-            @else
-                const packages = {
-                    'fixed': {
-                        name: 'Project Package',
-                        price: '{{ $project->hasFixedPrice() ? '$' . number_format($project->getDiscountedPrice(), 0) : '' }}',
-                        subtitle: 'Complete solution'
-                    }
-                };
-            @endif
-            const pkg = packages[packageType] || packages['fixed'] || {
-                name: 'Custom Package',
-                price: '',
-                subtitle: ''
-            };
-            const modal = document.createElement('div');
-            modal.className = 'modal';
-            modal.style.cssText =
-                'position:fixed;inset:0;background:rgba(0,0,0,.8);display:flex;align-items:center;justify-content:center;z-index:9999;cursor:pointer;';
-            modal.innerHTML = `
-                <div style="background:#fff;border-radius:24px;padding:3rem;max-width:500px;margin:2rem;cursor:default;" onclick="event.stopPropagation()">
-                    <div style="text-align:center;margin-bottom:2rem;">
-                        <div style="font-size:3rem;margin-bottom:1rem;">🎉</div>
-                        <h3 style="color:#1a1a1a;margin-bottom:.5rem;">Great Choice!</h3>
-                        <p style="color:#64748b;">You selected: <strong>${pkg.name}</strong></p>
-                        <p style="color:#64748b;font-size:.9rem;">${pkg.subtitle}</p>
-                        <p style="color:#6366f1;font-size:1.5rem;font-weight:700;margin-top:1rem;">${pkg.price}</p>
-                    </div>
-                    <form action="{{ route('projects.request-demo', $project) }}" method="POST" style="display:flex;flex-direction:column;gap:1rem;">
-                        @csrf
-                        <input type="hidden" name="package" value="${packageType || 'custom'}">
-                        <input type="text" name="name" placeholder="Your Name" required style="padding:1rem;border:2px solid #e2e8f0;border-radius:12px;font-size:1rem;">
-                        <input type="email" name="email" placeholder="Your Email" required style="padding:1rem;border:2px solid #e2e8f0;border-radius:12px;font-size:1rem;">
-                        <input type="tel" name="phone" placeholder="Phone Number" style="padding:1rem;border:2px solid #e2e8f0;border-radius:12px;font-size:1rem;">
-                        <input type="text" name="company" placeholder="Company (Optional)" style="padding:1rem;border:2px solid #e2e8f0;border-radius:12px;font-size:1rem;">
-                        <textarea name="message" placeholder="Project Requirements & Details" rows="3" style="padding:1rem;border:2px solid #e2e8f0;border-radius:12px;font-size:1rem;resize:vertical;"></textarea>
-                        <div style="display:flex;gap:1rem;margin-top:1rem;">
-                            <button type="submit" style="flex:1;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border:none;padding:1rem;border-radius:12px;font-weight:600;cursor:pointer;">Send Request</button>
-                            <button type="button" onclick="document.body.removeChild(this.closest('.modal'))" style="background:#f1f5f9;color:#64748b;border:none;padding:1rem;border-radius:12px;cursor:pointer;">Cancel</button>
-                        </div>
-                    </form>
-                </div>`;
-            modal.onclick = () => document.body.removeChild(modal);
-            document.body.appendChild(modal);
-        }
-
-        function requestDemo() {
-            const type =
-                '{{ $project->hasPricingPlans() ? $project->pricingPlans->first()->title ?? 'custom' : ($project->hasFixedPrice() ? 'fixed' : 'custom') }}';
-            showContactForm(type);
-        }
-    </script>
 @endsection

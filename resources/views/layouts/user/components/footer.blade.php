@@ -99,7 +99,7 @@
 </footer>
 <!-- footer end-->
 <!-- contact-btn -->
-<a class="contact-btn color-bg" href="{{ setting('contact_button_link', 'contacts.html') }}"><i
+<a class="contact-btn color-bg" href="{{ route('contact') }}"><i
         class="fal fa-envelope"></i><span>{{ setting('contact_button_text', 'Get in Touch') }}</span></a>
 <!-- contact-btn end -->
 </div>

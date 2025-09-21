@@ -9,6 +9,8 @@ use App\Models\Project;
 use App\Models\Testimonial;
 use App\Models\Client;
 use App\Models\Setting;
+use App\Models\Fact;
+use App\Models\FactSection;
 
 class AdminController extends Controller
 {
@@ -24,6 +26,10 @@ class AdminController extends Controller
         $activeTestimonialsCount = Testimonial::active()->count();
         $clientsCount = Client::count();
         $activeClientsCount = Client::active()->count();
+        $factSectionsCount = FactSection::count();
+        $activeFactSectionsCount = FactSection::active()->count();
+        $factsCount = Fact::count();
+        $activeFactsCount = Fact::active()->count();
         $settingsCount = Setting::count();
         $settingsGroupsCount = Setting::distinct('group')->count();
 
@@ -38,6 +44,10 @@ class AdminController extends Controller
             'activeTestimonialsCount',
             'clientsCount',
             'activeClientsCount',
+            'factSectionsCount',
+            'activeFactSectionsCount',
+            'factsCount',
+            'activeFactsCount',
             'settingsCount',
             'settingsGroupsCount'
         ));

@@ -134,8 +134,10 @@
             <!-- half-slider-wrap end-->
             <!--hero dec-->
             <div class="half-bg-dec" data-ran="12"></div>
-            <div class="hero-decor-numb"><span>40.7143528 </span><span>-74.0059731 </span> <a
-                    href="https://www.google.com/maps/" target="_blank" class="hero-decor-numb-tooltip">Based In NewYork</a>
+            <div class="hero-decor-numb"><span>{{ $locationSettings['hero_latitude'] ?? '40.7143528' }}
+                </span><span>{{ $locationSettings['hero_longitude'] ?? '-74.0059731' }} </span> <a
+                    href="{{ $locationSettings['hero_maps_url'] ?? 'https://www.google.com/maps/' }}" target="_blank"
+                    class="hero-decor-numb-tooltip">{{ $locationSettings['hero_location_name'] ?? 'Based In NewYork' }}</a>
             </div>
             <div class="pattern-bg"></div>
             <div class="hero-line-dec"></div>
@@ -239,73 +241,50 @@
         </section>
         <!-- section end-->
         <!-- section-->
-        <section class="parallax-section dark-bg sec-half parallax-sec-half-right darkBackground"
-            data-scrollax-parent="true">
-            <div class="bg par-elem" data-bg="{{ asset('images/bg/1.jpg') }}"
-                data-scrollax="properties: { translateY: '30%' }"></div>
-            <div class="overlay"></div>
-            <div class="container">
-                <div class="section-title">
-                    <h2>Some Interisting <span>Facts </span> <br> About Me</h2>
-                    <p class="limited-width">
-                        We have a wide range of pneumatic and vacuum components and conveyor belts and systems
-                        specifically suiting the precise needs of the print and packaging industry.
-                    </p>
+        @if ($factSection && $factSection->is_active)
+            <section class="parallax-section dark-bg sec-half parallax-sec-half-right darkBackground"
+                data-scrollax-parent="true">
+                <div class="bg par-elem"
+                    data-bg="{{ $factSection->hasMedia('background_images') ? $factSection->getFirstMediaUrl('background_images') : asset('images/bg/1.jpg') }}"
+                    data-scrollax="properties: { translateY: '30%' }"></div>
+                <div class="overlay"></div>
+                <div class="container">
+                    <div class="section-title">
+                        <h2>{{ $factSection->title ?? 'Some Interesting Facts About Me' }}</h2>
+                        @if ($factSection->description)
+                            <p class="limited-width">
+                                {!! nl2br(e($factSection->description)) !!}
+                            </p>
+                        @else
+                            <p class="limited-width">
+                                We have a wide range of pneumatic and vacuum components and conveyor belts and systems
+                                specifically suiting the precise needs of the print and packaging industry.
+                            </p>
+                        @endif
 
-                    <div class="horizonral-subtitle"><span>Numbers</span></div>
+                        @if ($factSection->subtitle)
+                            <div class="horizonral-subtitle"><span>{{ $factSection->subtitle }}</span></div>
+                        @endif
+                    </div>
+                    <div class="fl-wrap facts-holder">
+                        @foreach ($factSection->activeFacts as $fact)
+                            <!-- inline-facts -->
+                            <div class="inline-facts-wrap">
+                                <div class="inline-facts">
+                                    <div class="milestone-counter">
+                                        <div class="stats animaper">
+                                            <div class="num" data-content="0" data-num="{{ $fact->number }}">0</div>
+                                        </div>
+                                    </div>
+                                    <h6>{{ $fact->label }}</h6>
+                                </div>
+                            </div>
+                            <!-- inline-facts end -->
+                        @endforeach
+                    </div>
                 </div>
-                <div class="fl-wrap facts-holder">
-                    <!-- inline-facts -->
-                    <div class="inline-facts-wrap">
-                        <div class="inline-facts">
-                            <div class="milestone-counter">
-                                <div class="stats animaper">
-                                    <div class="num" data-content="0" data-num="145">0</div>
-                                </div>
-                            </div>
-                            <h6>Finished projects</h6>
-                        </div>
-                    </div>
-                    <!-- inline-facts end -->
-                    <!-- inline-facts  -->
-                    <div class="inline-facts-wrap">
-                        <div class="inline-facts">
-                            <div class="milestone-counter">
-                                <div class="stats animaper">
-                                    <div class="num" data-content="0" data-num="357">0</div>
-                                </div>
-                            </div>
-                            <h6>Happy customers</h6>
-                        </div>
-                    </div>
-                    <!-- inline-facts end -->
-                    <!-- inline-facts  -->
-                    <div class="inline-facts-wrap">
-                        <div class="inline-facts">
-                            <div class="milestone-counter">
-                                <div class="stats animaper">
-                                    <div class="num" data-content="0" data-num="825">0</div>
-                                </div>
-                            </div>
-                            <h6>Working hours</h6>
-                        </div>
-                    </div>
-                    <!-- inline-facts end -->
-                    <!-- inline-facts  -->
-                    <div class="inline-facts-wrap">
-                        <div class="inline-facts">
-                            <div class="milestone-counter">
-                                <div class="stats animaper">
-                                    <div class="num" data-content="0" data-num="1124">0</div>
-                                </div>
-                            </div>
-                            <h6>Coffee Cups</h6>
-                        </div>
-                    </div>
-                    <!-- inline-facts end -->
-                </div>
-            </div>
-        </section>
+            </section>
+        @endif
         <!-- section end-->
         <!-- section-->
         {{-- <section data-scrollax-parent="true" id="sec3">
@@ -879,7 +858,8 @@
                     <div class="col-md-8">
                         <h3>Ready To order Your Project ?</h3>
                     </div>
-                    <div class="col-md-4"><a href="contacts.html" class="btn flat-btn color-btn">Get In Touch</a> </div>
+                    <div class="col-md-4"><a href="{{ route('contact') }}" class="btn flat-btn color-btn">Get In
+                            Touch</a> </div>
                 </div>
             </div>
         </section>

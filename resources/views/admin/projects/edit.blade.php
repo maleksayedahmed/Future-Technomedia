@@ -478,23 +478,68 @@
                                                     name="pricing_plans[{{ $index }}][subtitle]"
                                                     value="{{ $plan->subtitle }}" placeholder="Short description">
                                             </div>
-                                            <div class="row">
-                                                <div class="col-md-8">
+                                            <div class="mb-3">
+                                                <label class="form-label">Pricing Type</label>
+                                                <select class="form-select pricing-type-select"
+                                                    name="pricing_plans[{{ $index }}][pricing_type]">
+                                                    <option value="fixed"
+                                                        {{ $plan->pricing_type === 'fixed' ? 'selected' : '' }}>Fixed Price
+                                                    </option>
+                                                    <option value="per_user"
+                                                        {{ $plan->pricing_type === 'per_user' ? 'selected' : '' }}>Per User
+                                                        Price</option>
+                                                    <option value="both"
+                                                        {{ $plan->pricing_type === 'both' ? 'selected' : '' }}>Both Fixed
+                                                        and Per User</option>
+                                                </select>
+                                            </div>
+                                            <div class="row pricing-fields">
+                                                <div class="col-md-6 fixed-price-field"
+                                                    style="display: {{ in_array($plan->pricing_type, ['fixed', 'both']) ? 'block' : 'none' }};">
                                                     <div class="mb-3">
-                                                        <label class="form-label">Price</label>
+                                                        <label class="form-label">Fixed Price</label>
                                                         <input type="number" class="form-control"
                                                             name="pricing_plans[{{ $index }}][price]"
                                                             value="{{ $plan->price }}" step="0.01" min="0"
                                                             placeholder="0.00">
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4">
+                                                <div class="col-md-6 per-user-price-field"
+                                                    style="display: {{ in_array($plan->pricing_type, ['per_user', 'both']) ? 'block' : 'none' }};">
                                                     <div class="mb-3">
-                                                        <div class="form-check mt-4">
+                                                        <label class="form-label">Per User Price</label>
+                                                        <input type="number" class="form-control"
+                                                            name="pricing_plans[{{ $index }}][per_user_price]"
+                                                            value="{{ $plan->per_user_price }}" step="0.01"
+                                                            min="0" placeholder="0.00">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Currency Icon</label>
+                                                <input type="file" class="form-control currency-icon-input"
+                                                    name="pricing_plans[{{ $index }}][currency_icon]"
+                                                    accept="image/*">
+                                                @if ($plan->getCurrencyIcon())
+                                                    <div class="mt-2">
+                                                        <img src="{{ $plan->getCurrencyIcon() }}"
+                                                            alt="Current currency icon"
+                                                            style="width: 32px; height: 32px;">
+                                                        <small class="text-muted">Leave empty to keep current icon</small>
+                                                    </div>
+                                                @else
+                                                    <div class="form-text">Upload a custom currency icon (PNG, JPG, SVG).
+                                                        Leave empty to use default.</div>
+                                                @endif
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <div class="mb-3">
+                                                        <div class="form-check">
                                                             <input class="form-check-input" type="checkbox"
                                                                 name="pricing_plans[{{ $index }}][is_popular]"
                                                                 value="1" {{ $plan->is_popular ? 'checked' : '' }}>
-                                                            <label class="form-check-label">Popular</label>
+                                                            <label class="form-check-label">Mark as Popular</label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -661,20 +706,44 @@
                     <input type="text" class="form-control" name="pricing_plans[${pricingPlanIndex}][subtitle]"
                            placeholder="Short description">
                 </div>
-                <div class="row">
-                    <div class="col-md-8">
+                <div class="mb-3">
+                    <label class="form-label">Pricing Type</label>
+                    <select class="form-select pricing-type-select" name="pricing_plans[${pricingPlanIndex}][pricing_type]">
+                        <option value="fixed">Fixed Price</option>
+                        <option value="per_user">Per User Price</option>
+                        <option value="both">Both Fixed and Per User</option>
+                    </select>
+                </div>
+                <div class="row pricing-fields">
+                    <div class="col-md-6 fixed-price-field">
                         <div class="mb-3">
-                            <label class="form-label">Price</label>
+                            <label class="form-label">Fixed Price</label>
                             <input type="number" class="form-control" name="pricing_plans[${pricingPlanIndex}][price]"
                                    step="0.01" min="0" placeholder="0.00">
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6 per-user-price-field" style="display: none;">
                         <div class="mb-3">
-                            <div class="form-check mt-4">
+                            <label class="form-label">Per User Price</label>
+                            <input type="number" class="form-control" name="pricing_plans[${pricingPlanIndex}][per_user_price]"
+                                   step="0.01" min="0" placeholder="0.00">
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Currency Icon</label>
+                    <input type="file" class="form-control currency-icon-input"
+                           name="pricing_plans[${pricingPlanIndex}][currency_icon]"
+                           accept="image/*">
+                    <div class="form-text">Upload a custom currency icon (PNG, JPG, SVG). Leave empty to use default.</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="mb-3">
+                            <div class="form-check">
                                 <input class="form-check-input" type="checkbox"
                                        name="pricing_plans[${pricingPlanIndex}][is_popular]" value="1">
-                                <label class="form-check-label">Popular</label>
+                                <label class="form-check-label">Mark as Popular</label>
                             </div>
                         </div>
                     </div>
@@ -689,7 +758,37 @@
         `;
                 container.insertAdjacentHTML('beforeend', planHtml);
                 pricingPlanIndex++;
+                wireUpPricingPlanRow(container.lastElementChild);
             });
+
+            // Wire up existing pricing plans
+            document.querySelectorAll('.pricing-plan-item').forEach(function(planElement) {
+                wireUpPricingPlanRow(planElement);
+            });
+
+            // Wire up pricing plan row functionality
+            function wireUpPricingPlanRow(planElement) {
+                const pricingTypeSelect = planElement.querySelector('.pricing-type-select');
+                const fixedPriceField = planElement.querySelector('.fixed-price-field');
+                const perUserPriceField = planElement.querySelector('.per-user-price-field');
+
+                if (pricingTypeSelect && fixedPriceField && perUserPriceField) {
+                    pricingTypeSelect.addEventListener('change', function() {
+                        const pricingType = this.value;
+
+                        if (pricingType === 'fixed') {
+                            fixedPriceField.style.display = 'block';
+                            perUserPriceField.style.display = 'none';
+                        } else if (pricingType === 'per_user') {
+                            fixedPriceField.style.display = 'none';
+                            perUserPriceField.style.display = 'block';
+                        } else if (pricingType === 'both') {
+                            fixedPriceField.style.display = 'block';
+                            perUserPriceField.style.display = 'block';
+                        }
+                    });
+                }
+            }
 
             // Remove pricing plan
             document.addEventListener('click', function(e) {

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -43,7 +44,7 @@
         .sidebar .brand {
             padding: 20px;
             text-align: center;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             margin-bottom: 30px;
         }
 
@@ -103,7 +104,7 @@
         .topbar {
             background: white;
             padding: 15px 30px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             display: flex;
             justify-content: between;
             align-items: center;
@@ -117,13 +118,13 @@
         .card {
             border: none;
             border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
             transition: all 0.3s ease;
         }
 
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
         }
 
         .stats-card {
@@ -166,7 +167,7 @@
             max-width: 100px;
             max-height: 100px;
             border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
         @media (max-width: 768px) {
@@ -186,6 +187,7 @@
     </style>
     @stack('styles')
 </head>
+
 <body>
     <!-- Sidebar -->
     <nav class="sidebar" id="sidebar">
@@ -194,43 +196,64 @@
         </div>
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}">
+                <a class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}"
+                    href="{{ route('admin.dashboard') }}">
                     <i class="fas fa-tachometer-alt"></i>
                     <span>Dashboard</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('admin.sliders.*') ? 'active' : '' }}" href="{{ route('admin.sliders.index') }}">
+                <a class="nav-link {{ request()->routeIs('admin.sliders.*') ? 'active' : '' }}"
+                    href="{{ route('admin.sliders.index') }}">
                     <i class="fas fa-images"></i>
                     <span>Sliders</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('admin.features.*') ? 'active' : '' }}" href="{{ route('admin.features.index') }}">
+                <a class="nav-link {{ request()->routeIs('admin.features.*') ? 'active' : '' }}"
+                    href="{{ route('admin.features.index') }}">
                     <i class="fas fa-star"></i>
                     <span>Features</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('admin.projects.*') ? 'active' : '' }}" href="{{ route('admin.projects.index') }}">
+                <a class="nav-link {{ request()->routeIs('admin.fact-sections.*') ? 'active' : '' }}"
+                    href="{{ route('admin.fact-sections.index') }}">
+                    <i class="fas fa-layer-group"></i>
+                    <span>Fact Sections</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('admin.facts.*') ? 'active' : '' }}"
+                    href="{{ route('admin.facts.index') }}">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Facts</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('admin.projects.*') ? 'active' : '' }}"
+                    href="{{ route('admin.projects.index') }}">
                     <i class="fas fa-folder-open"></i>
                     <span>Projects</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('admin.testimonials.*') ? 'active' : '' }}" href="{{ route('admin.testimonials.index') }}">
+                <a class="nav-link {{ request()->routeIs('admin.testimonials.*') ? 'active' : '' }}"
+                    href="{{ route('admin.testimonials.index') }}">
                     <i class="fas fa-comments"></i>
                     <span>Testimonials</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('admin.clients.*') ? 'active' : '' }}" href="{{ route('admin.clients.index') }}">
+                <a class="nav-link {{ request()->routeIs('admin.clients.*') ? 'active' : '' }}"
+                    href="{{ route('admin.clients.index') }}">
                     <i class="fas fa-handshake"></i>
                     <span>Clients</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}" href="{{ route('admin.settings.index') }}">
+                <a class="nav-link {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}"
+                    href="{{ route('admin.settings.index') }}">
                     <i class="fas fa-cog"></i>
                     <span>Site Settings</span>
                 </a>
@@ -252,14 +275,14 @@
 
         <!-- Content -->
         <div class="content-wrapper">
-            @if(session('success'))
+            @if (session('success'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     {{ session('success') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
             @endif
 
-            @if(session('error'))
+            @if (session('error'))
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     {{ session('error') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
@@ -295,4 +318,5 @@
 
     @stack('scripts')
 </body>
+
 </html>

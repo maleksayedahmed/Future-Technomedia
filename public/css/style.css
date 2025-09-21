@@ -1417,7 +1417,7 @@ p.interact,
 	top: 29%;
 }
 
-.half-hero-wrap p{
+.half-hero-wrap p {
 	text-align: left;
 }
 
@@ -7699,5 +7699,4 @@ section.parallax-section .section-title:before {
 
 .limited-width {
 	max-width: 400px !important;
-  }
-  
+}

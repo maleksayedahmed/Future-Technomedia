@@ -472,20 +472,44 @@
                     <input type="text" class="form-control" name="pricing_plans[${pricingPlanIndex}][subtitle]"
                            placeholder="Short description">
                 </div>
-                <div class="row">
-                    <div class="col-md-8">
+                <div class="mb-3">
+                    <label class="form-label">Pricing Type</label>
+                    <select class="form-select pricing-type-select" name="pricing_plans[${pricingPlanIndex}][pricing_type]">
+                        <option value="fixed">Fixed Price</option>
+                        <option value="per_user">Per User Price</option>
+                        <option value="both">Both Fixed and Per User</option>
+                    </select>
+                </div>
+                <div class="row pricing-fields">
+                    <div class="col-md-6 fixed-price-field">
                         <div class="mb-3">
-                            <label class="form-label">Price</label>
+                            <label class="form-label">Fixed Price</label>
                             <input type="number" class="form-control" name="pricing_plans[${pricingPlanIndex}][price]"
                                    step="0.01" min="0" placeholder="0.00">
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6 per-user-price-field" style="display: none;">
                         <div class="mb-3">
-                            <div class="form-check mt-4">
+                            <label class="form-label">Per User Price</label>
+                            <input type="number" class="form-control" name="pricing_plans[${pricingPlanIndex}][per_user_price]"
+                                   step="0.01" min="0" placeholder="0.00">
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Currency Icon</label>
+                    <input type="file" class="form-control currency-icon-input"
+                           name="pricing_plans[${pricingPlanIndex}][currency_icon]"
+                           accept="image/*">
+                    <div class="form-text">Upload a custom currency icon (PNG, JPG, SVG). Leave empty to use default.</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="mb-3">
+                            <div class="form-check">
                                 <input class="form-check-input" type="checkbox"
                                        name="pricing_plans[${pricingPlanIndex}][is_popular]" value="1">
-                                <label class="form-check-label">Popular</label>
+                                <label class="form-check-label">Mark as Popular</label>
                             </div>
                         </div>
                     </div>
@@ -500,7 +524,30 @@
         `;
                 container.insertAdjacentHTML('beforeend', planHtml);
                 pricingPlanIndex++;
+                wireUpPricingPlanRow(container.lastElementChild);
             });
+
+            // Wire up pricing plan row functionality
+            function wireUpPricingPlanRow(planElement) {
+                const pricingTypeSelect = planElement.querySelector('.pricing-type-select');
+                const fixedPriceField = planElement.querySelector('.fixed-price-field');
+                const perUserPriceField = planElement.querySelector('.per-user-price-field');
+
+                pricingTypeSelect.addEventListener('change', function() {
+                    const pricingType = this.value;
+
+                    if (pricingType === 'fixed') {
+                        fixedPriceField.style.display = 'block';
+                        perUserPriceField.style.display = 'none';
+                    } else if (pricingType === 'per_user') {
+                        fixedPriceField.style.display = 'none';
+                        perUserPriceField.style.display = 'block';
+                    } else if (pricingType === 'both') {
+                        fixedPriceField.style.display = 'block';
+                        perUserPriceField.style.display = 'block';
+                    }
+                });
+            }
 
             // Remove pricing plan
             document.addEventListener('click', function(e) {

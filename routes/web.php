@@ -15,6 +15,9 @@ use App\Models\Feature;
 use App\Models\Project;
 use App\Models\Testimonial;
 use App\Models\Client;
+use App\Models\Fact;
+use App\Models\FactSection;
+use App\Models\Setting;
 
 Route::get('/', function () {
     $sliders = Slider::active()->ordered()->get();
@@ -22,7 +25,9 @@ Route::get('/', function () {
     $projects = Project::active()->ordered()->get();
     $testimonials = Testimonial::active()->ordered()->get();
     $clients = Client::active()->ordered()->get();
-    return view('user.index', compact('sliders', 'features', 'projects', 'testimonials', 'clients'));
+    $factSection = FactSection::getActiveSection();
+    $locationSettings = Setting::getByGroup('location');
+    return view('user.index', compact('sliders', 'features', 'projects', 'testimonials', 'clients', 'factSection', 'locationSettings'));
 })->name('home');
 
 Route::get('/project', function () {

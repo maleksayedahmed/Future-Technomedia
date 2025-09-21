@@ -113,6 +113,9 @@
                                     <option value="contact"
                                         {{ old('group', $setting->group) === 'contact' ? 'selected' : '' }}>Contact
                                     </option>
+                                    <option value="location"
+                                        {{ old('group', $setting->group) === 'location' ? 'selected' : '' }}>Location
+                                    </option>
                                     <option value="footer"
                                         {{ old('group', $setting->group) === 'footer' ? 'selected' : '' }}>Footer</option>
                                 </select>

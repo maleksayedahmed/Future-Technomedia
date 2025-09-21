@@ -28,6 +28,8 @@ class DatabaseSeeder extends Seeder
             TestimonialSeeder::class,
             ClientSeeder::class,
             SettingSeeder::class,
+            FactSectionSeeder::class,
+            FactSeeder::class,
         ]);
     }
 }

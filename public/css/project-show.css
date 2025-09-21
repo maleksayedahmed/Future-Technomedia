@@ -260,6 +260,46 @@
     margin-top: 0.5rem;
 }
 
+/* Currency Icon Styling */
+.currency-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.currency-symbol {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #F1C232;
+    margin-right: 0.25rem;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+/* Dual Price Display */
+.dual-price {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.dual-price .price-amount {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: #F1C232;
+    display: inline-block;
+}
+
+.dual-price .price-period {
+    font-size: 0.9rem;
+    color: #64748b;
+    margin-top: 0;
+}
+
 .pricing-features {
     list-style: none;
     margin: 2rem 0;
