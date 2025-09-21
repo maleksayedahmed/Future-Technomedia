@@ -139,12 +139,8 @@
                                 <div class="pr-title fl-wrap">
                                     <div class="project-action-buttons">
                                         @if (isset($brochureAvailable) && $brochureAvailable)
-                                            <a class="action-btn-primary"
-                                                href="{{ route('projects.brochure.preview', $project) }}"
-                                                target="_blank">📄 Product Manual</a>
+                                            <a class="btn flat-btn color-btn" href="{{ route('projects.brochure.preview', $project) }}" target="_blank">Preview Manual</a>
                                         @endif
-                                        <a href="#" class="action-btn-secondary" onclick="requestDemo()">🎯 Offer
-                                            Request</a>
                                     </div>
                                 </div>
 
@@ -215,8 +211,8 @@
                                                         @endforeach
                                                     </ul>
                                                 @endif
-                                                <button class="cta-button"
-                                                    onclick="selectPackage('{{ $plan->title }}')">Choose
+                                                <button class="btn flat-btn color-btn"
+                                                    onclick="selectPackage('{{ $plan->title }}')">
                                                     {{ $plan->title }}</button>
                                             </div>
                                         @endforeach

@@ -106,7 +106,6 @@
 
     .project-action-buttons {
         display: flex;
-        justify-content: center;
         gap: 2rem;
         margin-top: 2.5rem;
     }
@@ -475,9 +474,6 @@
             <div class="project-action-buttons">
                 <a href="#" class="action-btn-primary" onclick="downloadBrochure()">
                     📄 Download Brochure
-                </a>
-                <a href="#" class="action-btn-secondary" onclick="requestDemo()">
-                    🎯 Request Demo
                 </a>
             </div>
         </div>

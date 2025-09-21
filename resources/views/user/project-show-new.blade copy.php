@@ -154,21 +154,10 @@
 
                                 <div class="pr-title fl-wrap">
                                     <div class="project-action-buttons">
-
                                         @if (isset($brochureAvailable) && $brochureAvailable)
-                                            <a class="action-btn-primary" href="{{ route('projects.brochure.preview', $project) }}"
-                                                target="_blank">
-                                                📄 Product Manual
-                                            </a>
+                                            <a class="btn flat-btn color-btn" href="{{ route('projects.brochure.preview', $project) }}" target="_blank">Preview Manual</a>
                                         @endif
-                                        <a class="action-btn-primary" href="#"
-                                        target="_blank">
-                                        📄 Product Manual
-                                    </a>
-                
-                                        <a href="#" class="action-btn-secondary" onclick="requestDemo()">
-                                            🎯 Offer Request
-                                        </a>
+                                        <a class="btn flat-btn color-btn" href="#" target="_blank">Preview Manual</a>
                                     </div>
                                 </div>
                                 
@@ -308,7 +297,7 @@
                                             <li>Basic analytics dashboard</li>
                                             <li>6 months support</li>
                                         </ul>
-                                        <button class="cta-button" onclick="selectPackage('starter')">Choose
+                                        <button class="btn flat-btn color-btn" onclick="selectPackage('starter')">Choose
                                             Starter</button>
                                     </div>
 
@@ -329,7 +318,7 @@
                                             <li>12 months support</li>
                                             <li>SEO optimization</li>
                                         </ul>
-                                        <button class="cta-button" onclick="selectPackage('pro')">Choose
+                                        <button class="btn flat-btn color-btn" onclick="selectPackage('pro')">Choose
                                             Professional</button>
                                     </div>
 
@@ -351,7 +340,7 @@
                                             <li>24/7 monitoring</li>
                                             <li>Custom training</li>
                                         </ul>
-                                        <button class="cta-button" onclick="selectPackage('enterprise')">Choose
+                                        <button class="btn flat-btn color-btn" onclick="selectPackage('enterprise')">Choose
                                             Enterprise</button>
                                     </div>
                                 </div>

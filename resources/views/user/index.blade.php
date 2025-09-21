@@ -33,7 +33,9 @@
                     @forelse($sliders as $slider)
                         <!-- half-slider-img item-->
                         <div class="half-slider-img-item">
-                            <div class="bg" data-bg="{{ $slider->getFirstMediaUrl('slider_images', 'slider') ?: asset('images/bg/1.jpg') }}" data-scrollax="properties: { translateY: '250px' }">
+                            <div class="bg"
+                                data-bg="{{ $slider->getFirstMediaUrl('slider_images', 'slider') ?: asset('images/bg/1.jpg') }}"
+                                data-scrollax="properties: { translateY: '250px' }">
                             </div>
                             <div class="overlay"></div>
                         </div>
@@ -41,21 +43,24 @@
                     @empty
                         <!-- half-slider-img item-->
                         <div class="half-slider-img-item">
-                            <div class="bg" data-bg="images/bg/1.jpg" data-scrollax="properties: { translateY: '250px' }">
+                            <div class="bg" data-bg="images/bg/1.jpg"
+                                data-scrollax="properties: { translateY: '250px' }">
                             </div>
                             <div class="overlay"></div>
                         </div>
                         <!-- half-slider-img item end-->
                         <!-- half-slider-img item-->
                         <div class="half-slider-img-item">
-                            <div class="bg" data-bg="images/bg/1.jpg" data-scrollax="properties: { translateY: '250px' }">
+                            <div class="bg" data-bg="images/bg/1.jpg"
+                                data-scrollax="properties: { translateY: '250px' }">
                             </div>
                             <div class="overlay"></div>
                         </div>
                         <!-- half-slider-img item end-->
                         <!-- half-slider-img item-->
                         <div class="half-slider-img-item">
-                            <div class="bg" data-bg="images/bg/1.jpg" data-scrollax="properties: { translateY: '250px' }">
+                            <div class="bg" data-bg="images/bg/1.jpg"
+                                data-scrollax="properties: { translateY: '250px' }">
                             </div>
                             <div class="overlay"></div>
                         </div>
@@ -75,14 +80,15 @@
                         <div class="half-slider-item fl-wrap">
                             <div class="half-hero-wrap">
                                 <h1>{!! $slider->title ?: '' !!}</h1>
-                                @if($slider->description)
-                                    <h4>{!! $slider->description ?: ''!!}</h4>
+                                @if ($slider->description)
+                                    <h4>{!! $slider->description ?: '' !!}</h4>
                                 @else
                                     <h4>I create web and graphic design</h4>
                                 @endif
                                 <div class="clearfix"></div>
-                                @if($slider->button_text && $slider->button_link)
-                                    <a href="{{ $slider->button_link }}" class="custom-scroll-link btn float-btn flat-btn color-btn mar-top">{{ $slider->button_text }}</a>
+                                @if ($slider->button_text && $slider->button_link)
+                                    <a href="{{ $slider->button_link }}"
+                                        class="custom-scroll-link btn float-btn flat-btn color-btn mar-top">{{ $slider->button_text }}</a>
                                 @endif
                             </div>
                         </div>
@@ -233,15 +239,19 @@
         </section>
         <!-- section end-->
         <!-- section-->
-        <section class="parallax-section dark-bg sec-half parallax-sec-half-right" data-scrollax-parent="true">
+        <section class="parallax-section dark-bg sec-half parallax-sec-half-right darkBackground"
+            data-scrollax-parent="true">
             <div class="bg par-elem" data-bg="{{ asset('images/bg/1.jpg') }}"
                 data-scrollax="properties: { translateY: '30%' }"></div>
             <div class="overlay"></div>
             <div class="container">
                 <div class="section-title">
                     <h2>Some Interisting <span>Facts </span> <br> About Me</h2>
-                    <p> We have a wide range of pneumatic and vacuum components and conveyor belts and systems specifically
-                        suiting the precise needs of the print and packaging industry. </p>
+                    <p class="limited-width">
+                        We have a wide range of pneumatic and vacuum components and conveyor belts and systems
+                        specifically suiting the precise needs of the print and packaging industry.
+                    </p>
+
                     <div class="horizonral-subtitle"><span>Numbers</span></div>
                 </div>
                 <div class="fl-wrap facts-holder">

@@ -936,12 +936,12 @@ nav.nav-inner {
 
 .footer-title span {
 	position: absolute;
-	left: -120px;
+	left: -148px;
 	opacity: 0.2;
-	margin-top: 66%;
+	margin-top: 46%;
 	text-transform: uppercase;
 	font-weight: 900;
-	font-size: 64px;
+	font-size: 54px;
 	letter-spacing: 6px;
 	transform: rotate(-90deg);
 	color: #fff;
@@ -1996,7 +1996,7 @@ section.parallax-section.parallax-sec-half-left .overlay {
 
 .horizonral-subtitle span {
 	position: absolute;
-	left: 0;
+	left: 51px;
 	text-transform: uppercase;
 	font-weight: 900;
 	font-size: 84px;
@@ -2024,7 +2024,7 @@ section.parallax-section.parallax-sec-half-left .horizonral-subtitle span {
 }
 
 .section-title h2 {
-	font-size: 40px;
+	font-size: 37px;
 	font-family: 'Poppins', sans-serif;
 	text-transform: uppercase;
 	font-weight: 800;
@@ -7693,3 +7693,11 @@ section.parallax-section .section-title:before {
 	}
 }
 
+.darkBackground:before {
+	background: #2A2A2E !important;
+}
+
+.limited-width {
+	max-width: 400px !important;
+  }
+  

@@ -46,9 +46,6 @@
                         @endif
 
 
-                        <a href="#" class="action-btn-secondary" onclick="requestDemo()">
-                            🎯 Offer Request
-                        </a>
                     </div>
                 </div>
                 @if ($project->hasPricingPlans() && $project->pricingPlans->count() > 0)
