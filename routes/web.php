@@ -36,7 +36,7 @@ Route::get('/project', function () {
 
 Route::get('/project-show-new', function () {
     return view('user.project-show-new');
-})->name('project');
+})->name('project-show-new');
 
 Route::get('/contact', function () {
     return view('user.contact');

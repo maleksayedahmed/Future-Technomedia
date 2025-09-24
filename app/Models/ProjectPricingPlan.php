@@ -26,7 +26,8 @@ class ProjectPricingPlan extends Model implements HasMedia
 
     protected $casts = [
         'price' => 'decimal:2',
-        'per_user_price' => 'decimal:2',
+        // Store per-user price as free text (e.g., "$5/user", "Contact us")
+        'per_user_price' => 'string',
         'features' => 'array',
         'is_popular' => 'boolean',
         'order' => 'integer'

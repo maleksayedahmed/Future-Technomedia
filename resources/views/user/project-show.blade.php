@@ -178,38 +178,34 @@
                                                     @if ($plan->hasFixedPrice() && $plan->hasPerUserPrice())
                                                         <!-- Both prices -->
                                                         <div class="dual-price">
-                                                            @if ($plan->getCurrencyIcon())
-                                                                <img src="{{ $plan->getCurrencyIcon() }}" alt="currency"
-                                                                    class="currency-icon">
-                                                            @else
-                                                                <span class="currency-symbol">$</span>
-                                                            @endif
-                                                            <span
-                                                                class="price-amount">{{ number_format($plan->price, 0) }}</span>
-                                                            <div class="price-period">one-time +
-                                                                ${{ number_format($plan->per_user_price, 0) }}/user</div>
+                                                            <div class="price-line">
+                                                                @if ($plan->getCurrencyIcon())
+                                                                    <img src="{{ $plan->getCurrencyIcon() }}" alt="currency" class="currency-icon">
+                                                                @else
+                                                                    <span class="currency-symbol">$</span>
+                                                                @endif
+                                                                <span class="price-amount">{{ number_format($plan->price, 0) }}</span>
+                                                            </div>
+                                                            <div class="price-period">{{ $plan->per_user_price }}</div>
                                                         </div>
                                                     @elseif ($plan->hasPerUserPrice())
                                                         <!-- Per user price -->
-                                                        @if ($plan->getCurrencyIcon())
-                                                            <img src="{{ $plan->getCurrencyIcon() }}" alt="currency"
-                                                                class="currency-icon">
-                                                        @else
-                                                            <span class="currency-symbol">$</span>
-                                                        @endif
-                                                        <span
-                                                            class="price-amount">{{ number_format($plan->per_user_price, 0) }}</span>
-                                                        <div class="price-period">per user</div>
+                                                        <div class="price-line">
+                                                            @if ($plan->getCurrencyIcon())
+                                                                <img src="{{ $plan->getCurrencyIcon() }}" alt="currency" class="currency-icon">
+                                                            @endif
+                                                            <span class="price-amount">{{ $plan->per_user_price }}</span>
+                                                        </div>
                                                     @else
                                                         <!-- Fixed price -->
-                                                        @if ($plan->getCurrencyIcon())
-                                                            <img src="{{ $plan->getCurrencyIcon() }}" alt="currency"
-                                                                class="currency-icon">
-                                                        @else
-                                                            <span class="currency-symbol">$</span>
-                                                        @endif
-                                                        <span
-                                                            class="price-amount">{{ number_format($plan->price, 0) }}</span>
+                                                        <div class="price-line">
+                                                            @if ($plan->getCurrencyIcon())
+                                                                <img src="{{ $plan->getCurrencyIcon() }}" alt="currency" class="currency-icon">
+                                                            @else
+                                                                <span class="currency-symbol">$</span>
+                                                            @endif
+                                                            <span class="price-amount">{{ number_format($plan->price, 0) }}</span>
+                                                        </div>
                                                         <div class="price-period">one-time payment</div>
                                                     @endif
                                                 </div>

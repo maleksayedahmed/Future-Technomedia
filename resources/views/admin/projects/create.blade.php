@@ -490,9 +490,9 @@
                     </div>
                     <div class="col-md-6 per-user-price-field" style="display: none;">
                         <div class="mb-3">
-                            <label class="form-label">Per User Price</label>
-                            <input type="number" class="form-control" name="pricing_plans[${pricingPlanIndex}][per_user_price]"
-                                   step="0.01" min="0" placeholder="0.00">
+                            <label class="form-label">Per User Price (text)</label>
+                            <input type="text" class="form-control" name="pricing_plans[${pricingPlanIndex}][per_user_price]"
+                                   placeholder="e.g., $5/user or Contact us">
                         </div>
                     </div>
                 </div>
