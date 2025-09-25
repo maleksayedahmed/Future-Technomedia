@@ -54,5 +54,8 @@ Route::get('/projects/{project}/brochure/preview', [ProjectPublicController::cla
 Route::get('/projects/{project}/brochure', [ProjectPublicController::class, 'viewBrochure'])->name('projects.brochure');
 Route::get('/projects/{project}/brochure/download', [ProjectPublicController::class, 'downloadBrochure'])->name('projects.brochure.download');
 Route::post('/projects/{project}/request-demo', [ProjectPublicController::class, 'requestDemo'])->name('projects.request-demo');
+
+// Contact routes
+Route::post('/contact', [App\Http\Controllers\ContactController::class, 'store'])->name('contact.store');
 require __DIR__.'/auth.php';
 require __DIR__.'/admin.php';

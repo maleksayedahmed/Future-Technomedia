@@ -366,7 +366,7 @@ function initSolonick() {
         $(this).closest(scw).find(ccsi).slick('slickNext');
     });
 	fpr.on('beforeChange', function (event, slick, currentSlide, nextSlide) {
-		var 
+		var
 			direction,
 			slideCountZeroBased = slick.slideCount - 1;
 
@@ -581,31 +581,45 @@ function initSolonick() {
     });
     $('.cs-wrap .hero-wrap , .nav-holder').perfectScrollbar({});
     //   Contact form------------------
-    $("#contactform").submit(function () {
-        var a = $(this).attr("action");
+    // Guard: only run this legacy handler for old static endpoint `php/contact.php`.
+    // For Laravel route-based forms, let page-specific JS handle submission (with CSRF & JSON).
+    $("#contactform").on('submit', function () {
+        var actionUrl = $(this).attr("action") || '';
+        if (actionUrl.indexOf('php/contact.php') === -1) {
+            // Not the legacy handler target; allow other handlers to process.
+            return true; // do not preventDefault here
+        }
+
+        var a = actionUrl;
         $("#message").slideUp(750, function () {
             $("#message").hide();
             $("#submit").attr("disabled", "disabled");
+            // Legacy handler (no CSRF) for static PHP; keep behavior.
             $.post(a, {
                 name: $("#name").val(),
                 email: $("#email").val(),
                 phone: $("#phone").val(),
                 subject: $('#subject').val(),
-                comments: $("#comments").val(),
-                verify: $('#verify').val()
+                comments: $("#comments").val()
 
             }, function (a) {
                 document.getElementById("message").innerHTML = a;
                 $("#message").slideDown("slow");
                 $("#submit").removeAttr("disabled");
-                if (null != a.match("success")) $("#contactform").slideDown("slow");
+                if (a && typeof a === 'string' && null != a.match("success")) $("#contactform").slideDown("slow");
             });
         });
         return false;
     });
-    $("#contactform input, #contactform textarea").keyup(function () {
-        $("#message").slideUp(1500);
-    });
+    // Only bind this hide-on-keyup for the legacy static contact.php form.
+    (function(){
+        var actionUrl = $("#contactform").attr("action") || '';
+        if (actionUrl.indexOf('php/contact.php') !== -1) {
+            $("#contactform input, #contactform textarea").on('keyup', function(){
+                $("#message").slideUp(1500);
+            });
+        }
+    })();
     $('.chosen-select').selectbox();
     //   mailchimp------------------
     $("#subscribe").ajaxChimp({
@@ -757,12 +771,12 @@ function initSolonick() {
      $(".twitt-link").on("click", function () {
         hideMenu();
 		$("html, body").animate({
-			scrollTop: $('#footer_ink').offset().top 
+			scrollTop: $('#footer_ink').offset().top
 		}, 1200);
         return false;
     });
- 
- 
+
+
     var tooltips = document.querySelectorAll('.nav-overlay .tooltip');
     window.onmousemove = function (e) {
         var x = (e.clientX + 20) + 'px',

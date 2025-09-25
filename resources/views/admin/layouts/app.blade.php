@@ -252,6 +252,13 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('admin.contacts.*') ? 'active' : '' }}"
+                    href="{{ route('admin.contacts.index') }}">
+                    <i class="fas fa-envelope"></i>
+                    <span>Contact Messages</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}"
                     href="{{ route('admin.settings.index') }}">
                     <i class="fas fa-cog"></i>

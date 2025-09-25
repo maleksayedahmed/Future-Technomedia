@@ -100,8 +100,23 @@
                         </div>
                         <div class="col-md-7">
                             <div id="contact-form">
+                                @if(session('success'))
+                                    <div class="alert alert-success" style="background:#d4edda;border:1px solid #c3e6cb;color:#155724;padding:12px;border-radius:4px;margin-bottom:20px;">
+                                        {{ session('success') }}
+                                    </div>
+                                @endif
+                                @if($errors->any())
+                                    <div class="alert alert-danger" style="background:#f8d7da;border:1px solid #f5c6cb;color:#721c24;padding:12px;border-radius:4px;margin-bottom:20px;">
+                                        <ul class="mb-0">
+                                            @foreach($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
                                 <div id="message"></div>
-                                <form class="custom-form" action="php/contact.php" name="contactform" id="contactform">
+                                <form class="custom-form" action="{{ route('contact.store') }}" method="POST" name="contactform" id="contactform">
+                                    @csrf
                                     <fieldset>
                                         <div class="row">
                                             <div class="col-md-6">
@@ -116,13 +131,17 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <label><i class="fal fa-mobile-android"></i> </label>
-                                                <input type="text" name="phone" id="phone" placeholder="Phone *"
+                                                <input type="text" name="phone" id="phone" placeholder="Phone (Optional)"
                                                     value="" />
+                                                    {{-- // Unbind theme keyup handler that hides #message
+                                                    if (typeof $ !== 'undefined') {
+                                                        $('#contactform input, #contactform textarea').off('keyup');
+                                                    } --}}
                                             </div>
                                             <div class="col-md-6">
                                                 <select name="subject" id="subject" data-placeholder="Subject"
                                                     class="chosen-select sel-dec">
-                                                    <option>Subject</option>
+                                                    <option value="">Select Subject (Optional)</option>
                                                     <option value="Order Project">Order Project</option>
                                                     <option value="Support">Support</option>
                                                     <option value="Other Question">Other Question</option>
@@ -130,20 +149,9 @@
                                             </div>
                                         </div>
                                         <textarea name="comments" id="comments" cols="40" rows="3" placeholder="Your Message:"></textarea>
-                                        <div class="verify-wrap">
-                                            <span class="verify-text"> How many gnomes were in the story about the
-                                                "Snow-white" ?</span>
-                                            <select name="verify" id="verify" data-placeholder="0"
-                                                class="chosen-select">
-                                                <option>0</option>
-                                                <option value="9">9</option>
-                                                <option value="5">5</option>
-                                                <option value="7">7</option>
-                                                <option value="2">2</option>
-                                            </select>
-                                        </div>
+
                                         <div class="clearfix"></div>
-                                        <button class="btn float-btn flat-btn color-btn" id="submit">Send
+                                        <button type="submit" class="btn float-btn flat-btn color-btn" id="submit">Send
                                             Message</button>
                                     </fieldset>
                                 </form>
@@ -190,7 +198,27 @@
 @section('js')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Helper to get cookie by name
+            function getCookie(name) {
+                                                                    if (typeof $ !== 'undefined') { $('#message').stop(true, true).slideDown('slow'); } else { messageDiv.style.display = 'block'; }
+                const value = `; ${document.cookie}`;
+                const parts = value.split(`; ${name}=`);
+                if (parts.length === 2) return parts.pop().split(';').shift();
+                return null;
+            }
+            // Ensure CSRF meta tag exists
+            if (!document.querySelector('meta[name="csrf-token"]')) {
+                const csrfInput = document.querySelector('input[name="_token"]');
+                if (csrfInput) {
+                    const meta = document.createElement('meta');
+                    meta.name = 'csrf-token';
+                    meta.content = csrfInput.value;
+                    document.getElementsByTagName('head')[0].appendChild(meta);
+                }
+            }
+
             // Get URL parameters
+                                                                    if (typeof $ !== 'undefined') { $('#message').stop(true, true).slideDown('slow'); } else { messageDiv.style.display = 'block'; }
             const urlParams = new URLSearchParams(window.location.search);
             const subject = urlParams.get('subject');
             const project = urlParams.get('project');
@@ -210,7 +238,8 @@
                         newOption.selected = true;
                         subjectSelect.appendChild(newOption);
                     } else {
-                        subjectSelect.value = subject;
+                                                                messageDiv.innerHTML = `<div class="alert alert-danger" style="background: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; padding: 12px; border-radius: 4px; margin-bottom: 20px;">${errorMessage}</div>`;
+                                                                if (typeof $ !== 'undefined') { $('#message').stop(true, true).slideDown('slow'); } else { messageDiv.style.display = 'block'; }
                     }
                     // Trigger change event for chosen-select
                     if (typeof $.fn.chosen !== 'undefined') {
@@ -251,6 +280,131 @@
                     }, 3000);
                 }, 500);
             }
+
+            // Handle form submission
+            // Defensive: unbind any theme-bound jQuery handlers to avoid duplicate submits
+            if (typeof $ !== 'undefined' && $('#contactform').length) {
+                $('#contactform').off('submit');
+            }
+            const form = document.getElementById('contactform');
+            const submitBtn = document.getElementById('submit');
+            const messageDiv = document.getElementById('message');
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                // Basic client-side validation
+                const name = document.getElementById('name').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const comments = document.getElementById('comments').value.trim();
+
+                if (!name || !email || !comments) {
+                    messageDiv.innerHTML = `<div class="alert alert-danger" style="background: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; padding: 12px; border-radius: 4px; margin-bottom: 20px;">Please fill in all required fields (Name, Email, and Message).</div>`;
+                    return;
+                }
+
+                // Disable submit button
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = 'Sending...';
+
+                // Clear previous messages
+                messageDiv.innerHTML = '';
+
+                // Get form data
+                const formData = new FormData(form);
+
+                // Ensure CSRF token is included
+                let csrfToken = document.querySelector('input[name="_token"]');
+                if (csrfToken) {
+                    formData.set('_token', csrfToken.value);
+                } else {
+                    // Fallback to meta tag
+                    const metaToken = document.querySelector('meta[name="csrf-token"]');
+                    if (metaToken) {
+                        formData.set('_token', metaToken.getAttribute('content'));
+                    }
+                }
+
+                // Debug: Log form data
+                console.log('Form data being sent:');
+                for (let [key, value] of formData.entries()) {
+                    console.log(key, value);
+                }
+
+                // Send AJAX request using jQuery (more reliable with CSRF)
+                $.ajaxSetup({
+                    headers: (function(){
+                        const headers = { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') };
+                        const xsrf = getCookie('XSRF-TOKEN');
+                        if (xsrf) {
+                            headers['X-XSRF-TOKEN'] = decodeURIComponent(xsrf);
+                        }
+                        return headers;
+                    })()
+                });
+
+                $.ajax({
+                    url: form.action,
+                    method: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    xhrFields: { withCredentials: true },
+                    success: function(data) {
+                        if (data.success) {
+                            messageDiv.innerHTML = `<div class="alert alert-success" style="background: #d4edda; border: 1px solid #c3e6cb; color: #155724; padding: 12px; border-radius: 4px; margin-bottom: 20px;">${data.message}</div>`;
+                            form.reset();
+                            // Reset chosen selects if they exist
+                            if (typeof $.fn.chosen !== 'undefined') {
+                                $('.chosen-select').val('').trigger('chosen:updated');
+                            }
+                        } else {
+                            let errorMsg = data.message || 'An error occurred. Please try again.';
+                            if (data.errors) {
+                                errorMsg += '<ul>';
+                                Object.values(data.errors).forEach(errors => {
+                                    errors.forEach(error => {
+                                        errorMsg += `<li>${error}</li>`;
+                                    });
+                                });
+                                errorMsg += '</ul>';
+                            }
+                            messageDiv.innerHTML = `<div class="alert alert-danger" style="background: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; padding: 12px; border-radius: 4px; margin-bottom: 20px;">${errorMsg}</div>`;
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('AJAX Error:', xhr.responseText);
+                        let errorMessage = 'An error occurred. Please try again.';
+
+                        if (xhr.status === 419) {
+                            errorMessage = 'Security token expired. Please refresh the page and try again.';
+                        } else if (xhr.status === 422 && xhr.responseJSON) {
+                            errorMessage = 'Please correct the following errors:<ul>';
+                            if (xhr.responseJSON.errors) {
+                                Object.values(xhr.responseJSON.errors).forEach(errors => {
+                                    errors.forEach(err => {
+                                        errorMessage += `<li>${err}</li>`;
+                                    });
+                                });
+                            }
+                            errorMessage += '</ul>';
+                        }
+
+                        messageDiv.innerHTML = `<div class="alert alert-danger" style="background: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; padding: 12px; border-radius: 4px; margin-bottom: 20px;">${errorMessage}</div>`;
+                    },
+                    complete: function() {
+                        // Re-enable submit button
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = 'Send Message';
+
+                        // Scroll to message
+                        messageDiv.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'center'
+                        });
+                    }
+                });
+            });
         });
     </script>
 @endsection
