@@ -26,5 +26,6 @@
                 {{ $slot }}
             </div>
         </div>
+        @includeIf('components.floating-contact')
     </body>
 </html>

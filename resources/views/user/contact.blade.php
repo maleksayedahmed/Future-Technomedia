@@ -1,5 +1,24 @@
 @extends('layouts.user.app')
 @section('css')
+<style>
+    .fw-map-container {
+        position: relative;
+        width: 100%;
+        margin-bottom: 30px;
+    }
+    .map-container {
+        position: relative;
+        width: 100%;
+        height: 450px;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+    #singleMap {
+        width: 100%;
+        height: 100%;
+        min-height: 450px;
+    }
+</style>
 @endsection
 @section('content')
     <div class="content">
@@ -11,7 +30,7 @@
                 </div>
                 <span>Scroll Down</span>
             </div>
-            <a href="index.html" class="single-page-fixed-row-link"><i class="fal fa-arrow-left"></i> <span>Back to
+            <a href="{{ route('home') }}" class="single-page-fixed-row-link"><i class="fal fa-arrow-left"></i> <span>Back to
                     home</span></a>
         </div>
         <!-- section-->
@@ -21,10 +40,9 @@
             <div class="pattern-bg"></div>
             <div class="container">
                 <div class="section-title">
-                    <h2>My <span>Contact </span> Page</h2>
-                    <p> If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything
-                        embarrassing hidden in the middle of text. </p>
-                    <div class="horizonral-subtitle"><span>Contacts</span></div>
+                    <h2>{{ $contactSettings['contact_hero_title'] ?? 'My' }}</h2>
+                    <p>{{ $contactSettings['contact_hero_description'] ?? 'If you are going to use a passage of Lorem Ipsum, you need to be sure there isn\'t anything embarrassing hidden in the middle of text.' }}</p>
+                    <div class="horizonral-subtitle"><span>{{ $contactSettings['contact_hero_subtitle'] ?? 'Contacts' }}</span></div>
                 </div>
             </div>
             <a href="#sec1" class="custom-scroll-link hero-start-link"><span>Let's Start</span> <i
@@ -41,8 +59,8 @@
                     <div class="row">
                         <div class="col-md-3">
                             <div class="pr-title fl-wrap">
-                                <h3>Contact Details</h3>
-                                <span>Lorem Ipsum generators on the Internet king this the first true generator</span>
+                                <h3>{{ $contactSettings['contact_details_title'] ?? 'Contact Details' }}</h3>
+                                <span>{{ $contactSettings['contact_details_subtitle'] ?? 'Lorem Ipsum generators on the Internet king this the first true generator' }}</span>
                             </div>
                         </div>
                         <div class="col-md-9">
@@ -55,7 +73,7 @@
                                             <i class="fal fa-mobile-android"></i>
                                         </div>
                                         <h3>01. Phone</h3>
-                                        <a href="#">+489756412322</a>
+                                        <a href="tel:{{ $contactSettings['contact_phone'] ?? '+489756412322' }}">{{ $contactSettings['contact_phone'] ?? '+489756412322' }}</a>
                                     </div>
                                     <!-- features-box end  -->
                                     <!--features-box -->
@@ -64,7 +82,7 @@
                                             <i class="fal fa-compass"></i>
                                         </div>
                                         <h3>02. Location</h3>
-                                        <a href="#">USA 27TH Brooklyn NY</a>
+                                        <a href="#">{{ $contactSettings['contact_address'] ?? 'USA 27TH Brooklyn NY' }}</a>
                                     </div>
                                     <!-- features-box end  -->
                                     <!--features-box -->
@@ -73,7 +91,7 @@
                                             <i class="fal fa-envelope-open"></i>
                                         </div>
                                         <h3>03. Email</h3>
-                                        <a href="#">yourmail@domain.com</a>
+                                        <a href="mailto:{{ $contactSettings['contact_email'] ?? 'yourmail@domain.com' }}">{{ $contactSettings['contact_email'] ?? 'yourmail@domain.com' }}</a>
                                     </div>
                                     <!-- features-box end  -->
                                 </div>
@@ -85,8 +103,20 @@
                 <!-- contact details end  -->
                 <div class="fw-map-container fl-wrap mar-bottom">
                     <div class="map-container">
-                        <div id="singleMap" data-latitude="40.7143528" data-longitude="-74.0059731"
-                            data-mapTitle="Out Location"></div>
+                        <!-- Embedded Google Map (No API Key Required) -->
+                        <iframe
+                            src="{{ $contactSettings['contact_map_embed_url'] ?? 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d924237.7098003947!2d46.28065179453125!3d24.72422534946569!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e2f03890d489399%3A0xba974d1c98e79fd5!2sRiyadh%20Saudi%20Arabia!5e0!3m2!1sen!2s!4v1234567890123!5m2!1sen!2s' }}"
+                            width="100%"
+                            height="450"
+                            style="border:0;"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+
+                        <!-- Alternative: Custom Map with API (Uncomment and add your API key above) -->
+                        <!-- <div id="singleMap" data-latitude="{{ $contactSettings['contact_map_latitude'] ?? '24.7136' }}" data-longitude="{{ $contactSettings['contact_map_longitude'] ?? '46.6753' }}"
+                            data-mapTitle="{{ $contactSettings['contact_address'] ?? 'Riyadh, Saudi Arabia' }}"></div> -->
                     </div>
                 </div>
                 <!--  map end  -->
@@ -94,8 +124,8 @@
                     <div class="row">
                         <div class="col-md-3">
                             <div class="pr-title fl-wrap">
-                                <h3>Get In Touch</h3>
-                                <span>Lorem Ipsum generators on the Internet king this the first true generator</span>
+                                <h3>{{ $contactSettings['contact_form_title'] ?? 'Get In Touch' }}</h3>
+                                <span>{{ $contactSettings['contact_form_subtitle'] ?? 'Lorem Ipsum generators on the Internet king this the first true generator' }}</span>
                             </div>
                         </div>
                         <div class="col-md-7">
@@ -177,14 +207,22 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-8">
-                        <h3>Find me on social networks : </h3>
+                        <h3>{{ $contactSettings['contact_social_title'] ?? 'Find me on social networks :' }}</h3>
                     </div>
                     <div class="col-md-4">
                         <ul>
-                            <li><a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
-                            <li><a href="#" target="_blank"><i class="fab fa-instagram"></i></a></li>
-                            <li><a href="#" target="_blank"><i class="fab fa-twitter"></i></a></li>
-                            <li><a href="#" target="_blank"><i class="fab fa-vk"></i></a></li>
+                            @if(!empty($socialSettings['social_facebook']) && $socialSettings['social_facebook'] !== '#')
+                                <li><a href="{{ $socialSettings['social_facebook'] }}" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+                            @endif
+                            @if(!empty($socialSettings['social_instagram']) && $socialSettings['social_instagram'] !== '#')
+                                <li><a href="{{ $socialSettings['social_instagram'] }}" target="_blank"><i class="fab fa-instagram"></i></a></li>
+                            @endif
+                            @if(!empty($socialSettings['social_twitter']) && $socialSettings['social_twitter'] !== '#')
+                                <li><a href="{{ $socialSettings['social_twitter'] }}" target="_blank"><i class="fab fa-twitter"></i></a></li>
+                            @endif
+                            @if(!empty($socialSettings['social_vk']) && $socialSettings['social_vk'] !== '#')
+                                <li><a href="{{ $socialSettings['social_vk'] }}" target="_blank"><i class="fab fa-vk"></i></a></li>
+                            @endif
                         </ul>
                     </div>
                 </div>
@@ -196,6 +234,12 @@
 
 
 @section('js')
+    <!-- Google Maps API (Only needed if using custom map with markers) -->
+    <!-- TODO: Replace YOUR_GOOGLE_MAPS_API_KEY with your actual Google Maps API key -->
+    <!-- Get your API key from: https://console.cloud.google.com/google/maps-apis -->
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&libraries=places&callback=Function.prototype"></script> -->
+    <!-- <script type="text/javascript" src="{{ asset('js/map.js') }}"></script> -->
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Helper to get cookie by name
@@ -265,20 +309,22 @@
                 }
             }
 
-            // Scroll to contact form
-            const contactForm = document.getElementById('contact-form');
-            if (contactForm) {
-                setTimeout(() => {
-                    contactForm.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'center'
-                    });
-                    // Add a highlight effect
-                    contactForm.style.boxShadow = '0 0 0 3px rgba(99, 102, 241, 0.3)';
+            // Scroll to contact form only if there are URL parameters
+            if (subject || project || packageType) {
+                const contactForm = document.getElementById('contact-form');
+                if (contactForm) {
                     setTimeout(() => {
-                        contactForm.style.boxShadow = '';
-                    }, 3000);
-                }, 500);
+                        contactForm.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'center'
+                        });
+                        // Add a highlight effect
+                        contactForm.style.boxShadow = '0 0 0 3px rgba(99, 102, 241, 0.3)';
+                        setTimeout(() => {
+                            contactForm.style.boxShadow = '';
+                        }, 3000);
+                    }, 500);
+                }
             }
 
             // Handle form submission

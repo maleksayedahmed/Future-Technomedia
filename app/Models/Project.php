@@ -16,6 +16,7 @@ class Project extends Model implements HasMedia
         'description',
         'pdf_file',
         'project_category',
+        'category_id',
         'live_url',
         'github_url',
         'pricing_type',
@@ -57,6 +58,11 @@ class Project extends Model implements HasMedia
     }
 
     // Relationships
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
     public function features()
     {
         return $this->hasMany(ProjectFeature::class)->ordered();

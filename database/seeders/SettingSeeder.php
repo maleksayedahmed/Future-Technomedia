@@ -54,13 +54,22 @@ class SettingSeeder extends Seeder
                 'order' => 1,
             ],
             [
+                'key' => 'contact_whatsapp',
+                'value' => '+489756412322',
+                'type' => 'text',
+                'group' => 'contact',
+                'label' => 'WhatsApp Number',
+                'description' => 'Primary WhatsApp number with country code (e.g., +201234567890)',
+                'order' => 2,
+            ],
+            [
                 'key' => 'contact_email',
                 'value' => 'yourmail@domain.com',
                 'type' => 'text',
                 'group' => 'contact',
                 'label' => 'Email Address',
                 'description' => 'Main contact email address',
-                'order' => 2,
+                'order' => 3,
             ],
             [
                 'key' => 'contact_address',
@@ -69,7 +78,7 @@ class SettingSeeder extends Seeder
                 'group' => 'contact',
                 'label' => 'Address',
                 'description' => 'Company address',
-                'order' => 3,
+                'order' => 4,
             ],
 
             // Social Media Links
@@ -208,7 +217,8 @@ class SettingSeeder extends Seeder
         ];
 
         foreach ($settings as $setting) {
-            Setting::create($setting);
+            // Upsert to avoid unique key conflicts if seeder runs multiple times
+            Setting::updateOrCreate(['key' => $setting['key']], $setting);
         }
     }
 }

@@ -8,6 +8,7 @@ use App\Models\Project;
 use App\Models\ProjectFeature;
 use App\Models\ProjectTechStack;
 use App\Models\ProjectPricingPlan;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
@@ -19,7 +20,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::latest()->paginate(10);
+        $projects = Project::with('category')->latest()->paginate(10);
         return view('admin.projects.index', compact('projects'));
     }
 
@@ -28,7 +29,8 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view('admin.projects.create');
+        $categories = Category::active()->ordered()->get();
+        return view('admin.projects.create', compact('categories'));
     }
 
     /**
@@ -41,7 +43,7 @@ class ProjectController extends Controller
 
             // Create the project
             $projectData = $request->only([
-                'title', 'description', 'project_category', 'live_url', 'github_url',
+                'title', 'description', 'project_category', 'category_id', 'live_url', 'github_url',
                 'pricing_type', 'fixed_price', 'discount_amount',
                 'discount_type', 'order'
             ]);
@@ -157,8 +159,9 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        $project->load(['features', 'techStacks', 'pricingPlans']);
-        return view('admin.projects.edit', compact('project'));
+        $project->load(['features', 'techStacks', 'pricingPlans', 'category']);
+        $categories = Category::active()->ordered()->get();
+        return view('admin.projects.edit', compact('project', 'categories'));
     }
 
     /**
@@ -171,7 +174,7 @@ class ProjectController extends Controller
 
             // Update project data
             $projectData = $request->only([
-                'title', 'description', 'project_category', 'live_url', 'github_url',
+                'title', 'description', 'project_category', 'category_id', 'live_url', 'github_url',
                 'pricing_type', 'fixed_price', 'discount_amount',
                 'discount_type', 'order'
             ]);

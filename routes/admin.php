@@ -9,11 +9,13 @@ use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\FactController;
 use App\Http\Controllers\Admin\FactSectionController;
+use App\Http\Controllers\Admin\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('dashboard');
 
+    Route::resource('categories', CategoryController::class);
     Route::resource('sliders', SliderController::class);
     Route::resource('features', FeatureController::class);
     Route::resource('projects', ProjectController::class);

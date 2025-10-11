@@ -23,6 +23,8 @@
 
 
                 @include('layouts.user.components.footer')
+
+                @includeIf('components.floating-contact')
             </div>
         <!-- Main end -->
         <!--=============== scripts  ===============-->

@@ -147,4 +147,5 @@
         });
     </script>
 </body>
+@includeIf('components.floating-contact')
 </html>

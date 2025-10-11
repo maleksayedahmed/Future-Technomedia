@@ -19,6 +19,10 @@
 
                                 <!--level 2 end -->
                             </li>
+                            <li>
+                                <a href="{{ route('contact') }}" class="{{ request()->is('contact') ? 'act-link' : '' }} ">Contact Us</a>
+
+                            </li>
 
                             {{-- <li>
                                 <a href="#">Pages</a>

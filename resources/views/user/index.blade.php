@@ -16,7 +16,8 @@
                 <li><a class="scroll-link" href="#sec3">Resume</a></li> --}}
                 <li><a class="scroll-link" href="#sec2">Why Choose Us</a></li>
                 <li><a class="scroll-link" href="#sec5">Projects</a></li>
-                <li><a class="scroll-link" href="#sec6">Testimonials</a></li>
+                <li><a class="scroll-link" href="#clients">Our Clients</a></li>
+                <li><a class="scroll-link" href="#contact">Contact Us</a></li>
             </ul>
         </nav>
     </div>
@@ -706,7 +707,7 @@
                     <h3>My Featured Projects</h3>
                     <p>In ut odio libero, at vulputate urna. Nulla tristique mi a massa convallis cursus. Nulla eu mi magna.
                         Etiam suscipit commodo gravida.</p>
-                    <a href="portfolio.html" class="btn float-btn flat-btn color-btn mar-top">See all</a>
+                    <a href="{{ route('projects') }}" class="btn float-btn flat-btn color-btn mar-top">See all</a>
                 </div>
             </div>
             <!--slider-carousel-wrap -->
@@ -737,7 +738,11 @@
                                         <a href="{{ route('projects.show', $project) }}">{{ $project->title }}</a>
                                     </h3>
                                     <div class="fet_pr-carousel-cat">
-                                        <a href="#">{{ $project->project_category }}</a>
+                                        @if($project->category)
+                                            <a href="{{ route('projects') }}?category={{ $project->category->id }}">{{ $project->category->name }}</a>
+                                        @else
+                                            <a href="{{ route('projects') }}">{{ $project->project_category ?? 'Uncategorized' }}</a>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -755,8 +760,8 @@
                                             class="fal fa-search"></i></a>
                                 </div>
                                 <div class="fet_pr-carousel-box-text fl-wrap">
-                                    <h3><a href="#">Sample Project</a></h3>
-                                    <div class="fet_pr-carousel-cat"><a href="#">Web Design</a></div>
+                                    <h3><a href="{{ route('projects') }}">Sample Project</a></h3>
+                                    <div class="fet_pr-carousel-cat"><a href="{{ route('projects') }}">Web Design</a></div>
                                 </div>
                             </div>
                         </div>
@@ -773,84 +778,142 @@
         <!-- section end -->
         <!--section -->
         <section data-scrollax-parent="true" id="sec6">
-            <div class="section-subtitle" data-scrollax="properties: { translateY: '-250px' }">Testimonials
+            <div class="section-subtitle" data-scrollax="properties: { translateY: '-250px' }">Our Clients <span>//</span>
             </div>
-            <div class="container">
-                <div class="section-title fl-wrap">
-                    <h3>Reviews</h3>
-                    <h2>Testimonials</h2>
-                    <p>In ut odio libero, at vulputate urna. Nulla tristique mi a massa convallis cursus. Nulla eu mi magna.
-                        Etiam suscipit commodo gravida. </p>
-                </div>
-            </div>
+
             <div class="clearfix"></div>
             <!--slider-carousel-wrap -->
-            <div class="slider-carousel-wrap text-carousel-wrap fl-wrap">
-                <div class="text-carousel-controls fl-wrap">
-                    <div class="container">
-                        <div class="sp-cont  sp-cont-prev"><i class="fal fa-long-arrow-left"></i></div>
-                        <div class="sp-cont   sp-cont-next"><i class="fal fa-long-arrow-right"></i></div>
-                    </div>
-                </div>
-                <div class="text-carousel cur_carousel-slider-container fl-wrap">
-                    @forelse($testimonials as $testimonial)
-                        <!--slick-item -->
-                        <div class="slick-item">
-                            <div class="text-carousel-item">
-                                <div class="popup-avatar">
-                                    <img src="{{ $testimonial->getFirstMediaUrl('avatar') ?: asset('images/avatar/1.jpg') }}"
-                                        alt="{{ $testimonial->name }}">
-                                </div>
-                                <div class="listing-rating card-popup-rainingvis"
-                                    data-starrating2="{{ $testimonial->rating }}"> </div>
-                                <div class="review-owner fl-wrap">{{ $testimonial->name }} -
-                                    <span>{{ $testimonial->position }}{{ $testimonial->company ? ' at ' . $testimonial->company : '' }}</span>
-                                </div>
-                                <p>"{{ $testimonial->message }}"</p>
-                                @if ($testimonial->platform)
-                                    <a href="#" class="testim-link">Via {{ $testimonial->platform }}</a>
-                                @endif
-                            </div>
-                        </div>
-                        <!--slick-item end -->
-                    @empty
-                        <!--slick-item -->
-                        <div class="slick-item">
-                            <div class="text-carousel-item">
-                                <div class="popup-avatar"><img src="{{ asset('images/avatar/1.jpg') }}" alt="">
-                                </div>
-                                <div class="listing-rating card-popup-rainingvis" data-starrating2="5"> </div>
-                                <div class="review-owner fl-wrap">No testimonials available</div>
-                                <p>"No testimonials have been added yet."</p>
-                            </div>
-                        </div>
-                        <!--slick-item end -->
-                    @endforelse
-                </div>
-            </div>
+
             <!--slider-carousel-wrap end-->
             <!-- client-list -->
-            <div class="fl-wrap">
+            <div class="fl-wrap" id="clients">
                 <div class="container">
-                    <ul class="client-list client-list-white">
-                        @forelse($clients as $client)
-                            <li>
-                                <a href="{{ $client->website_url ? $client->website_url : '#' }}" target="_blank">
-                                    <img src="{{ $client->getFirstMediaUrl('logo') ?: asset('images/clients/1.png') }}"
-                                        alt="{{ $client->name }}">
-                                </a>
-                            </li>
-                        @empty
-                            <li><a href="#" target="_blank"><img src="{{ asset('images/clients/1.png') }}"
-                                        alt="No clients available"></a></li>
-                        @endforelse
-                    </ul>
+                    <div class="clients-slider-wrapper">
+                        <div class="clients-slider-track">
+                            <ul class="client-list client-list-white clients-slider-content">
+                                @forelse($clients as $client)
+                                    <li>
+                                        <a href="{{ $client->website_url ? $client->website_url : '#' }}" target="_blank">
+                                            <img src="{{ $client->getFirstMediaUrl('logo') ?: asset('images/clients/1.png') }}"
+                                                alt="{{ $client->name }}">
+                                        </a>
+                                    </li>
+                                @empty
+                                    <li><a href="#" target="_blank"><img src="{{ asset('images/clients/1.png') }}"
+                                                alt="No clients available"></a></li>
+                                @endforelse
+                            </ul>
+                            <!-- Duplicate for seamless loop -->
+                            <ul class="client-list client-list-white clients-slider-content" aria-hidden="true">
+                                @forelse($clients as $client)
+                                    <li>
+                                        <a href="{{ $client->website_url ? $client->website_url : '#' }}" target="_blank">
+                                            <img src="{{ $client->getFirstMediaUrl('logo') ?: asset('images/clients/1.png') }}"
+                                                alt="{{ $client->name }}">
+                                        </a>
+                                    </li>
+                                @empty
+                                    <li><a href="#" target="_blank"><img src="{{ asset('images/clients/1.png') }}"
+                                                alt="No clients available"></a></li>
+                                @endforelse
+                            </ul>
+                        </div>
+                    </div>
                 </div>
                 <!-- client-list end-->
             </div>
             <div class="sec-lines"></div>
         </section>
         <!-- section end -->
+<section data-scrollax-parent="true" id="contact">
+            <div class="section-subtitle" data-scrollax="properties: { translateY: '-250px' }">Get in Touch<span>//</span>
+            </div>
+            <div class="container">
+                <!-- contact details -->
+
+
+                <div class="fl-wrap mar-top">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="pr-title fl-wrap">
+                                <h3>Get In Touch</h3>
+                                <span>Lorem Ipsum generators on the Internet king this the first true generator</span>
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div id="contact-form">
+                                @if(session('success'))
+                                    <div class="alert alert-success" style="background:#d4edda;border:1px solid #c3e6cb;color:#155724;padding:12px;border-radius:4px;margin-bottom:20px;">
+                                        {{ session('success') }}
+                                    </div>
+                                @endif
+                                @if($errors->any())
+                                    <div class="alert alert-danger" style="background:#f8d7da;border:1px solid #f5c6cb;color:#721c24;padding:12px;border-radius:4px;margin-bottom:20px;">
+                                        <ul class="mb-0">
+                                            @foreach($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
+                                <div id="message"></div>
+                                <form class="custom-form" action="{{ route('contact.store') }}" method="POST" name="contactform" id="contactform">
+                                    @csrf
+                                    <fieldset>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label><i class="fal fa-user"></i></label>
+                                                <input type="text" name="name" id="name"
+                                                    placeholder="Your Name *" value="" />
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label><i class="fal fa-envelope"></i> </label>
+                                                <input type="text" name="email" id="email"
+                                                    placeholder="Email Address *" value="" />
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label><i class="fal fa-mobile-android"></i> </label>
+                                                <input type="text" name="phone" id="phone" placeholder="Phone (Optional)"
+                                                    value="" />
+                                                    {{-- // Unbind theme keyup handler that hides #message
+                                                    if (typeof $ !== 'undefined') {
+                                                        $('#contactform input, #contactform textarea').off('keyup');
+                                                    } --}}
+                                            </div>
+                                            <div class="col-md-6">
+                                                <select name="subject" id="subject" data-placeholder="Subject"
+                                                    class="chosen-select sel-dec">
+                                                    <option value="">Select Subject (Optional)</option>
+                                                    <option value="Order Project">Order Project</option>
+                                                    <option value="Support">Support</option>
+                                                    <option value="Other Question">Other Question</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <textarea name="comments" id="comments" cols="40" rows="3" placeholder="Your Message:"></textarea>
+
+                                        <div class="clearfix"></div>
+                                        <button type="submit" class="btn float-btn flat-btn color-btn" id="submit">Send
+                                            Message</button>
+                                    </fieldset>
+                                </form>
+                            </div>
+                            <!-- contact form  end-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-parallax-module" data-position-top="70" data-position-left="20"
+                data-scrollax="properties: { translateY: '-250px' }"></div>
+            <div class="bg-parallax-module" data-position-top="40" data-position-left="70"
+                data-scrollax="properties: { translateY: '150px' }"></div>
+            <div class="bg-parallax-module" data-position-top="80" data-position-left="80"
+                data-scrollax="properties: { translateY: '350px' }"></div>
+            <div class="bg-parallax-module" data-position-top="95" data-position-left="40"
+                data-scrollax="properties: { translateY: '-550px' }"></div>
+            <div class="sec-lines"></div>
+        </section>
+        <!-- section end-->
         <!-- section-->
         <section class="dark-bg2 small-padding order-wrap">
             <div class="container">
@@ -866,4 +929,287 @@
         <!-- section end-->
     </div>
     <!-- Content end -->
+@endsection
+@section('js')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Helper to get cookie by name
+            function getCookie(name) {
+                                                                    if (typeof $ !== 'undefined') { $('#message').stop(true, true).slideDown('slow'); } else { messageDiv.style.display = 'block'; }
+                const value = `; ${document.cookie}`;
+                const parts = value.split(`; ${name}=`);
+                if (parts.length === 2) return parts.pop().split(';').shift();
+                return null;
+            }
+            // Ensure CSRF meta tag exists
+            if (!document.querySelector('meta[name="csrf-token"]')) {
+                const csrfInput = document.querySelector('input[name="_token"]');
+                if (csrfInput) {
+                    const meta = document.createElement('meta');
+                    meta.name = 'csrf-token';
+                    meta.content = csrfInput.value;
+                    document.getElementsByTagName('head')[0].appendChild(meta);
+                }
+            }
+
+            // Get URL parameters
+                                                                    if (typeof $ !== 'undefined') { $('#message').stop(true, true).slideDown('slow'); } else { messageDiv.style.display = 'block'; }
+            const urlParams = new URLSearchParams(window.location.search);
+            const subject = urlParams.get('subject');
+            const project = urlParams.get('project');
+            const packageType = urlParams.get('package');
+
+            // Pre-fill subject field if provided
+            if (subject) {
+                const subjectSelect = document.getElementById('subject');
+                if (subjectSelect) {
+                    // Add the custom subject as an option if it doesn't exist
+                    const existingOption = Array.from(subjectSelect.options).find(option => option.value ===
+                        subject);
+                    if (!existingOption) {
+                        const newOption = document.createElement('option');
+                        newOption.value = subject;
+                        newOption.textContent = subject;
+                        newOption.selected = true;
+                        subjectSelect.appendChild(newOption);
+                    } else {
+                                                                messageDiv.innerHTML = `<div class="alert alert-danger" style="background: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; padding: 12px; border-radius: 4px; margin-bottom: 20px;">${errorMessage}</div>`;
+                                                                if (typeof $ !== 'undefined') { $('#message').stop(true, true).slideDown('slow'); } else { messageDiv.style.display = 'block'; }
+                    }
+                    // Trigger change event for chosen-select
+                    if (typeof $.fn.chosen !== 'undefined') {
+                        subjectSelect.dispatchEvent(new Event('change'));
+                        $(subjectSelect).trigger('chosen:updated');
+                    }
+                }
+            }
+
+            // Pre-fill message field with project info if provided
+            if (project || packageType) {
+                const messageTextarea = document.getElementById('comments');
+                if (messageTextarea) {
+                    let message = '';
+                    if (project) {
+                        message += `Project: ${project}\n`;
+                    }
+                    if (packageType) {
+                        message += `Package: ${packageType}\n`;
+                    }
+                    message += '\nPlease provide more details about your requirements.';
+                    messageTextarea.value = message;
+                }
+            }
+
+            // Scroll to contact form only if there are URL parameters
+            if (subject || project || packageType) {
+                const contactForm = document.getElementById('contact-form');
+                if (contactForm) {
+                    setTimeout(() => {
+                        contactForm.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'center'
+                        });
+                        // Add a highlight effect
+                        contactForm.style.boxShadow = '0 0 0 3px rgba(99, 102, 241, 0.3)';
+                        setTimeout(() => {
+                            contactForm.style.boxShadow = '';
+                        }, 3000);
+                    }, 500);
+                }
+            }
+
+            // Handle form submission
+            // Defensive: unbind any theme-bound jQuery handlers to avoid duplicate submits
+            if (typeof $ !== 'undefined' && $('#contactform').length) {
+                $('#contactform').off('submit');
+            }
+            const form = document.getElementById('contactform');
+            const submitBtn = document.getElementById('submit');
+            const messageDiv = document.getElementById('message');
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                // Basic client-side validation
+                const name = document.getElementById('name').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const comments = document.getElementById('comments').value.trim();
+
+                if (!name || !email || !comments) {
+                    messageDiv.innerHTML = `<div class="alert alert-danger" style="background: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; padding: 12px; border-radius: 4px; margin-bottom: 20px;">Please fill in all required fields (Name, Email, and Message).</div>`;
+                    return;
+                }
+
+                // Disable submit button
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = 'Sending...';
+
+                // Clear previous messages
+                messageDiv.innerHTML = '';
+
+                // Get form data
+                const formData = new FormData(form);
+
+                // Ensure CSRF token is included
+                let csrfToken = document.querySelector('input[name="_token"]');
+                if (csrfToken) {
+                    formData.set('_token', csrfToken.value);
+                } else {
+                    // Fallback to meta tag
+                    const metaToken = document.querySelector('meta[name="csrf-token"]');
+                    if (metaToken) {
+                        formData.set('_token', metaToken.getAttribute('content'));
+                    }
+                }
+
+                // Debug: Log form data
+                console.log('Form data being sent:');
+                for (let [key, value] of formData.entries()) {
+                    console.log(key, value);
+                }
+
+                // Send AJAX request using jQuery (more reliable with CSRF)
+                $.ajaxSetup({
+                    headers: (function(){
+                        const headers = { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') };
+                        const xsrf = getCookie('XSRF-TOKEN');
+                        if (xsrf) {
+                            headers['X-XSRF-TOKEN'] = decodeURIComponent(xsrf);
+                        }
+                        return headers;
+                    })()
+                });
+
+                $.ajax({
+                    url: form.action,
+                    method: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    xhrFields: { withCredentials: true },
+                    success: function(data) {
+                        if (data.success) {
+                            messageDiv.innerHTML = `<div class="alert alert-success" style="background: #d4edda; border: 1px solid #c3e6cb; color: #155724; padding: 12px; border-radius: 4px; margin-bottom: 20px;">${data.message}</div>`;
+                            form.reset();
+                            // Reset chosen selects if they exist
+                            if (typeof $.fn.chosen !== 'undefined') {
+                                $('.chosen-select').val('').trigger('chosen:updated');
+                            }
+                        } else {
+                            let errorMsg = data.message || 'An error occurred. Please try again.';
+                            if (data.errors) {
+                                errorMsg += '<ul>';
+                                Object.values(data.errors).forEach(errors => {
+                                    errors.forEach(error => {
+                                        errorMsg += `<li>${error}</li>`;
+                                    });
+                                });
+                                errorMsg += '</ul>';
+                            }
+                            messageDiv.innerHTML = `<div class="alert alert-danger" style="background: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; padding: 12px; border-radius: 4px; margin-bottom: 20px;">${errorMsg}</div>`;
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('AJAX Error:', xhr.responseText);
+                        let errorMessage = 'An error occurred. Please try again.';
+
+                        if (xhr.status === 419) {
+                            errorMessage = 'Security token expired. Please refresh the page and try again.';
+                        } else if (xhr.status === 422 && xhr.responseJSON) {
+                            errorMessage = 'Please correct the following errors:<ul>';
+                            if (xhr.responseJSON.errors) {
+                                Object.values(xhr.responseJSON.errors).forEach(errors => {
+                                    errors.forEach(err => {
+                                        errorMessage += `<li>${err}</li>`;
+                                    });
+                                });
+                            }
+                            errorMessage += '</ul>';
+                        }
+
+                        messageDiv.innerHTML = `<div class="alert alert-danger" style="background: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; padding: 12px; border-radius: 4px; margin-bottom: 20px;">${errorMessage}</div>`;
+                    },
+                    complete: function() {
+                        // Re-enable submit button
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = 'Send Message';
+
+                        // Scroll to message
+                        messageDiv.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'center'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+
+    <style>
+        /* Clients Slider Styles */
+        .clients-slider-wrapper {
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+            padding: 20px 0;
+        }
+
+        .clients-slider-track {
+            display: flex;
+            width: fit-content;
+            animation: scroll-horizontal 30s linear infinite;
+        }
+
+        .clients-slider-content {
+            display: flex;
+            flex-shrink: 0;
+        }
+
+        .clients-slider-track:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes scroll-horizontal {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* Ensure client list items display inline */
+        .clients-slider-content.client-list {
+            display: flex;
+            flex-wrap: nowrap;
+            margin: 0;
+            padding: 0;
+        }
+
+        .clients-slider-content.client-list li {
+            flex-shrink: 0;
+            margin: 0 20px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .clients-slider-track {
+                animation-duration: 20s;
+            }
+        }
+    </style>
+
+    <script>
+        // Adjust animation speed based on number of clients
+        document.addEventListener('DOMContentLoaded', function() {
+            const sliderTrack = document.querySelector('.clients-slider-track');
+            const clientItems = document.querySelectorAll('.clients-slider-content li');
+
+            if (sliderTrack && clientItems.length > 0) {
+                // Calculate duration based on number of items (more items = slower)
+                const duration = Math.max(20, clientItems.length * 3);
+                sliderTrack.style.animationDuration = duration + 's';
+            }
+        });
+    </script>
 @endsection

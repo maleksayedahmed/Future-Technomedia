@@ -52,7 +52,11 @@
                                     </td> --}}
                                     <td>{{ $project->title }}</td>
                                     <td>
-                                        <span class="badge bg-info">{{ $project->project_category }}</span>
+                                        @if($project->category)
+                                            <span class="badge bg-info">{{ $project->category->name }}</span>
+                                        @else
+                                            <span class="badge bg-secondary">Uncategorized</span>
+                                        @endif
                                     </td>
                                     <td>
                                         @if($project->pricing_type === 'fixed')

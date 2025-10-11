@@ -41,20 +41,23 @@
                                         @enderror
                                     </div>
                                 </div>
-                                {{-- <div class="col-md-4">
+                                <div class="col-md-4">
                                     <div class="mb-3">
-                                        <label for="project_category" class="form-label">Category <span
-                                                class="text-danger">*</span></label>
-                                        <input type="text"
-                                            class="form-control @error('project_category') is-invalid @enderror"
-                                            id="project_category" name="project_category"
-                                            value="{{ old('project_category') }}" placeholder="e.g., Web Design, Mobile App"
-                                            required>
-                                        @error('project_category')
+                                        <label for="category_id" class="form-label">Category</label>
+                                        <select class="form-select @error('category_id') is-invalid @enderror"
+                                                id="category_id" name="category_id">
+                                            <option value="">Select Category</option>
+                                            @foreach($categories as $category)
+                                                <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                                    {{ $category->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('category_id')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                </div> --}}
+                                </div>
                             </div>
 
                             <div class="mb-3">

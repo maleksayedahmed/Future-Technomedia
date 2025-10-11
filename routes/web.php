@@ -18,11 +18,12 @@ use App\Models\Client;
 use App\Models\Fact;
 use App\Models\FactSection;
 use App\Models\Setting;
+use App\Models\Category;
 
 Route::get('/', function () {
     $sliders = Slider::active()->ordered()->get();
     $features = Feature::active()->ordered()->get();
-    $projects = Project::active()->ordered()->get();
+    $projects = Project::with('category')->active()->ordered()->get();
     $testimonials = Testimonial::active()->ordered()->get();
     $clients = Client::active()->ordered()->get();
     $factSection = FactSection::getActiveSection();
@@ -34,12 +35,21 @@ Route::get('/project', function () {
     return view('user.project');
 })->name('project');
 
+Route::get('/projects', function () {
+    $categories = Category::active()->ordered()->withCount('projects')->get();
+    $projects = Project::with(['category', 'media'])->active()->ordered()->get();
+    $selectedCategory = request('category');
+    return view('user.projects', compact('categories', 'projects', 'selectedCategory'));
+})->name('projects');
+
 Route::get('/project-show-new', function () {
     return view('user.project-show-new');
 })->name('project-show-new');
 
 Route::get('/contact', function () {
-    return view('user.contact');
+    $contactSettings = \App\Models\Setting::getByGroup('contact');
+    $socialSettings = \App\Models\Setting::getByGroup('social');
+    return view('user.contact', compact('contactSettings', 'socialSettings'));
 })->name('contact');
 
 Route::middleware('auth')->group(function () {
