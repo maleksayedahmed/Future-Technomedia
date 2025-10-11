@@ -20,6 +20,11 @@
                                 <!--level 2 end -->
                             </li>
                             <li>
+                                <a href="{{ route('projects') }}" class="{{ request()->is('projects') ? 'act-link' : '' }} ">Projects</a>
+
+                                <!--level 2 end -->
+                            </li>
+                            <li>
                                 <a href="{{ route('contact') }}" class="{{ request()->is('contact') ? 'act-link' : '' }} ">Contact Us</a>
 
                             </li>
