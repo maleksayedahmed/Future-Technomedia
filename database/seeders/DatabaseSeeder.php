@@ -30,6 +30,10 @@ class DatabaseSeeder extends Seeder
             SettingSeeder::class,
             FactSectionSeeder::class,
             FactSeeder::class,
+            BlogSeeder::class,
+            BlogsPageContentSeeder::class,
+            FaqSeeder::class,
+            AboutSeeder::class,
         ]);
     }
 }

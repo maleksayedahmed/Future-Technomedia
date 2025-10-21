@@ -28,6 +28,7 @@
         .sidebar {
             background: linear-gradient(135deg, var(--sidebar-bg) 0%, #495057 100%);
             min-height: 100vh;
+            height: 100vh;
             position: fixed;
             top: 0;
             left: 0;
@@ -35,10 +36,40 @@
             padding: 20px 0;
             transition: all 0.3s ease;
             z-index: 1000;
+            overflow-y: auto;
+            overflow-x: hidden;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, 0.35) transparent;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .sidebar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.25);
+            border-radius: 12px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.4);
         }
 
         .sidebar.collapsed {
             width: 70px;
+            overflow: visible;
+        }
+
+        .sidebar.collapsed .nav-link {
+            overflow: hidden;
+        }
+
+        .sidebar.collapsed .nav-link span {
+            display: none;
         }
 
         .sidebar .brand {
@@ -89,6 +120,22 @@
 
         .sidebar.collapsed .nav-link span {
             display: none;
+        }
+
+        .sidebar .nav {
+            padding-right: 10px;
+        }
+
+        .sidebar.collapsed::-webkit-scrollbar {
+            display: none;
+        }
+
+        .sidebar.collapsed {
+            overflow-y: auto;
+        }
+
+        .sidebar.collapsed .nav {
+            padding-right: 0;
         }
 
         .main-content {
@@ -238,6 +285,27 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('admin.blogs-page-content.*') ? 'active' : '' }}"
+                    href="{{ route('admin.blogs-page-content.edit') }}">
+                    <i class="fas fa-newspaper"></i>
+                    <span>Blogs Page</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('admin.blogs.*') ? 'active' : '' }}"
+                    href="{{ route('admin.blogs.index') }}">
+                    <i class="fas fa-blog"></i>
+                    <span>Blog Posts</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('admin.faqs.*') ? 'active' : '' }}"
+                    href="{{ route('admin.faqs.index') }}">
+                    <i class="fas fa-question-circle"></i>
+                    <span>FAQs</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('admin.testimonials.*') ? 'active' : '' }}"
                     href="{{ route('admin.testimonials.index') }}">
                     <i class="fas fa-comments"></i>
@@ -256,6 +324,13 @@
                     href="{{ route('admin.contacts.index') }}">
                     <i class="fas fa-envelope"></i>
                     <span>Contact Messages</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('admin.abouts.*') ? 'active' : '' }}"
+                    href="{{ route('admin.abouts.index') }}">
+                    <i class="fas fa-info-circle"></i>
+                    <span>About Page</span>
                 </a>
             </li>
             <li class="nav-item">

@@ -52,6 +52,21 @@ Route::get('/contact', function () {
     return view('user.contact', compact('contactSettings', 'socialSettings'));
 })->name('contact');
 
+
+//blog routes
+Route::get('/blogs', [App\Http\Controllers\BlogController::class, 'index'])->name('blogs.index');
+Route::get('/blogs/{slug}', [App\Http\Controllers\BlogController::class, 'show'])->name('blogs.show');
+Route::post('/blogs/{slug}/comments', [App\Http\Controllers\BlogController::class, 'storeComment'])->name('blogs.comments.store');
+
+// FAQ routes
+Route::get('/faq', [App\Http\Controllers\FaqController::class, 'index'])->name('faq');
+
+// about us routes
+Route::get('/about-us', function () {
+    $about = \App\Models\About::active()->with('media')->first();
+    return view('user.about-us', compact('about'));
+})->name('about-us');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

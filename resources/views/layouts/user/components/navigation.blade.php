@@ -5,22 +5,41 @@
             <div class="nav-holder">
 
                 <a class="header-logo" href="{{ route('home') }}">
-                    @if(setting('logo'))
-                    <img src="{{ setting('logo') }}" alt="{{ setting('company_name', 'Future Technomedia') }}">
-                @else
-                    <img src="{{ asset('images/logo2.svg') }}" alt="{{ setting('company_name', 'Future Technomedia') }}">
-                @endif
+                    @if (setting('logo'))
+                        <img src="{{ setting('logo') }}" alt="{{ setting('company_name', 'Future Technomedia') }}">
+                    @else
+                        <img src="{{ asset('images/logo2.svg') }}"
+                            alt="{{ setting('company_name', 'Future Technomedia') }}">
+                    @endif
                 </a>
                 <div class="nav-inner-wrap">
                     <nav class="nav-inner sound-nav" id="menu">
                         <ul>
                             <li>
-                                <a href="{{ route('home') }}" class="{{ request()->is('/') ? 'act-link' : '' }} ">Home</a>
+                                <a href="{{ route('home') }}"
+                                    class="{{ request()->is('/') ? 'act-link' : '' }} ">Home</a>
 
                                 <!--level 2 end -->
                             </li>
                             <li>
-                                <a href="{{ route('contact') }}" class="{{ request()->is('contact') ? 'act-link' : '' }} ">Contact Us</a>
+                                <a href="{{ route('projects') }}"
+                                    class="{{ request()->is('project') ? 'act-link' : '' }} ">Projects</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('blogs.index') }}"
+                                    class="{{ request()->is('blogs') ? 'act-link' : '' }} ">Blogs</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('about-us') }}"
+                                    class="{{ request()->is('about-us') ? 'act-link' : '' }} ">About Us</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('faq') }}"
+                                    class="{{ request()->is('faq') ? 'act-link' : '' }} ">FAQs</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('contact') }}"
+                                    class="{{ request()->is('contact') ? 'act-link' : '' }} ">Contact Us</a>
 
                             </li>
 
