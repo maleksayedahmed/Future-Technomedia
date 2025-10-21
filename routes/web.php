@@ -49,7 +49,8 @@ Route::get('/project-show-new', function () {
 Route::get('/contact', function () {
     $contactSettings = \App\Models\Setting::getByGroup('contact');
     $socialSettings = \App\Models\Setting::getByGroup('social');
-    return view('user.contact', compact('contactSettings', 'socialSettings'));
+    $projects = Project::active()->ordered()->get();
+    return view('user.contact', compact('contactSettings', 'socialSettings', 'projects'));
 })->name('contact');
 
 

@@ -172,9 +172,10 @@
                                                 <select name="subject" id="subject" data-placeholder="Subject"
                                                     class="chosen-select sel-dec">
                                                     <option value="">Select Subject (Optional)</option>
-                                                    <option value="Order Project">Order Project</option>
-                                                    <option value="Support">Support</option>
-                                                    <option value="Other Question">Other Question</option>
+                                                    @foreach($projects as $project)
+                                                        <option value="{{ $project->title }}">{{ $project->title }}</option>
+                                                    @endforeach
+                                                    <option value="Other">Other</option>
                                                 </select>
                                             </div>
                                         </div>

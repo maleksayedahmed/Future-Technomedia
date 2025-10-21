@@ -234,7 +234,7 @@
                         <li><a href="#" class="ln"><i class="fal fa-arrow-left"></i><span
                                     class="tooltip">Prev</span></a></li>
                         <li>
-                            <a href="{{ route('project') }}" class="cur-page"><span>All Projects</span></a>
+                            <a href="{{ route('projects') }}" class="cur-page"><span>All Projects</span></a>
                         </li>
                         <li><a href="#" class="rn"><i class="fal fa-arrow-right"></i><span
                                     class="tooltip">Next</span></a></li>
@@ -271,4 +271,42 @@
 @endsection
 
 @section('js')
+    <script>
+        (function () {
+            function equalizePricingCardHeights() {
+                var cards = document.querySelectorAll('.pricing-grid .pricing-card');
+                if (!cards.length) return;
+
+                cards.forEach(function (card) { card.style.height = 'auto'; });
+
+                var maxHeight = 0;
+                cards.forEach(function (card) {
+                    var h = card.offsetHeight;
+                    if (h > maxHeight) maxHeight = h;
+                });
+
+                cards.forEach(function (card) { card.style.height = maxHeight + 'px'; });
+            }
+
+            // Initial runs
+            document.addEventListener('DOMContentLoaded', equalizePricingCardHeights);
+            window.addEventListener('load', equalizePricingCardHeights);
+
+            // Debounced on resize
+            var resizeTimer;
+            window.addEventListener('resize', function () {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(equalizePricingCardHeights, 150);
+            });
+
+            // If any images/icons inside cards load later, re-equalize
+            document.addEventListener('DOMContentLoaded', function () {
+                var imgs = document.querySelectorAll('.pricing-grid img');
+                imgs.forEach(function (img) {
+                    if (img.complete) return;
+                    img.addEventListener('load', equalizePricingCardHeights);
+                });
+            });
+        })();
+    </script>
 @endsection

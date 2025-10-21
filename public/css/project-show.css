@@ -183,8 +183,8 @@
 
 /* Pricing Grid Section */
 .pricing-grid {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(268px, 1fr));
     gap: 2rem;
     margin: 3rem 0;
     align-items: stretch;
@@ -379,7 +379,7 @@
 /* Responsive Design */
 @media (max-width: 768px) {
     .pricing-grid {
-        flex-direction: column;
+        grid-template-columns: 1fr;
         gap: 1.5rem;
     }
 

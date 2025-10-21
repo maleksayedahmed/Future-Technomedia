@@ -278,6 +278,13 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('admin.categories  .*') ? 'active' : '' }}"
+                    href="{{ route('admin.categories.index') }}">
+                    <i class="fas fa-folder-open"></i>
+                    <span>Categories</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('admin.projects.*') ? 'active' : '' }}"
                     href="{{ route('admin.projects.index') }}">
                     <i class="fas fa-folder-open"></i>
