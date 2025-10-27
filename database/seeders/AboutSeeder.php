@@ -41,7 +41,6 @@ class AboutSeeder extends Seeder
             'video_title' => 'Our Story in Motion',
             'video_description' => 'Watch our journey and see how we transform ideas into digital realities. Our team\'s passion and expertise come together to create innovative solutions for our clients.',
             'video_button_text' => 'Watch Our Story',
-            'video_button_url' => '#',
 
             'cta_title' => 'Ready To Start Your Project?',
             'cta_button_text' => 'Get In Touch',
