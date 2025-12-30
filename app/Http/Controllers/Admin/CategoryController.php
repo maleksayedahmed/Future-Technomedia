@@ -31,6 +31,9 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        if (isset($request->is_active) && $request->is_active == 'on') {
+            $request['is_active'] = true;
+        }
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'slug' => 'nullable|string|unique:categories,slug|max:255',
@@ -74,6 +77,9 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
+         if (isset($request->is_active) && $request->is_active == 'on') {
+            $request['is_active'] = true;
+        }
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'slug' => 'nullable|string|unique:categories,slug,' . $category->id . '|max:255',

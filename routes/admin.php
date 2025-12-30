@@ -32,12 +32,14 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::resource('projects', ProjectController::class);
     Route::resource('testimonials', TestimonialController::class);
     Route::resource('clients', ClientController::class);
+    Route::patch('settings/bulk-update', [SettingController::class, 'bulkUpdate'])->name('settings.bulk-update');
+
     Route::resource('settings', SettingController::class);
     Route::resource('fact-sections', FactSectionController::class);
     Route::resource('facts', FactController::class);
     Route::resource('faqs', FaqController::class);
     Route::resource('abouts', AboutController::class);
-
+    Route::resource('admin/menu-items', \App\Http\Controllers\Admin\MenuController::class);
     // Contact management routes
     Route::resource('contacts', App\Http\Controllers\Admin\ContactController::class)->only(['index', 'show', 'destroy']);
     Route::patch('contacts/{contact}/mark-read', [App\Http\Controllers\Admin\ContactController::class, 'markAsRead'])->name('contacts.mark-read');
@@ -45,5 +47,4 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::post('contacts/bulk-action', [App\Http\Controllers\Admin\ContactController::class, 'bulkAction'])->name('contacts.bulk-action');
 
     // Bulk update route for settings form (used in admin settings index view)
-    Route::patch('settings/bulk-update', [SettingController::class, 'bulkUpdate'])->name('settings.bulk-update');
 });

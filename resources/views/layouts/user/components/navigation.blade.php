@@ -15,33 +15,14 @@
                 <div class="nav-inner-wrap">
                     <nav class="nav-inner sound-nav" id="menu">
                         <ul>
-                            <li>
-                                <a href="{{ route('home') }}"
-                                    class="{{ request()->is('/') ? 'act-link' : '' }} ">Home</a>
-
-                                <!--level 2 end -->
-                            </li>
-                            <li>
-                                <a href="{{ route('projects') }}"
-                                    class="{{ request()->is('project') ? 'act-link' : '' }} ">Projects</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('blogs.index') }}"
-                                    class="{{ request()->is('blogs') ? 'act-link' : '' }} ">Blogs</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('about-us') }}"
-                                    class="{{ request()->is('about-us') ? 'act-link' : '' }} ">About Us</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('faq') }}"
-                                    class="{{ request()->is('faq') ? 'act-link' : '' }} ">FAQs</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('contact') }}"
-                                    class="{{ request()->is('contact') ? 'act-link' : '' }} ">Contact Us</a>
-
-                            </li>
+                            @foreach($dynamicMenu as $menuItem)
+                                <li>
+                                    <a href="{{ $menuItem->link }}"
+                                    class="{{ (request()->routeIs($menuItem->route) || request()->is(ltrim($menuItem->url, '/'))) ? 'act-link' : '' }}">
+                                        {{ $menuItem->title }}
+                                    </a>
+                                </li>
+                            @endforeach
 
                             {{-- <li>
                                 <a href="#">Pages</a>

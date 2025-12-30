@@ -15,9 +15,9 @@
                 {{-- <li><a class="scroll-link" href="#sec2">About</a></li>
                 <li><a class="scroll-link" href="#sec3">Resume</a></li> --}}
                 <li><a class="scroll-link" href="#sec2">Why Choose Us</a></li>
-                <li><a class="scroll-link" href="#sec5">Projects</a></li>
+                <li><a class="scroll-link" href="#sec5">Our Projects</a></li>
                 <li><a class="scroll-link" href="#clients">Our Clients</a></li>
-                <li><a class="scroll-link" href="#contact">Contact Us</a></li>
+                <li><a class="scroll-link" href="#contact">Get In Touch</a></li>
             </ul>
         </nav>
     </div>
@@ -704,7 +704,7 @@
         <section class="dark-bg" id="sec5">
             <div class="fet_pr-carousel-title">
                 <div class="fet_pr-carousel-title-item">
-                    <h3>My Featured Projects</h3>
+                    <h3>Our Projects</h3>
                     <p>In ut odio libero, at vulputate urna. Nulla tristique mi a massa convallis cursus. Nulla eu mi magna.
                         Etiam suscipit commodo gravida.</p>
                     <a href="{{ route('projects') }}" class="btn float-btn flat-btn color-btn mar-top">See all</a>
@@ -837,7 +837,7 @@
                         <div class="col-md-3">
                             <div class="pr-title fl-wrap">
                                 <h3>Get In Touch</h3>
-                                <span>Lorem Ipsum generators on the Internet king this the first true generator</span>
+                                <span>“Have a Project in Mind? Reach Out & Let’s Make It Happen.</span>
                             </div>
                         </div>
                         <div class="col-md-7">

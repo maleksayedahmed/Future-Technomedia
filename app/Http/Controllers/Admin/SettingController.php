@@ -16,7 +16,7 @@ class SettingController extends Controller
     {
         $settings = Setting::orderBy('group')->orderBy('order')->orderBy('key')->get();
         $groupedSettings = $settings->groupBy('group');
-        
+
         return view('admin.settings.index', compact('groupedSettings'));
     }
 
@@ -170,11 +170,12 @@ class SettingController extends Controller
      */
     public function bulkUpdate(Request $request)
     {
+        // dd(123);
         $settings = $request->input('settings', []);
 
         foreach ($settings as $key => $value) {
             $setting = Setting::where('key', $key)->first();
-            
+
             if ($setting) {
                 if ($setting->type === 'boolean') {
                     $setting->update(['value' => $value ? '1' : '0']);

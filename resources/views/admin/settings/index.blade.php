@@ -7,14 +7,12 @@
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h1 class="h3 mb-0">Site Settings</h1>
-                {{-- <a href="{{ route('admin.settings.create') }}" class="btn btn-primary">
-                <i class="fas fa-plus me-2"></i>Add New Setting
-            </a> --}}
             </div>
         </div>
     </div>
 
-    <form action="{{ route('admin.settings.bulk-update') }}" method="POST" enctype="multipart/form-data">
+    {{-- 1. Main Bulk Update Form --}}
+    <form action="{{ route('admin.settings.bulk-update') }}" method="POST" enctype="multipart/form-data" id="bulkUpdateForm">
         @csrf
         @method('PATCH')
 
@@ -24,8 +22,7 @@
                     <div class="card">
                         <div class="card-header bg-transparent">
                             <h5 class="card-title mb-0">
-                                <i
-                                    class="fas fa-{{ $group === 'general' ? 'cog' : ($group === 'social' ? 'share-alt' : ($group === 'contact' ? 'phone' : ($group === 'location' ? 'map-marker-alt' : 'info-circle'))) }} me-2"></i>
+                                <i class="fas fa-{{ $group === 'general' ? 'cog' : ($group === 'social' ? 'share-alt' : ($group === 'contact' ? 'phone' : ($group === 'location' ? 'map-marker-alt' : 'info-circle'))) }} me-2"></i>
                                 {{ ucfirst($group) }} Settings
                             </h5>
                         </div>
@@ -76,15 +73,13 @@
                                                 class="btn btn-sm btn-outline-primary me-1">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                            <form action="{{ route('admin.settings.destroy', $setting) }}" method="POST"
-                                                class="d-inline"
-                                                onsubmit="return confirm('Are you sure you want to delete this setting?')">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-outline-danger">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </form>
+
+                                            {{-- 2. CHANGED: Replaced Form with Button and JS call --}}
+                                            <button type="button"
+                                                class="btn btn-sm btn-outline-danger"
+                                                onclick="confirmDelete('{{ route('admin.settings.destroy', $setting) }}')">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
                                         </div>
                                     </div>
                                 @endforeach
@@ -108,6 +103,12 @@
         </div>
     </form>
 
+    {{-- 3. ADDED: Hidden Dynamic Delete Form (Outside main form) --}}
+    <form id="deleteSettingForm" action="" method="POST" style="display: none;">
+        @csrf
+        @method('DELETE')
+    </form>
+
 @endsection
 
 @push('styles')
@@ -119,4 +120,17 @@
             border-radius: 5px;
         }
     </style>
+@endpush
+
+@push('scripts')
+    {{-- 4. ADDED: Script to handle deletion --}}
+    <script>
+        function confirmDelete(url) {
+            if (confirm('Are you sure you want to delete this setting?')) {
+                var form = document.getElementById('deleteSettingForm');
+                form.action = url;
+                form.submit();
+            }
+        }
+    </script>
 @endpush

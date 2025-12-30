@@ -312,13 +312,13 @@
                     <span>FAQs</span>
                 </a>
             </li>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('admin.testimonials.*') ? 'active' : '' }}"
                     href="{{ route('admin.testimonials.index') }}">
                     <i class="fas fa-comments"></i>
                     <span>Testimonials</span>
                 </a>
-            </li>
+            </li> --}}
             <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('admin.clients.*') ? 'active' : '' }}"
                     href="{{ route('admin.clients.index') }}">
@@ -338,6 +338,13 @@
                     href="{{ route('admin.abouts.index') }}">
                     <i class="fas fa-info-circle"></i>
                     <span>About Page</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('admin.menu-items.*') ? 'active' : '' }}"
+                    href="{{ route('admin.menu-items.index') }}">
+                    <i class="fas fa-cog"></i>
+                    <span>Site menu</span>
                 </a>
             </li>
             <li class="nav-item">

@@ -105,7 +105,7 @@ body {
 
 /*--------------Typography------ -----*/
 p {
-	font-size: 11px;
+	font-size: 13px;
 	line-height: 24px;
 	padding-bottom: 32px;
 	font-weight: 500;
@@ -2434,7 +2434,7 @@ section.parallax-section .section-title:before {
 }
 
 .features-box {
-	padding: 15px 20px 15px 100px;
+	padding: 15px 0px 15px 100px;
 	position: relative;
 }
 
@@ -6146,7 +6146,7 @@ section.parallax-section .section-title:before {
 .custom-form input[type=password] {
 	float: left;
 	border: none;
-	border: 1px solid #eee;
+	border: 2px solid #eee;
 	background: #fff;
 	width: 100%;
 	padding: 15px 20px 15px 55px;
